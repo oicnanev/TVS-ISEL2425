@@ -272,3 +272,37 @@ input.txt < comando 1> output.txt 2> error.txt 88>something.txt
 #### Função ```dup2(int oldfd, int newfd)```
 
 É usada para duplicar um *file descriptor*, duplicando o ```oldfd``` para ```newfd```, Se o ```newfd``` já estiver aberto, será encerrado antes de ser reutilizado sem ser necessário chamar ```close()```. Se o ```oldfd``` não for um *file descriptor* válido, a função falha e o ```newfd``` não será encerrado.
+
+## 24SET2024
+
+### Pipes
+**Pipes** são um mecanismo de comunicação entre processos em Unix. Permitem o fluxo unidirecional de dados entre processos, onde um processo escreve dados no *pipe* e outro lê esses dados.
+
+![pipes](../img/pipe1.jpeg)
+
+#### Funcionamento do ponto de vista do *Kernel*
+
+![pipe](../img/pipe2.jpeg)
+
+1. **Criação do Pipe**:
+    - A operação *pipe* cria um objeto *pipe* na memória do *kernel*, retorna um para de *file descriptors*, um para ler e outro para escrever no *pipe*.
+    - O *kernel* utiliza um sistema de ficheiros virtual ```pipefs``` para gerir os *pipes*. Este sistema de ficheirosé montado no espaço do *kernel* durante o *init*.
+2. **Buffer de memória**:
+    - O *kernel* usa a sua própria memória como *buffer* para transferir dados entre os espaços de endereços do *user* e do *kernel*. Quando um processo escreve dados no *pipe*, o *kernel* copia esses dados do espaço de endereço do *user* para o espaço de endereços do *kernel*. Da mesma forma, quando um processo lê do *pipe*, os dados são copiados do espaço de endereço do *kernel* para o espaço de endereços do *user*.
+3. **Chamadas de Sistema**:
+    - O *kernel* fornece várias chamadas de sistema para manipular operações de *pipe*, como ```pipe()```, ```read()```, e ```write()```. Essas chamadas garantem o funcionamento adequado dos *pipes* e permitem a transferência eficiente de dados entre processos.
+
+#### Funcionamento do ponto de vista dos Processos
+1. **Criação e uso**:
+    - Um processo pode criar um *pipe* usando a chamada de sistema ```pipe()```, que retorna dois *file descriptors*: um para leitura e outro para escrita.
+    - O processo de escrita 'empurra' dados para o *pipe*, enquanto o processo de leitura 'puxa' dados do outro extremo do *pipe*.
+2. **Comunicação entre processos**
+    - Os *pipes* são muitas vezes usados para comunicação entre processos pai e filho. Por exemplo, um processo pai pode criar um *pipe* antes de fazer ```fork()```. Após o ```fork()```, tanto o processo pai como o filho herdam os *file descriptors* do *pipe*, permitindo a comunicação entre eles.
+3. **Exemplo prático**:
+    - Considere uma *shell* que usa *pipes* para ligar a saída de um comando à entrada de outro. A *shell* cria processos filhos para cada comando e usa *pipes* para ligar a saída de um comando à entrada do próximo. Isso é feito configurando os *file descriptors* apropriados antes de chamar ```exec()``` para executar os comandos.
+    ![exercicio](../img/exercicio_pipes.jpeg)
+	- Tendo um processo com *file descriptor table*, onde se pede ao *kernel* para criar um *pipe*, vão ser criadas entradas na tabela que serão usads para manipular o mesmo (*pipe*):
+	- Entrada 3 - permite ler do *pipe*
+	- Entrada 4 - permite escrever do *pipe*
+	- Ao fazer ```fork()``` no processo **P1**, criamos outro processo **P2** cuja tabela de *file descriptors* é cópia da tabela do processo pai (**P1**). Ficando assim com duas sessões ativas de leitura sobre o *pipe* e duas sessões de escrita sobre o *pipe*.
+	
