@@ -306,3 +306,119 @@ input.txt < comando 1> output.txt 2> error.txt 88>something.txt
 	- Entrada 4 - permite escrever do *pipe*
 	- Ao fazer ```fork()``` no processo **P1**, criamos outro processo **P2** cuja tabela de *file descriptors* é cópia da tabela do processo pai (**P1**). Ficando assim com duas sessões ativas de leitura sobre o *pipe* e duas sessões de escrita sobre o *pipe*.
 	
+## 01OUT24
+
+### Signals
+![signals as virtual interrupts](../img/signals.jpeg)
+
+- A iniciativa de ação é sempre do CPU, no entanto, nos sistemas reais existe um mecanismo para dispositivos I/O pedirem CPU - os *interrupts*.
+- Existem dispositivos lentos ou dependentes de ações externas o que faz com que a iniciativa do CPU (Polling) se torne ineficiente. (Ex.: CD/DVD, placas de rede, etc.). Os *interrupts* permitem que não seja necessário o *polling* por parte do CPU e este é avisado diretamente pelo dispositivo através do mecanismo de *interrupts*.
+- Nos servidores modernos, todas as ligações são assíncronas; é tudo notificado ao CPU através de *interrupts*.
+- Como forma de ocultar o funcionamento dos *interrupts*, nas linguagens de programação modernas, começou a surgir o ```async/await``` primariamente no **C#**, depois **JavaScript**, no **Kotlin** são usadas as **corotinas**, no **Java**, as **virtual threads**, etc.
+- Em termos de **processos**, existem também notificações assíncronas de forma semelhante aos *interrupts*. Este processo é chamado de *Signals*. O número tipico de sinais (*standard*) por processo são 31, no entanto podem existir mais ou menos. Ver: ```man 7 signal``` em sistemas Unix.
+- A forma de trabalhar com os *signals* é em tudo semelhante à forma com que se trabalha com *interrupts*.
+
+#### Signal dispositions
+Cada *signal* tem uma *disposition* atual, que determina o seu comportamento do processo quando recebe o mesmo.
+
+As entradas na coluna **Ação** da tabela abaixo, especificam a disposição padrão para cada sinal como:
+- **Term** - terminar o processo
+- **Ign** - ignorar o sinal, (ex: morte de processo filho)
+- **Core** - terminar o processo e guardar informação para *debug*
+- **Stop** - pausar (*stop*) o processo
+- **Cont** - continuar o processo se o mesmo estiver pausado (*stoped*) no momento.
+
+Um processo pode alterar a disposição de um *signal* através das funções [```sigaction()```](https://www.man7.org/linux/man-pages/man2/sigaction.2.html) ou [```signal()```](https://www.man7.org/linux/man-pages/man2/signal.2.html).
+
+##### Standard Signals
+| Signal | Action | Comment |
+| ------ | ------ | ------- |
+| **SIGABRT** | Core | Abort signal from abort(3) |
+| **SIGALRM** | Term | Timer signal from alarm(2) |
+| **SIGBUS** | Core | Bus error (bad memory access) |
+| **SIGCHLD** | Ign | Child stopped or terminated |
+| **SIGCLD** | Ign | A synonym for SIGCHLD |
+| **SIGCONT** | Cont | Continue if stopped |
+| **SIGEMT** | Term | Emulator trap |
+| **SIGFPE** | Core | Floating-point exception |
+| **SIGHUP** | Term | Hangup detected on controlling terminal or death of controlling process |
+| **SIGILL** | Core | Illegal Instruction |
+| **SIGINFO** | | A synonym for SIGPWR |
+| **SIGINT** | Term | Interrupt from keyboard |
+| **SIGIO** | Term | I/O now possible (4.2BSD) |
+| **SIGIOT** | Core | IOT trap. A synonym for SIGABRT |
+| **SIGKILL** | Term | Kill signal |
+| **SIGLOST** | Term | File lock lost (unused) |
+| **SIGPIPE** | Term | Broken pipe: write to pipe with no readers; see pipe(7) |
+| **SIGPOLL** | Term | Pollable event (Sys V); synonym for SIGIO |
+| **SIGPROF** | Term | Profiling timer expired |
+| **SIGPWR** | Term | Power failure (System V) |
+| **SIGQUIT** | Core | Quit from keyboard |
+| **SIGSEGV** | Core | Invalid memory reference |
+| **SIGSTKFLT** | Term | Stack fault on coprocessor (unused) |
+| **SIGSTOP** | Stop | Stop process |
+| **SIGTSTP** | Stop | Stop typed at terminal |
+| **SIGSYS** | Core | Bad system call (SVr4); see also seccomp(2) |
+| **SIGTERM** | Term | Termination signal |
+| **SIGTRAP** | Core | Trace/breakpoint trap |
+| **SIGTTIN** | Stop | Terminal input for background process |
+| **SIGTTOU** | Stop | Terminal output for background process |
+| **SIGUNUSED** | Core | Synonymous with SIGSYS |
+| **SIGURG** | Ign | Urgent condition on socket (4.2BSD) |
+| **SIGUSR1** | Term | User-defined signal 1 |
+| **SIGUSR2** | Term | User-defined signal 2 |
+| **SIGVTALRM** | Term | Virtual alarm clock (4.2BSD) |
+| **SIGXCPU** | Core | CPU time limit exceeded (4.2BSD); see setrlimit(2) |
+| **SIGXFSZ** | Core | File size limit exceeded (4.2BSD); see setrlimit(2) |
+| **SIGWINCH** | Ign | Window resize signal (4.3BSD, Sun) |
+
+Os sinais **SIGKILL** e **SIGSTOP** não permitem ser capturados, bloqueados ou ignorados.
+
+#### Numeração dos *signals* para *standard signals*
+
+| Signal | x86/ARM most others | Alpha/SPARC | MIPS | PARISC | Notes |
+| ------ | - | - | - | - | - |
+| SIGHUP | 1 | 1 | 1 | 1 |  |
+| SIGINT | 2 | 2 | 2 | 2 |  |
+| SIGQUIT | 3 | 3 | 3 | 3 |  |
+| SIGILL | 4 | 4 | 4 | 4 |  |
+| SIGTRAP | 5 | 5 | 5 | 5 |  |
+| SIGABRT | 6 | 6 | 6 | 6 |  |
+| SIGIOT | 6 | 6 | 6 | 6 |  |
+| SIGBUS | 7 | 10 | 10 | 10 |  |
+| SIGEMT | - | 7 | 7 | - |  |
+| SIGFPE | 8 | 8 | 8 | 8 |  |
+| SIGKILL | 9 | 9 | 9 | 9 |  |
+| SIGUSR1 | 10 | 30 | 16 | 16 |  |
+| SIGSEGV | 11 | 11 | 11 | 11 |  |
+| SIGUSR2 | 12 | 31 | 17 | 17 |  |
+| SIGPIPE | 13 | 13 | 13 | 13 |  |
+| SIGALRM | 14 | 14 | 14 | 14 |  |
+| SIGTERM | 15 | 15 | 15 | 15 |  |
+| SIGSTKFLT | 16 | - | - | 7 |  |
+| SIGCHLD | 17 | 20 | 18 | 18 |  |
+| SIGCLD | - | - | 18 | - |  |
+| SIGCONT | 18 | 19 | 25 | 26 |  |
+| SIGSTOP | 19 | 17 | 23 | 24 |  |
+| SIGTSTP | 20 | 18 | 24 | 25 |  |
+| SIGTTIN | 21 | 21 | 26 | 27 |  |
+| SIGTTOU | 22 | 22 | 27 | 28 |  |
+| SIGURG | 23 | 16 | 21 | 29 |  |
+| SIGXCPU | 24 | 24 | 30 | 12 |  |
+| SIGXFSZ | 25 | 25 | 31 | 30 |  |
+| SIGVTALRM | 26 | 26 | 28 | 20 |  |
+| SIGPROF | 27 | 27 | 29 | 21 |  |
+| SIGWINCH | 28 | 28 | 20 | 23 |  |
+| SIGIO | 29 | 23 | 22 | 22 |  |
+| SIGPOLL |   |   |   |   | Same as SIGIO |
+| SIGPWR | 30 | 29/- | 19 | 19 |  |
+| SIGINFO | - | 29/- | - | - |  |
+| SIGLOST | - | -/29 | - | - |  |
+| SIGSYS | 31 | 12 | 12 | 31 |  |
+| SIGUNUSED | 31 | - | - | 31 |  |
+
+> Quando temos um processo que termina é possível ver o seu *exit code* através do comando shell ```echo $```. O número retornado, caso seja superior a 128 indica que o processo terminou com um *signal*. Por exemplo, *exit code* = 130, diz-nos que o processo terminou com um *signal* (128) e que este *signal* foi SIGINT (*signal* #2). 128 + 2 = 130.
+
+> **ATENÇÂO** ao SIGPIPE - depois dum <CTRL>+<C> pode existir a tentativa de escrever *file descriptors* que já não existem.
+
+
