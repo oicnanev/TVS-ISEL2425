@@ -419,6 +419,6 @@ Os sinais **SIGKILL** e **SIGSTOP** não permitem ser capturados, bloqueados ou 
 
 > Quando temos um processo que termina é possível ver o seu *exit code* através do comando shell ```echo $```. O número retornado, caso seja superior a 128 indica que o processo terminou com um *signal*. Por exemplo, *exit code* = 130, diz-nos que o processo terminou com um *signal* (128) e que este *signal* foi SIGINT (*signal* #2). 128 + 2 = 130.
 
-> **ATENÇÂO** ao SIGPIPE - depois dum <CTRL>+<C> pode existir a tentativa de escrever *file descriptors* que já não existem.
+> **ATENÇÂO** ao SIGPIPE - depois dum ```<CTRL>+<C>``` pode existir a tentativa de escrever *file descriptors* que já não existem.
 
 
