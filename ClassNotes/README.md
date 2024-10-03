@@ -125,6 +125,8 @@ Para alterar o *index* por defeito do *File Descriptor Table*:
 Neste exemplo, redirecionamos o stdout do *index* 1 para o ficheiro "myStdout.txt". "output.txt" é um parâmetro do programa "prog".
 Também é possível redirecionar os outros *index*, "stdin"" e "stderr".
 
+> Código exemplo da aula, criação de um **file descriptor** que remete para um ficheiro no *index* 3. [prog01-files.c](../ClassCode/01-files/prog01-files.c)
+
 ### Permissões em UNIX
 
 | owner | group | others |     |
@@ -217,6 +219,11 @@ A função ```fork()``` é usada para criar um novo processo, chamado de process
     * **Recuperação do exit code** - Permite ao processo pai verificar se o processo filho terminou com sucesso ou ocorreu algum erro.
     * **Gestão de recursos** - Ao chamar ```wait()``` ou ```waitpid()```, o processo pai pode liberar os recursos associados ao processo filho. Isso pode incluir a entrada na tabela de processos, bem como, outros recursos do sistema que foram alocados para o processo filho.
 
+> Código de exemplos da aula:
+
+> - fork [prog02-fork.c](../ClassCode/02-fork/prog02-fork.c)
+> - waitpid [prog03-waitpid.c](../ClassCode/02-fork/prog03-waitpid.c)
+> - same virtual memory space with different physical memory addresses [prog04-procmem.c](../ClassCode/02-fork/prog04-procmem.c)
 
 #### exec()
 A família de funções exec() substitui a imagem do processo atual por uma nova imagem de processo. Isso significa que o código e os dados do processo atual são substituídos pelo código e dados de um novo programa. No âmbito do processo corrente, destroi a sua representação virtual e cria um novo, no entanto reutiliza a sua tabela de descritores de ficheiros.
@@ -230,6 +237,10 @@ A família de funções exec() substitui a imagem do processo atual por uma nova
 	- ```execvp()``` - ao usar o **p**, procura o programa no *path* 
 	- ```execvpe()``` - ao usar o **e**, passa-se um *poiter* para *array* extra com as variáveis de ambiente. **e** de *environment*
 - **Não Retorna**: Se ```exec()``` for bem-sucedido, ele não retorna ao programa que o chamou. Se falhar, ele retorna -1.
+
+> Exemplo da aula:
+
+> - exec [prog05-exec.c](../ClassCode/03-exec/prog05-exec.c)
 
 ### Redirecionamentos na shell
 
@@ -273,6 +284,11 @@ input.txt < comando 1> output.txt 2> error.txt 88>something.txt
 
 É usada para duplicar um *file descriptor*, duplicando o ```oldfd``` para ```newfd```, Se o ```newfd``` já estiver aberto, será encerrado antes de ser reutilizado sem ser necessário chamar ```close()```. Se o ```oldfd``` não for um *file descriptor* válido, a função falha e o ```newfd``` não será encerrado.
 
+> Exemplo de programa que usa **dup2** para fazer *redirection*:
+
+> - redirection with dup2 [prog06-redir.c](../ClassCode/04-redir/prog06-redir.c)
+
+
 ## 24SET2024
 
 ### Pipes
@@ -305,6 +321,12 @@ input.txt < comando 1> output.txt 2> error.txt 88>something.txt
 	- Entrada 3 - permite ler do *pipe*
 	- Entrada 4 - permite escrever do *pipe*
 	- Ao fazer ```fork()``` no processo **P1**, criamos outro processo **P2** cuja tabela de *file descriptors* é cópia da tabela do processo pai (**P1**). Ficando assim com duas sessões ativas de leitura sobre o *pipe* e duas sessões de escrita sobre o *pipe*.
+
+> Programas de exemplo do funcionamento dos *pipes*:
+
+>- pipe basic [prog07-pipe-basic.c](../ClassCode/05-pipe/prog07-pipe-basic.c)
+>- pipe with fork [prog08-pipe-fork.c](../ClassCode/05-pipe/prog08-pipe-fork.c)
+>- pipe with fork, dup2 and exec [prog09-pipe-fork-dup2-exec.c](../ClassCode/05-pipe/prog09-pipe-fork-dup2-exec.c)
 	
 ## 01OUT24
 
@@ -417,8 +439,16 @@ Os sinais **SIGKILL** e **SIGSTOP** não permitem ser capturados, bloqueados ou 
 | SIGSYS | 31 | 12 | 12 | 31 |  |
 | SIGUNUSED | 31 | - | - | 31 |  |
 
-> Quando temos um processo que termina é possível ver o seu *exit code* através do comando shell ```echo $```. O número retornado, caso seja superior a 128 indica que o processo terminou com um *signal*. Por exemplo, *exit code* = 130, diz-nos que o processo terminou com um *signal* (128) e que este *signal* foi SIGINT (*signal* #2). 128 + 2 = 130.
+Quando temos um processo que termina é possível ver o seu *exit code* através do comando shell ```echo $```. O número retornado, caso seja superior a 128 indica que o processo terminou com um *signal*. Por exemplo, *exit code* = 130, diz-nos que o processo terminou com um *signal* (128) e que este *signal* foi SIGINT (*signal* #2). 128 + 2 = 130.
 
-> **ATENÇÂO** ao SIGPIPE - depois dum ```<CTRL>+<C>``` pode existir a tentativa de escrever *file descriptors* que já não existem.
+**ATENÇÂO** ao SIGPIPE - depois dum ```<CTRL>+<C>``` pode existir a tentativa de escrever *file descriptors* que já não existem.
+
+> Exemplos de manipulação dos *signals* programáticamente:
+
+>- Send SIGINT or SIGTERM [sig01.c](../ClassCode/06-signal/sig01.c)
+>- SIGALARM terminates program [sig02.c](../ClassCode/06-signal/sig02.c)
+>- Change default signal disposition [sig03.c](../ClassCode/06-signal/sig03.c)
+>- Set disposition to signal handling function [sig04.c](../ClassCode/06-signal/sig04.c)
+>- Set an alarm every second once a procedure receives a SIGTERM. So handling SIGINT and SIGALARM [sig5.c](../ClassCode/06-signal/sig05.c)
 
 
