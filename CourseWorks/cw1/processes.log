@@ -1,0 +1,452 @@
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  24064 14540 ?        Ss   Oct02   0:07 /sbin/init splash
+root           2  0.0  0.0      0     0 ?        S    Oct02   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        S    Oct02   0:00 [pool_workqueue_release]
+root           4  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-rcu_g]
+root           5  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-rcu_p]
+root           6  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-slub_]
+root           7  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-netns]
+root           9  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/0:0H-events_highpri]
+root          12  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-mm_pe]
+root          13  0.0  0.0      0     0 ?        I    Oct02   0:00 [rcu_tasks_kthread]
+root          14  0.0  0.0      0     0 ?        I    Oct02   0:00 [rcu_tasks_rude_kthread]
+root          15  0.0  0.0      0     0 ?        I    Oct02   0:00 [rcu_tasks_trace_kthread]
+root          16  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/0]
+root          17  0.0  0.0      0     0 ?        I    Oct02   0:43 [rcu_preempt]
+root          18  0.0  0.0      0     0 ?        S    Oct02   0:03 [migration/0]
+root          19  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/0]
+root          20  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/0]
+root          21  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/1]
+root          22  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/1]
+root          23  0.0  0.0      0     0 ?        S    Oct02   0:02 [migration/1]
+root          24  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/1]
+root          27  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/2]
+root          28  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/2]
+root          29  0.0  0.0      0     0 ?        S    Oct02   0:02 [migration/2]
+root          30  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/2]
+root          32  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/2:0H-events_highpri]
+root          33  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/3]
+root          34  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/3]
+root          35  0.0  0.0      0     0 ?        S    Oct02   0:02 [migration/3]
+root          36  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/3]
+root          38  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/3:0H-events_highpri]
+root          39  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/4]
+root          40  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/4]
+root          41  0.0  0.0      0     0 ?        S    Oct02   0:03 [migration/4]
+root          42  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/4]
+root          44  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/4:0H-events_highpri]
+root          45  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/5]
+root          46  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/5]
+root          47  0.0  0.0      0     0 ?        S    Oct02   0:03 [migration/5]
+root          48  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/5]
+root          50  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/5:0H-events_highpri]
+root          51  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/6]
+root          52  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/6]
+root          53  0.0  0.0      0     0 ?        S    Oct02   0:04 [migration/6]
+root          54  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/6]
+root          56  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/6:0H-events_highpri]
+root          57  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/7]
+root          58  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/7]
+root          59  0.0  0.0      0     0 ?        S    Oct02   0:03 [migration/7]
+root          60  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/7]
+root          62  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/7:0H-events_highpri]
+root          63  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/8]
+root          64  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/8]
+root          65  0.0  0.0      0     0 ?        S    Oct02   0:03 [migration/8]
+root          66  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/8]
+root          67  0.0  0.0      0     0 ?        I    Oct02   0:02 [kworker/8:0-events]
+root          68  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/8:0H-events_highpri]
+root          69  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/9]
+root          70  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/9]
+root          71  0.0  0.0      0     0 ?        S    Oct02   0:03 [migration/9]
+root          72  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/9]
+root          74  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/9:0H-events_highpri]
+root          75  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/10]
+root          76  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/10]
+root          77  0.0  0.0      0     0 ?        S    Oct02   0:02 [migration/10]
+root          78  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/10]
+root          80  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/10:0H-events_highpri]
+root          81  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/11]
+root          82  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/11]
+root          83  0.0  0.0      0     0 ?        S    Oct02   0:01 [migration/11]
+root          84  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/11]
+root          86  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/11:0H-events_highpri]
+root          87  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/12]
+root          88  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/12]
+root          89  0.0  0.0      0     0 ?        S    Oct02   0:01 [migration/12]
+root          90  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/12]
+root          92  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/12:0H-events_highpri]
+root          93  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/13]
+root          94  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/13]
+root          95  0.0  0.0      0     0 ?        S    Oct02   0:01 [migration/13]
+root          96  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/13]
+root          98  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/13:0H-events_highpri]
+root          99  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/14]
+root         100  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/14]
+root         101  0.0  0.0      0     0 ?        S    Oct02   0:01 [migration/14]
+root         102  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/14]
+root         104  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/14:0H-events_highpri]
+root         105  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/15]
+root         106  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/15]
+root         107  0.0  0.0      0     0 ?        S    Oct02   0:00 [migration/15]
+root         108  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/15]
+root         110  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/15:0H-events_highpri]
+root         111  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/16]
+root         112  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/16]
+root         113  0.0  0.0      0     0 ?        S    Oct02   0:02 [migration/16]
+root         114  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/16]
+root         115  0.0  0.0      0     0 ?        I    Oct02   0:01 [kworker/16:0-mm_percpu_wq]
+root         116  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/16:0H-events_highpri]
+root         117  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/17]
+root         118  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/17]
+root         119  0.0  0.0      0     0 ?        S    Oct02   0:00 [migration/17]
+root         120  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/17]
+root         122  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/17:0H-kblockd]
+root         123  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/18]
+root         124  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/18]
+root         125  0.0  0.0      0     0 ?        S    Oct02   0:04 [migration/18]
+root         126  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/18]
+root         128  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/18:0H-events_highpri]
+root         129  0.0  0.0      0     0 ?        S    Oct02   0:00 [cpuhp/19]
+root         130  0.0  0.0      0     0 ?        S    Oct02   0:00 [idle_inject/19]
+root         131  0.0  0.0      0     0 ?        S    Oct02   0:01 [migration/19]
+root         132  0.0  0.0      0     0 ?        S    Oct02   0:00 [ksoftirqd/19]
+root         134  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/19:0H-events_highpri]
+root         135  0.0  0.0      0     0 ?        S    Oct02   0:00 [kdevtmpfs]
+root         136  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-inet_]
+root         138  0.0  0.0      0     0 ?        S    Oct02   0:00 [kauditd]
+root         142  0.0  0.0      0     0 ?        S    Oct02   0:00 [khungtaskd]
+root         143  0.0  0.0      0     0 ?        S    Oct02   0:00 [oom_reaper]
+root         145  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-write]
+root         146  0.0  0.0      0     0 ?        S    Oct02   0:03 [kcompactd0]
+root         147  0.0  0.0      0     0 ?        SN   Oct02   0:00 [ksmd]
+root         148  0.0  0.0      0     0 ?        SN   Oct02   0:00 [khugepaged]
+root         149  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-kinte]
+root         150  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-kbloc]
+root         151  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-blkcg]
+root         152  0.0  0.0      0     0 ?        S    Oct02   0:00 [irq/9-acpi]
+root         153  0.0  0.0      0     0 ?        I    Oct02   0:02 [kworker/10:1-events]
+root         154  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-tpm_d]
+root         155  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-ata_s]
+root         156  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-md]
+root         157  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-md_bi]
+root         158  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-edac-]
+root         159  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-devfr]
+root         160  0.0  0.0      0     0 ?        S    Oct02   0:00 [watchdogd]
+root         162  0.0  0.0      0     0 ?        I<   Oct02   0:04 [kworker/1:1H-kblockd]
+root         164  0.0  0.0      0     0 ?        S    Oct02   0:00 [kswapd0]
+root         165  0.0  0.0      0     0 ?        S    Oct02   0:00 [ecryptfs-kthread]
+root         166  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-kthro]
+root         168  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-acpi_]
+root         169  0.0  0.0      0     0 ?        S    Oct02   0:00 [hwrng]
+root         172  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-mld]
+root         173  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/5:1H-kblockd]
+root         174  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-ipv6_]
+root         181  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-kstrp]
+root         189  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/u41:0]
+root         203  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-charg]
+root         229  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/14:1H-kblockd]
+root         230  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/17:1H]
+root         250  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/18:1H-kblockd]
+root         251  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/16:1H-kblockd]
+root         281  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/3:1H-kblockd]
+root         282  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/4:1H-kblockd]
+root         283  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/2:1H-kblockd]
+root         284  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/6:1H-kblockd]
+root         285  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/10:1H-kblockd]
+root         286  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/8:1H-kblockd]
+root         287  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/12:1H-kblockd]
+root         288  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/15:1H-kblockd]
+root         289  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/0:1H-kblockd]
+root         290  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/13:1H-kblockd]
+root         291  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/9:1H-kblockd]
+root         292  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/19:1H-kblockd]
+root         293  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/7:1H-kblockd]
+root         294  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/11:1H-kblockd]
+root         340  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-nvme-]
+root         342  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-nvme-]
+root         343  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-nvme-]
+root         344  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-nvme-]
+root         347  0.0  0.0      0     0 ?        I    Oct02   0:03 [kworker/18:1-mm_percpu_wq]
+root         348  0.0  0.0      0     0 ?        S    Oct02   0:00 [scsi_eh_0]
+root         349  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-scsi_]
+root         350  0.0  0.0      0     0 ?        S    Oct02   0:00 [scsi_eh_1]
+root         351  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-scsi_]
+root         352  0.0  0.0      0     0 ?        S    Oct02   0:00 [scsi_eh_2]
+root         353  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-scsi_]
+root         354  0.0  0.0      0     0 ?        S    Oct02   0:00 [scsi_eh_3]
+root         355  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-scsi_]
+root         356  0.0  0.0      0     0 ?        S    Oct02   0:00 [scsi_eh_4]
+root         357  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-scsi_]
+root         358  0.0  0.0      0     0 ?        S    Oct02   0:00 [scsi_eh_5]
+root         359  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-scsi_]
+root         360  0.0  0.0      0     0 ?        S    Oct02   0:00 [scsi_eh_6]
+root         361  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-scsi_]
+root         362  0.0  0.0      0     0 ?        S    Oct02   0:00 [scsi_eh_7]
+root         363  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-scsi_]
+root         376  0.0  0.0      0     0 ?        I    Oct02   0:03 [kworker/6:1-events]
+root         377  0.0  0.0      0     0 ?        I    Oct02   0:01 [kworker/12:1-mm_percpu_wq]
+root         417  0.0  0.0      0     0 ?        S    Oct02   0:01 [jbd2/nvme0n1p2-8]
+root         418  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-ext4-]
+root         469  0.0  0.0  75436 18872 ?        S<s  Oct02   0:04 /usr/lib/systemd/systemd-journald
+root         495  0.0  0.0      0     0 ?        I    Oct02   0:02 [kworker/11:2-events]
+root         506  0.0  0.0      0     0 ?        I    Oct02   0:01 [kworker/13:2-mm_percpu_wq]
+root         509  0.0  0.0      0     0 ?        I    Oct02   0:04 [kworker/2:2-events]
+root         558  0.0  0.0  30728  7716 ?        Ss   Oct02   0:00 /usr/lib/systemd/systemd-udevd
+root         628  0.0  0.0      0     0 ?        S    Oct02   0:00 [psimon]
+root         733  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/1:2H-kblockd]
+root         832  0.0  0.0      0     0 ?        S    Oct02   0:00 [irq/73-mei_me]
+root         914  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-crypt]
+root         932  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-cfg80]
+root         955  0.0  0.0      0     0 ?        S    Oct02   0:00 [irq/75-1-0008]
+root         967  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-1-000]
+root         970  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-nfit]
+root         979  0.0  0.0      0     0 ?        S    Oct02   0:00 [nv_queue]
+root         980  0.0  0.0      0     0 ?        S    Oct02   0:00 [nv_queue]
+root         983  0.9  0.0      0     0 ?        S    Oct02  16:31 [nvidia-modeset/kthread_q]
+root         984  0.0  0.0      0     0 ?        S    Oct02   0:00 [nvidia-modeset/deferred_close_kthread_q]
+root         986  0.5  0.0      0     0 ?        S    Oct02  10:18 [irq/87-nvidia]
+root         987  0.0  0.0      0     0 ?        S    Oct02   0:00 [nvidia]
+root         988  0.0  0.0      0     0 ?        S    Oct02   0:22 [nv_queue]
+root        1012  0.0  0.0      0     0 ?        S    Oct02   0:10 [jbd2/sda1-8]
+root        1013  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-ext4-]
+systemd+    1153  0.1  0.0  22248 12960 ?        Ss   Oct02   2:32 /usr/lib/systemd/systemd-resolved
+systemd+    1154  0.0  0.0  91212  7840 ?        Ssl  Oct02   0:00 /usr/lib/systemd/systemd-timesyncd
+avahi       1234  0.0  0.0   8752  4000 ?        Ss   Oct02   0:02 avahi-daemon: running [CodePoetry.local]
+message+    1235  0.0  0.0  12076  5920 ?        Ss   Oct02   0:02 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+polkitd     1243  0.0  0.0 384776  9968 ?        Ssl  Oct02   0:00 /usr/lib/polkit-1/polkitd --no-debug
+root        1244  0.0  0.0 313512  7496 ?        Ssl  Oct02   0:00 /usr/libexec/power-profiles-daemon
+root        1251  0.0  0.0  12392  6080 ?        Ss   Oct02   0:00 /usr/sbin/smartd -n
+root        1256  0.0  0.1 3248148 34212 ?       Ssl  Oct02   0:29 /usr/lib/snapd/snapd
+root        1258  0.0  0.0 313292  7136 ?        Ssl  Oct02   0:02 /usr/libexec/accounts-daemon
+root        1260  0.0  0.0   9424  2400 ?        Ss   Oct02   0:00 /usr/sbin/cron -f -P
+root        1262  0.0  0.0 309804  6560 ?        Ssl  Oct02   0:00 /usr/libexec/switcheroo-control
+root        1266  0.0  0.0  18160  8392 ?        Ss   Oct02   0:00 /usr/lib/systemd/systemd-logind
+root        1268  0.0  0.0 470700 14032 ?        Ssl  Oct02   0:12 /usr/libexec/udisks2/udisksd
+avahi       1278  0.0  0.0   8476  1284 ?        S    Oct02   0:00 avahi-daemon: chroot helper
+root        1279  0.0  0.0 336300 17760 ?        Ssl  Oct02   0:02 /usr/sbin/NetworkManager --no-daemon
+root        1280  0.0  0.0  17376  5440 ?        Ss   Oct02   0:00 /usr/sbin/wpa_supplicant -u -s -O DIR=/run/wpa_supplicant GROUP=netdev
+syslog      1363  0.0  0.0 222568  5708 ?        Ssl  Oct02   0:00 /usr/sbin/rsyslogd -n -iNONE
+root        1387  0.0  0.0 392092 11824 ?        Ssl  Oct02   0:00 /usr/sbin/ModemManager
+epmd        1568  0.0  0.0   7160  3040 ?        Ss   Oct02   0:01 /usr/bin/epmd -systemd
+root        1574  0.0  0.0 1235336 9696 ?        Ssl  Oct02   0:03 /snap/canonical-livepatch/282/canonical-livepatchd
+root        1576  0.0  0.0 118048 24320 ?        Ssl  Oct02   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+kernoops    1654  0.0  0.0  12744  2244 ?        Ss   Oct02   0:00 /usr/sbin/kerneloops --test
+kernoops    1658  0.0  0.0  12744  1924 ?        Ss   Oct02   0:00 /usr/sbin/kerneloops
+www-data    1667  0.0  0.0   5940  4160 ?        Ss   Oct02   0:03 /usr/sbin/lighttpd -D -f /etc/lighttpd/lighttpd.conf
+root        1800  0.0  0.0      0     0 ?        S    Oct02   0:00 [UVM global queue]
+root        1801  0.0  0.0      0     0 ?        S    Oct02   0:00 [UVM deferred release queue]
+root        1802  0.0  0.0      0     0 ?        S    Oct02   0:00 [UVM Tools Event Queue]
+nvidia-+    1819  0.0  0.0   5228  1920 ?        Ss   Oct02   0:00 /usr/bin/nvidia-persistenced --user nvidia-persistenced --no-persistence-mode --verbose
+root        1820  0.0  0.0 380076  7152 ?        SLsl Oct02   0:00 /usr/sbin/lightdm
+root        1847  1.4  0.2 25478960 85188 tty7   Ssl+ Oct02  25:11 /usr/lib/xorg/Xorg -core :0 -seat seat0 -auth /var/run/lightdm/root/:0 -nolisten tcp vt7 -novtswitch
+root        1850  0.0  0.0   8704  1920 tty1     Ss+  Oct02   0:00 /sbin/agetty -o -p -- \u --noclear - linux
+rtkit       1965  0.0  0.0  22940  3360 ?        SNsl Oct02   0:01 /usr/libexec/rtkit-daemon
+root        2065  0.0  0.0 317292  9280 ?        Ssl  Oct02   0:00 /usr/libexec/upowerd
+root        2074  0.0  0.0 234816  8640 ?        Sl   Oct02   0:00 lightdm --session-child 14 21
+root        2088  0.3  0.1 3266356 48456 ?       Ssl  Oct02   6:31 /usr/bin/bettercap -no-colors -eval set events.stream.output /var/log/bettercap.log; api.rest on
+root        2103  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-ib-co]
+root        2104  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-ib-co]
+root        2105  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-ib_mc]
+root        2106  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-ib_nl]
+oicnanev    2177  0.0  0.0  21556 12320 ?        Ss   Oct02   0:01 /usr/lib/systemd/systemd --user
+oicnanev    2178  0.0  0.0  21460  3580 ?        S    Oct02   0:00 (sd-pam)
+oicnanev    2188  0.0  0.0 117040 14672 ?        S<sl Oct02   0:18 /usr/bin/pipewire
+oicnanev    2189  0.0  0.0  97736  5920 ?        Ssl  Oct02   0:00 /usr/bin/pipewire -c filter-chain.conf
+oicnanev    2191  0.0  0.0 406992 18240 ?        S<sl Oct02   1:07 /usr/bin/wireplumber
+oicnanev    2192  0.0  0.0 124972 26632 ?        S<sl Oct02   0:25 /usr/bin/pipewire-pulse
+oicnanev    2194  0.0  0.0 390376  9920 ?        SLsl Oct02   0:00 /usr/bin/gnome-keyring-daemon --foreground --components=pkcs11,secrets --control-directory=/run/user/1000/keyring
+oicnanev    2208  0.0  0.0  10940  5120 ?        Ss   Oct02   0:02 /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+oicnanev    2235  0.0  0.0 536560  7200 ?        Ssl  Oct02   0:00 /usr/libexec/xdg-document-portal
+oicnanev    2242  0.0  0.0 309908  6400 ?        Ssl  Oct02   0:00 /usr/libexec/xdg-permission-store
+root        2249  0.0  0.0   2704  1920 ?        Ss   Oct02   0:00 fusermount3 -o rw,nosuid,nodev,fsname=portal,auto_unmount,subtype=portal -- /run/user/1000/doc
+oicnanev    2265  0.0  0.0 520832 17600 ?        Ssl  Oct02   0:00 /usr/libexec/budgie-session-binary --builtin --session=org.buddiesofbudgie.BudgieDesktop
+oicnanev    2512  0.0  0.0 314260  7360 ?        Ssl  Oct02   0:00 /usr/libexec/gvfsd
+oicnanev    2518  0.0  0.0 459712  7040 ?        Sl   Oct02   0:00 /usr/libexec/gvfsd-fuse /run/user/1000/gvfs -f
+oicnanev    2528  0.0  0.0 383052  7680 ?        Ssl  Oct02   0:00 /usr/libexec/at-spi-bus-launcher
+oicnanev    2535  0.0  0.0  10556  5280 ?        S    Oct02   0:49 /usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 11 --address=unix:path=/run/user/1000/at-spi/bus_0
+oicnanev    2558  0.0  0.0 383632  6560 ?        Sl   Oct02   0:00 /usr/libexec/gsd-a11y-settings
+oicnanev    2560  0.0  0.0 309556  5760 ?        Sl   Oct02   0:00 /usr/libexec/gsd-screensaver-proxy
+oicnanev    2573  0.0  0.0 451920 25888 ?        Sl   Oct02   0:01 /usr/libexec/gsd-color
+oicnanev    2576  0.0  0.0 543308 10560 ?        Sl   Oct02   0:00 /usr/libexec/gsd-sharing
+oicnanev    2582  0.0  0.0 532108  6720 ?        Sl   Oct02   0:00 /usr/libexec/gsd-usb-protection
+oicnanev    2587  0.0  0.0 431768 11680 ?        Sl   Oct02   0:00 /usr/libexec/gsd-datetime
+oicnanev    2596  0.0  0.0 385932  7840 ?        Sl   Oct02   0:00 /usr/libexec/gsd-smartcard
+oicnanev    2601  0.0  0.0 459292  7360 ?        Sl   Oct02   0:08 /usr/libexec/gsd-housekeeping
+oicnanev    2605  0.0  0.0 393620  9280 ?        Sl   Oct02   0:00 /usr/libexec/gsd-sound
+oicnanev    2617  0.0  0.0 524856 24616 ?        Sl   Oct02   0:00 /usr/libexec/gsd-wacom
+oicnanev    2620  0.0  0.0 452908 27592 ?        Sl   Oct02   0:02 /usr/libexec/gsd-xsettings
+oicnanev    2623  0.0  0.0 391040  8800 ?        Sl   Oct02   0:00 /usr/libexec/gsd-wwan
+oicnanev    2630  0.0  0.0 450188 24480 ?        Sl   Oct02   0:00 /usr/libexec/gsd-keyboard
+oicnanev    2637  0.0  0.0 596052 27840 ?        Sl   Oct02   0:07 /usr/libexec/gsd-media-keys
+oicnanev    2646  0.0  0.0 525436 25584 ?        Sl   Oct02   0:00 /usr/libexec/gsd-power
+oicnanev    2650  0.0  0.0 323644 10720 ?        Sl   Oct02   0:00 /usr/libexec/gsd-print-notifications
+oicnanev    2653  0.0  0.0 531084  6080 ?        Sl   Oct02   0:00 /usr/libexec/gsd-rfkill
+oicnanev    2677  0.0  0.0 236044  7680 ?        Sl   Oct02   0:05 /usr/libexec/at-spi2-registryd --use-gnome-session
+oicnanev    2725  0.0  0.0 416204 14880 ?        Sl   Oct02   0:00 /usr/libexec/gsd-printer
+oicnanev    2737  1.1  0.6 1145956 214304 ?      Sl   Oct02  19:59 /usr/bin/budgie-wm
+oicnanev    2760  0.0  0.0  39000 12000 ?        Ss   Oct02   0:00 /snap/snapd-desktop-integration/178/usr/bin/snapd-desktop-integration
+oicnanev    2811  0.0  0.1 453272 53512 ?        Sl   Oct02   0:02 /snap/snapd-desktop-integration/178/usr/bin/snapd-desktop-integration
+oicnanev    2820  0.1  0.2 1020524 93468 ?       Sl   Oct02   1:48 /usr/bin/budgie-panel
+colord      2829  0.0  0.0 320260 13900 ?        Ssl  Oct02   0:00 /usr/libexec/colord
+oicnanev    2853  0.0  0.0 230480  6080 ?        Ssl  Oct02   0:00 /usr/libexec/dconf-service
+oicnanev    2879  0.0  0.0 537116 11360 ?        Ssl  Oct02   0:07 /usr/libexec/gvfs-udisks2-volume-monitor
+oicnanev    2892  0.0  0.0 389376  7520 ?        Ssl  Oct02   0:04 /usr/libexec/gvfs-afc-volume-monitor
+oicnanev    2898  0.0  0.0 310888  6880 ?        Ssl  Oct02   0:00 /usr/libexec/gvfs-gphoto2-volume-monitor
+oicnanev    2903  0.0  0.0 309772  6080 ?        Ssl  Oct02   0:00 /usr/libexec/gvfs-goa-volume-monitor
+oicnanev    2912  0.0  0.0 546756 23680 ?        Sl   Oct02   0:00 /usr/libexec/goa-daemon
+oicnanev    2924  0.0  0.0 389128  8640 ?        Sl   Oct02   0:02 /usr/libexec/goa-identity-service
+oicnanev    2931  0.0  0.0 309920  6560 ?        Ssl  Oct02   0:00 /usr/libexec/gvfs-mtp-volume-monitor
+oicnanev    2946  0.0  0.0  49064  8160 ?        Ss   Oct02   0:00 /usr/libexec/bluetooth/obexd
+oicnanev    2965  0.0  0.1 711664 47536 ?        Sl   Oct02   0:55 /usr/bin/budgie-daemon
+oicnanev    2968  0.0  0.0 450868 25932 ?        Sl   Oct02   0:00 /usr/libexec/budgie-desktop/budgie-polkit-dialog
+oicnanev    2982  0.0  0.0 599764 32352 ?        Sl   Oct02   0:55 /usr/lib/budgie-desktop/plugins/budgie-showtime/showtime_desktop b6cf45bc-2252-11ef-802c-80e82ce25de7
+oicnanev    2987  0.0  0.1 471764 44480 ?        Sl   Oct02   0:00 /usr/bin/python3 /usr/lib/budgie-desktop/plugins/budgie-dropby/dropover b6cf45be-2252-11ef-802c-80e82ce25de7
+oicnanev    3011  0.0  0.1 521172 41796 ?        Sl   Oct02   0:05 /usr/bin/gnome-screensaver
+oicnanev    3019  0.0  0.0 305492  7840 ?        Sl   Oct02   0:00 /usr/libexec/gsd-disk-utility-notify
+oicnanev    3022  0.0  0.0 450540 25920 ?        Sl   Oct02   0:48 /usr/lib/budgie-window-shuffler/dragsnap
+oicnanev    3027  0.0  0.0 453548 27968 ?        Sl   Oct02   1:30 /usr/lib/budgie-window-shuffler/windowshufflerdaemon
+oicnanev    3038  0.0  0.0 328336 11520 ?        Sl   Oct02   0:00 /usr/libexec/ayatana-indicator-application/ayatana-indicator-application-service
+oicnanev    3040  0.0  0.0 525276 26228 ?        Sl   Oct02   0:03 /usr/bin/update-notifier
+oicnanev    3049  0.0  0.1 615572 45656 ?        Sl   Oct02   1:02 /usr/bin/plank
+oicnanev    3062  0.0  0.0 450832 24480 ?        Sl   Oct02   0:00 /usr/bin/org.buddiesofbudgie.sendto -d
+oicnanev    3066  0.0  0.1 545016 40164 ?        Sl   Oct02   0:00 /usr/bin/nm-applet --indicator
+oicnanev    3073  0.0  0.0 449920 24764 ?        Sl   Oct02   0:00 /usr/bin/budgie-extras-daemon
+oicnanev    3082  0.0  0.0 450760 25792 ?        Sl   Oct02   0:00 /usr/libexec/budgie-desktop/budgie-power-dialog
+oicnanev    3181  0.0  0.0 452324 30080 ?        Ssl  Oct02   0:52 /usr/lib/x86_64-linux-gnu/bamf/bamfdaemon
+oicnanev    3359  1.7  0.2 2273052 96824 ?       Sl   Oct02  30:28 /usr/bin/tilix --gapplication-service
+oicnanev    3366  0.0  0.0  11400  5120 pts/0    Ss+  Oct02   0:00 /bin/bash
+oicnanev    3380  0.0  0.0   8432  5920 ?        S    Oct02   0:00 /usr/bin/ssh-agent -D -a /run/user/1000/keyring/.ssh
+oicnanev    3389  0.0  0.0  18764  9276 pts/0    S+   Oct02   0:00 ssh -x -a -oClearAllForwardings=yes -2 sdato@192.168.1.252 -s sftp
+oicnanev    3402  0.0  0.0 304056  1920 ?        Ssl  Oct02   0:00 sshfs -o sshfs_sync -v sdato@192.168.1.252: /home/oicnanev/RemoteServers/sdatosrv01
+oicnanev    3410  0.0  0.0  18764  8960 pts/0    S+   Oct02   0:00 ssh -x -a -oClearAllForwardings=yes -2 oicnanev@192.168.1.27 -s sftp
+oicnanev    3421  0.0  0.0 304052  1920 ?        Ssl  Oct02   0:00 sshfs -o sshfs_sync -v oicnanev@192.168.1.27: /home/oicnanev/RemoteServers/gcdev
+oicnanev    3441  0.0  0.0  11268  5120 pts/1    Ss   Oct02   0:00 /bin/bash
+oicnanev    3458  1.0  0.0 342040 25592 pts/1    Sl+  Oct02  17:33 btop
+oicnanev    4909  0.0  0.0  11532  5280 pts/2    Ss   Oct02   0:00 /bin/bash
+oicnanev    4965  0.0  0.0 554160 14104 ?        Ssl  Oct02   0:01 /usr/libexec/xdg-desktop-portal
+oicnanev    4970  0.0  0.1 894092 46008 ?        Ssl  Oct02   0:04 /usr/libexec/xdg-desktop-portal-gtk
+oicnanev    5174  3.6  2.6 34772252 877328 ?     SLl  Oct02  62:23 /opt/microsoft/msedge/msedge
+oicnanev    5180  0.0  0.0   8428  1760 ?        S    Oct02   0:00 cat
+oicnanev    5181  0.0  0.0   8428  1760 ?        S    Oct02   0:00 cat
+oicnanev    5183  0.0  0.0 33577648 4000 ?       Sl   Oct02   0:00 /opt/microsoft/msedge/msedge_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --database=/home/oicnanev/.config/microsoft-edge/Crash Reports --metrics-dir=/home/oicnanev/.config/microsoft-edge --annotation=IsOfficialBuild=1 --annotation=exe=msedge --annotation=lsb-release=Ubuntu 24.04.1 LTS --annotation=plat=Linux --annotation=prod=Microsoft_Edge_Linux --annotation=ver=129.0.2792.65 --initial-client-fd=5 --shared-client-connection
+oicnanev    5185  0.0  0.0 33569420 3680 ?       Sl   Oct02   0:00 /opt/microsoft/msedge/msedge_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/home/oicnanev/.config/microsoft-edge/Crash Reports --annotation=IsOfficialBuild=1 --annotation=exe=msedge --annotation=lsb-release=Ubuntu 24.04.1 LTS --annotation=plat=Linux --annotation=prod=Microsoft_Edge_Linux --annotation=ver=129.0.2792.65 --initial-client-fd=4 --shared-client-connection
+oicnanev    5191  0.0  0.2 34037468 68160 ?      S    Oct02   0:00 /opt/microsoft/msedge/msedge --type=zygote --no-zygote-sandbox --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable
+oicnanev    5192  0.0  0.2 34037456 68000 ?      S    Oct02   0:00 /opt/microsoft/msedge/msedge --type=zygote --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable
+oicnanev    5194  0.0  0.0 34037480 19344 ?      S    Oct02   0:26 /opt/microsoft/msedge/msedge --type=zygote --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable
+oicnanev    5228  2.7  1.0 34548580 347252 ?     Sl   Oct02  46:28 /opt/microsoft/msedge/msedge --type=gpu-process --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --gpu-preferences=UAAAAAAAAAAgAAAEAAAAAAAAAAAAAAAAAABgAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAEAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAA --shared-files --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5231  0.9  0.4 34192868 138956 ?     Sl   Oct02  16:36 /opt/microsoft/msedge/msedge --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5241  0.0  0.1 34312992 39856 ?      S    Oct02   0:00 /opt/microsoft/msedge/msedge --type=broker
+oicnanev    5249  0.0  0.1 34108504 56804 ?      Sl   Oct02   0:10 /opt/microsoft/msedge/msedge --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5274  0.0  0.4 1212083692 137100 ?   Sl   Oct02   0:09 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=10 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=273705777 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5275  0.0  0.3 1212082516 125856 ?   Sl   Oct02   0:26 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --extension-process --renderer-sub-type=extension --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=273708096 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5291  0.0  0.3 1212074960 127800 ?   Sl   Oct02   0:06 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --extension-process --renderer-sub-type=extension --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=6 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=273731323 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5309  0.3  0.6 1212167804 202476 ?   Sl   Oct02   5:44 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --extension-process --renderer-sub-type=extension --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=8 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=273742569 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5353  0.1  0.5 1213786612 171196 ?   Sl   Oct02   2:12 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --extension-process --renderer-sub-type=extension --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=15 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=274819611 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5392  0.0  0.7 1213831036 251124 ?   Sl   Oct02   0:42 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=126 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=275426844 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5403  0.4  1.5 1245117440 494480 ?   Sl   Oct02   8:35 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=43 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=275547339 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5709  0.0  0.5 1212151616 188936 ?   Sl   Oct02   0:35 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=106 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=298927147 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5804  0.0  0.5 1212151488 184748 ?   Sl   Oct02   0:14 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=108 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=302235221 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    5828  0.0  0.5 1212176488 177152 ?   Sl   Oct02   0:25 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=149 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=302433724 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    6078  3.7  0.5 1212159460 168704 ?   Sl   Oct02  64:59 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --extension-process --renderer-sub-type=extension --init-isolate-as-foreground --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=151 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=303074428 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    6221  0.0  0.4 1212118060 140812 ?   Sl   Oct02   0:05 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=17 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=309721161 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    6245  0.0  0.8 1212165316 269144 ?   Sl   Oct02   0:28 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=41 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=311010602 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    6469  0.0  0.9 1212170004 308456 ?   Sl   Oct02   0:58 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=35 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=316225345 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    6532  0.0  0.2 34111088 79484 ?      Sl   Oct02   0:11 /opt/microsoft/msedge/msedge --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    6545  0.0  0.8 1212178196 284056 ?   Sl   Oct02   0:51 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=34 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=318302655 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    6962  0.0  0.5 1212151384 176152 ?   Sl   Oct02   0:08 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=53 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=329333659 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    6974  0.0  1.1 1215492276 364288 ?   Sl   Oct02   1:20 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=200 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=329668607 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    7944  0.3  1.1 1213902056 383792 ?   Sl   Oct02   6:49 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=238 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=416323096 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    8603  0.0  0.6 1213799492 205724 ?   Sl   Oct02   0:18 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=112 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=547706864 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev    9197  0.0  0.0  11508  5280 pts/3    Ss+  Oct02   0:00 /bin/bash
+oicnanev    9233  0.0  0.0 535712  8480 ?        Sl   Oct02   0:00 /usr/libexec/gvfsd-trash --spawner :1.17 /org/gtk/gvfs/exec_spaw/0
+oicnanev    9251  0.0  0.0 462436  8480 ?        Sl   Oct02   0:00 /usr/libexec/gvfsd-network --spawner :1.17 /org/gtk/gvfs/exec_spaw/1
+oicnanev    9272  0.0  0.0 390548  8320 ?        Sl   Oct02   0:00 /usr/libexec/gvfsd-dnssd --spawner :1.17 /org/gtk/gvfs/exec_spaw/3
+oicnanev   10828  0.0  0.3 1212082588 114564 ?   Sl   Oct02   0:05 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=114 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=782937032 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   10858  0.0  0.2 1211962060 76592 ?    Sl   Oct02   0:00 /opt/microsoft/msedge/msedge --type=ppapi --lang=en-US --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --shared-files --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   11052  0.0  0.5 1212151328 170300 ?   Sl   Oct02   0:14 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=118 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=786472743 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   13969  0.0  0.5 1212148916 189152 ?   Sl   Oct02   0:09 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=303 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=1205864584 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   14097  0.0  0.5 1212126568 181864 ?   Sl   Oct02   0:09 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=115 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=1235282766 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   18187  0.0  0.5 1212151064 179080 ?   Sl   Oct02   0:17 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=371 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=2057908040 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   18271  0.0  0.6 1213810116 197612 ?   Sl   Oct02   0:35 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --extension-process --renderer-sub-type=extension --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=372 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=2079945136 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+root       18864  0.0  0.1 575872 43996 ?        Ssl  Oct02   0:06 /usr/libexec/fwupd/fwupd
+oicnanev   19996  0.1  1.1 1212230504 364820 ?   Sl   Oct02   2:38 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=40 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=2429190572 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+root       23811  0.0  0.0      0     0 ?        I<   Oct02   0:00 [kworker/R-tls-s]
+oicnanev   31524  0.1  0.7 1212162992 244888 ?   Sl   Oct02   2:05 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=612 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=5060602948 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   35507  0.0  0.1 34095764 57744 ?      Sl   Oct02   0:01 /opt/microsoft/msedge/msedge --type=utility --utility-sub-type=paint_preview.mojom.PaintPreviewCompositorCollection --lang=en-US --service-sandbox-type=print_compositor --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   37575  0.0  0.0 309876  6400 ?        Ssl  Oct02   0:00 /usr/libexec/flatpak-session-helper
+oicnanev   37580  0.0  0.0   4436   812 ?        Ss   Oct02   0:00 server --sh -n /run/user/1000/.flatpak-helper/pkcs11-flatpak-37575 --provider p11-kit-trust.so pkcs11:model=p11-kit-trust?write-protected=yes
+oicnanev   42556  0.2  0.9 1212167424 307584 ?   Sl   Oct02   4:16 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=818 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=7387326684 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   48592  0.0  0.1 34087568 46556 ?      Sl   Oct02   0:01 /opt/microsoft/msedge/msedge --type=utility --utility-sub-type=paint_preview.mojom.PaintPreviewCompositorCollection --lang=en-US --service-sandbox-type=print_compositor --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   48682  0.0  0.0 236372  6240 ?        Ssl  Oct02   0:00 /usr/libexec/gvfsd-metadata
+oicnanev   86713  0.0  0.7 1212172072 258860 ?   Sl   Oct02   1:06 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=1668 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=17344491406 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   90237  0.1  1.5 1215515364 505432 ?   Sl   Oct02   1:35 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=45 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=18166798261 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev   90335  0.0  0.4 1212099292 161108 ?   Sl   Oct02   0:09 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=1730 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=18179676371 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev  108519  0.1  0.9 1212153692 311356 ?   Sl   Oct02   1:48 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=1953 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=22524046779 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev  129125  0.0  0.6 1212151864 196564 ?   Sl   Oct02   0:16 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=36 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=27210087563 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev  129923  0.0  0.5 1212151056 187500 ?   Sl   Oct02   0:13 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=2329 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=27398439038 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+root      208478  0.0  0.0      0     0 ?        I    Oct02   0:01 [kworker/19:0-mm_percpu_wq]
+root      224322  0.0  0.0      0     0 ?        I    Oct02   0:01 [kworker/14:0-events]
+root      234851  0.0  0.0  38676 12800 ?        Ss   00:00   0:00 /usr/sbin/cupsd -l
+cups-br+  234856  0.0  0.0 268924 20640 ?        Ssl  00:00   0:00 /usr/sbin/cups-browsed
+oicnanev  276894  0.0  0.3 1212069396 127336 ?   Sl   02:40   0:03 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --extension-process --renderer-sub-type=extension --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=4908 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=61130302561 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+root      302962  0.0  0.0      0     0 ?        I    04:20   0:01 [kworker/3:0-mm_percpu_wq]
+root      383648  0.0  0.0      0     0 ?        I    09:27   0:00 [kworker/7:2-mm_percpu_wq]
+oicnanev  386041  0.1  0.9 1212250224 325632 ?   Sl   09:35   0:19 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=42 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=86016525157 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev  386120  1.8  1.0 1222107904 326892 ?   Sl   09:35   5:22 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=6841 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=86023509702 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+root      389783  0.0  0.0      0     0 ?        I    09:48   0:01 [kworker/1:0-mm_percpu_wq]
+oicnanev  390860  0.0  0.6 1212152824 197544 ?   Sl   09:51   0:07 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=6924 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=86968632063 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev  392444  0.1  1.0 1212225508 332144 ?   Sl   09:57   0:31 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=48 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=87326258418 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+root      396088  0.0  0.0      0     0 ?        I    10:10   0:02 [kworker/0:0-pm]
+root      402873  0.0  0.0      0     0 ?        I    10:33   0:00 [kworker/4:1-mm_percpu_wq]
+oicnanev  410266  0.7  0.8 1212151848 261780 ?   Sl   10:58   1:32 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=7243 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=91025164077 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+root      412377  0.0  0.0      0     0 ?        I    11:05   0:00 [kworker/5:0-mm_percpu_wq]
+root      412402  0.0  0.0      0     0 ?        I    11:05   0:00 [kworker/12:2-rcu_par_gp]
+root      412449  0.0  0.0      0     0 ?        I    11:05   0:00 [kworker/18:0]
+root      413057  0.0  0.0      0     0 ?        I    11:07   0:00 [kworker/13:1-rcu_par_gp]
+root      413073  0.0  0.0      0     0 ?        I    11:07   0:00 [kworker/11:1-rcu_par_gp]
+root      413077  0.0  0.0      0     0 ?        I    11:07   0:00 [kworker/14:2-rcu_par_gp]
+root      419519  0.0  0.0      0     0 ?        I    11:26   0:00 [kworker/9:0-mm_percpu_wq]
+root      424532  0.0  0.0      0     0 ?        I    11:45   0:00 [kworker/17:0-events]
+root      431753  0.0  0.0      0     0 ?        I    12:10   0:00 [kworker/2:1]
+root      436088  0.0  0.0      0     0 ?        I    12:27   0:00 [kworker/10:0]
+root      439038  0.0  0.0      0     0 ?        I    12:38   0:00 [kworker/9:2-mm_percpu_wq]
+root      446833  0.0  0.0      0     0 ?        I    13:07   0:00 [kworker/1:2]
+root      446875  0.0  0.0      0     0 ?        I    13:07   0:00 [kworker/4:0-rcu_par_gp]
+oicnanev  446880  0.0  0.0      0     0 ?        Z    13:07   0:00 [checkonwin] <defunct>
+root      447004  0.0  0.0      0     0 ?        S    13:07   0:00 [psimon]
+root      447665  0.0  0.0      0     0 ?        I    13:10   0:00 [kworker/19:3]
+root      451418  0.0  0.0      0     0 ?        I    13:24   0:00 [kworker/0:1-mm_percpu_wq]
+root      453040  0.0  0.0      0     0 ?        I    13:30   0:00 [kworker/16:2-cgroup_destroy]
+root      454612  0.0  0.0      0     0 ?        I    13:36   0:00 [kworker/u40:2-events_power_efficient]
+oicnanev  457110  0.3  0.1 904360 57760 ?        Sl   13:45   0:08 /usr/bin/nemo
+root      458237  0.0  0.0      0     0 ?        I    13:50   0:00 [kworker/7:3]
+root      458368  0.0  0.0      0     0 ?        I    13:50   0:00 [kworker/6:0]
+root      458431  0.0  0.0      0     0 ?        I    13:50   0:00 [kworker/15:1-mm_percpu_wq]
+oicnanev  459169  0.0  0.0   3580  2080 ?        S    13:53   0:00 bwrap --args 38 -- apostrophe /home/oicnanev/Projects/TVS-ISEL2425/CourseWorks/cw1/bach-BashAlternativeFromCHelas/docs/README.md
+oicnanev  459180  0.0  0.0   3580  1760 ?        S    13:53   0:00 bwrap --args 36 -- xdg-dbus-proxy --args=41
+oicnanev  459181  0.0  0.0 235684  5920 ?        Sl   13:53   0:00 xdg-dbus-proxy --args=41
+root      459182  0.0  0.0      0     0 ?        I    13:53   0:00 [kworker/5:2-rcu_par_gp]
+oicnanev  459185  0.0  0.0   3684  1444 ?        S    13:53   0:00 bwrap --args 38 -- apostrophe /home/oicnanev/Projects/TVS-ISEL2425/CourseWorks/cw1/bach-BashAlternativeFromCHelas/docs/README.md
+oicnanev  459186 10.3  0.6 103474204 195948 ?    Sl   13:53   3:24 python3 /app/bin/apostrophe /home/oicnanev/Projects/TVS-ISEL2425/CourseWorks/cw1/bach-BashAlternativeFromCHelas/docs/README.md
+oicnanev  459194  0.5  0.1 102742572 52760 ?     S    13:53   0:10 python3 /app/bin/apostrophe /home/oicnanev/Projects/TVS-ISEL2425/CourseWorks/cw1/bach-BashAlternativeFromCHelas/docs/README.md
+oicnanev  459195  0.8  0.1 102742968 53464 ?     S    13:53   0:17 python3 /app/bin/apostrophe /home/oicnanev/Projects/TVS-ISEL2425/CourseWorks/cw1/bach-BashAlternativeFromCHelas/docs/README.md
+oicnanev  459196  0.0  0.1 102742968 53464 ?     S    13:53   0:00 python3 /app/bin/apostrophe /home/oicnanev/Projects/TVS-ISEL2425/CourseWorks/cw1/bach-BashAlternativeFromCHelas/docs/README.md
+oicnanev  460355  0.2  0.5 1212119772 174764 ?   Sl   13:57   0:05 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=8091 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=101744794942 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+root      460367  0.0  0.0      0     0 ?        I    13:57   0:00 [kworker/u40:0-ext4-rsv-conversion]
+root      461780  0.0  0.0      0     0 ?        I    14:02   0:00 [kworker/3:2]
+root      461806  0.0  0.0      0     0 ?        I    14:02   0:00 [kworker/15:0-rcu_par_gp]
+root      461857  0.0  0.0      0     0 ?        I    14:02   0:00 [kworker/8:1]
+root      463749  0.0  0.0      0     0 ?        I    14:10   0:00 [kworker/u40:1-events_unbound]
+root      466345  0.0  0.0      0     0 ?        I    14:20   0:00 [kworker/17:1]
+oicnanev  466596  0.0  0.2 1212000488 70520 ?    Sl   14:20   0:00 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=8204 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=103158310238 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+root      466897  0.0  0.0      0     0 ?        I    14:22   0:00 [kworker/9:1-mm_percpu_wq]
+root      466903  0.0  0.0      0     0 ?        I    14:22   0:00 [kworker/0:2-pm]
+root      467105  0.0  0.0      0     0 ?        I    14:22   0:00 [kworker/u40:3-events_unbound]
+oicnanev  467853  2.7  0.3 1213712652 106352 ?   Sl   14:25   0:00 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --extension-process --renderer-sub-type=extension --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=8223 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=103455161106 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev  467885  0.3  0.2 1213647084 84988 ?    Sl   14:25   0:00 /opt/microsoft/msedge/msedge --type=renderer --string-annotations --crashpad-handler-pid=5183 --enable-crash-reporter=, --extension-process --renderer-sub-type=extension --change-stack-guard-on-fork=enable --lang=en-US --js-flags=--ms-user-locale= --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=8224 --time-ticks-at-unix-epoch=-1727858499466032 --launch-time-ticks=103458915820 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9430884496718663751,3558938011481858835,262144 --variations-seed-version
+oicnanev  467957  200  0.0  13744  4800 pts/2    R+   14:26   0:00 ps aux
+oicnanev  467958  0.0  0.0   8296  1920 pts/2    S+   14:26   0:00 tee processes.log
+oicnanev  467959  0.0  0.0   9144  2080 pts/2    S+   14:26   0:00 grep --color=auto root
+oicnanev  467960  0.0  0.0   8296  1920 pts/2    S+   14:26   0:00 tee root-processes.log
+oicnanev  467961  0.0  0.0   8308  1920 pts/2    S+   14:26   0:00 wc -l
