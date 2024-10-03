@@ -9,6 +9,24 @@ Our shell, *bach* was developed with three key points in mind:
 - **Redirection**: The program can redirect output to a file if the command includes ```>```.
 - **Memory Management**: It allocates and frees memory for command arguments and handles errors gracefully.
 
++---------------------------------------------------------------+
+|            bach.c                                                      |
++---------------------------------------------------------------+
+| - MAX_LINE: int                                                  |
+| - MAX_ARGS: int                                                |
+| - MAX_PROCS: int                                              |
++---------------------------------------------------------------+
+| + main(argc: int, argv: char*)                            |
+| + remove_whitespaces(str: char*)                       |
+| + free_memory(arr: char*, arr_count: int)       |
+| + process_args_and_execute_cmd(cmd: char*) |
+| + is_cd(cmd: char*): int                                      |
+| + is_exit(cmd: char*): int                                     |
+| + execute_cd(cmd: char*)                                 |
+| + process_pipes(cmd: char*, counter: int)        |
+| + process_string(line: char*)                          |
++--------------------------------------------------------------+
+
 In our implementation we define 3 definitions (```#define```):
 
 - MAX_LINE 131072 - For the maximum input line of the user. In Linux systems, the maximum size of a command is 128KB = 131072 Bytes.
