@@ -4,28 +4,13 @@
 #### 1. Implementation of bach - **B**ash **A**lternative from **Ch**elas
 
 Our shell, *bach* was developed with three key points in mind:
+
 - **Command Parsing**: The program reads a command from the user, splits it into arguments, and handles special commands like ```cd``` and ```exit```.
 - **Pipe Handling**: It supports commands connected by pipes (|), creating the necessary pipes and forking processes to execute each command in the pipeline.
 - **Redirection**: The program can redirect output to a file if the command includes ```>```.
 - **Memory Management**: It allocates and frees memory for command arguments and handles errors gracefully.
 
-+---------------------------------------------------------------+
-|            bach.c                                                      |
-+---------------------------------------------------------------+
-| - MAX_LINE: int                                                  |
-| - MAX_ARGS: int                                                |
-| - MAX_PROCS: int                                              |
-+---------------------------------------------------------------+
-| + main(argc: int, argv: char*)                            |
-| + remove_whitespaces(str: char*)                       |
-| + free_memory(arr: char*, arr_count: int)       |
-| + process_args_and_execute_cmd(cmd: char*) |
-| + is_cd(cmd: char*): int                                      |
-| + is_exit(cmd: char*): int                                     |
-| + execute_cd(cmd: char*)                                 |
-| + process_pipes(cmd: char*, counter: int)        |
-| + process_string(line: char*)                          |
-+--------------------------------------------------------------+
+![bach UML](../../../../img/bach_uml.png)
 
 In our implementation we define 3 definitions (```#define```):
 
@@ -33,18 +18,23 @@ In our implementation we define 3 definitions (```#define```):
 - MAX_ARGS 100 - For the maximum number of arguments of a command, not sure if there is any limit other than the size of the line.
 - MAX_PROCS 10 - For the maximum number of commands passed. Like ARGS, I think there's no limit other than the size of the line.
 
-We divided our program with 4 functions:
+We divided our program in 9 functions:
 
 - ```int main(int argc, char *argv[])``` - main loop that grabs user input though ```fgets```.
 - ```void process_string(char *line)``` - to create an array of commands (separated by pipes)
 - ```void process_pipes(char *cmd[], int counter)``` - to create and configure (dup2) the necessary pipes for each command in the commands array
 - ```void process_args_and_execute_cmd(char *cmd)``` - to execute individual commands with or without arguments. Also implements the command ```cd``` and ```exit```.
+- ```execute_cd(cmd: char*)``` - to execute ```cd``` (change directory) without making any ```fork()``` because we need change directory in the  process of **bach**.
+- ```is_cd(cmd: char*)``` - like a boolean to check if the command that the user wrote is ```cd```
+-  ```ìs_exit(cmd: char*)``` - like a boolean to check if the command that user wrote is ```exit```
+- ```remove_whitespaces(str: char*)``` - to remove ```space``` between *pipes* and *command arguments*, also removes aditional ones introduced by the user.
+- ```free_memory(arr: char*, arr_count: int)``` - to execute the *C* ```free```command in arrays that are no more used.
 
-##### main
+#### main
 
 Responsible for reading user input and forwarding it to the next function for processing. The function runs an infinite loop, allowing the user to enter multiple commands until an EOF (End of File) is encontered. This input is readed from the standard input though the function ```fgets```. After geting the input, it is passed to the function ```process_string()```.
 
-##### process_string
+#### process_string
 
 Receives a string that is the user inputted commands. Creates an empty array of commands of size ```MAX_PROCS``` and ```command_counter```. Then separates the commands by pipes (|), removes accidental white spaces surrounding the command and add the null character to each one, incrementing the command_counter. After parsing all the user inputted line, call the next function ```process_pipes``` passing the array of commands and the command_counter as arguments. 
 
@@ -52,31 +42,42 @@ Before starting to separate every command in the user inputted string is necessa
 
 For separating the user inputted line by pipes (|) we used the function [strtok](https://documentation.help/C-Cpp-Reference/strtok.html#:~:text=strtok.%20Syntax:%20#include%20%3Ccstring%3E%20char%20*strtok(%20char%20*str1,)).
 
-To remove accidental white spaces surrounding the command we used the [isspace](https://documentation.help/C-Cpp-Reference/isspace.html) function to locate the spaces and remove it.
+To remove accidental white spaces surrounding the command we call the function ```remove_whitespaces```
 
 To allocate the new string (only the command with arguments) to the new array, we used the function [strdup](https://en.cppreference.com/w/c/experimental/dynamic/strdup#:~:text=char%20*%20strdup%20(const%20char%20*%20str1%20);%20(dynamic%20memory)) that returns a pointer to the function.
 
-In the end, it's necessary to free the memory allocated by the strdup
+In the end, it's necessary to free the memory allocated by the strdup, and we used the function ```free_memory```.
 
 
-##### process_pipes
+#### process_pipes
 
 Based on the number of commands, it creates the necessary number of pipes and puts them in an array of pipes. Number of pipes = 2 x (number of commands - 1) - First command only needs out_pipe and the last one, in_pipe.
 
-Then, it forks each command in the command array creating child processes and passes them to the next function for execution
+Then, checks if the command is ```cd``` or ```exit``` and if true executes them. Using ```is_cd```, ```is_exit``` and ```execute_cd```.
 
-In the end, closes all the pipes in the parent process and waits for all the child processes to finish
+If not ```cd``` or ```exit```, it forks each command in the command array creating child processes and passes them to the function ```process_args_and_execute_cmd``` for execution
 
-##### process_args_and_execute_cmd
+In the end, closes all the pipes in the parent process, waits for all the child processes to finish and closes all pipes from the child.
+
+#### process_args_and_execute_cmd
 
 In the same fashion as the ```process_string``` function removes accidental spaces and separates all argument keeping them in an array of arguments.
 
-Check if the command is ```cd``` or ```exit``` and in positive case execute this commands.
-
-If the command is other than the previous ones, check if there are redirection to a file and duplicates the process with ```execvp```
+Checks if there are redirection to a file and duplicates the process with ```execvp```
 
 In the end frees all memory allocated by the array of arguments. 
 
+#### remove_whitespaces
+We used the [isspace](https://documentation.help/C-Cpp-Reference/isspace.html) function to locate the spaces and remove it.
+
+#### free_memory
+We transverse an array and for each element we call the *C* function ```free```
+
+#### is_cd and is_exit
+Return 1 if ```cd``` \ ```exit``` is on the command
+
+#### execute_cd
+Checks if there are arguments (*path*) in the command and if true executes the *C* function ```chdir```. If there are no arguments or does't find the *path* it notifies the user accordingly.
 
 #### 2. Add a new user to a Linux system
 
