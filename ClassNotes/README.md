@@ -512,7 +512,7 @@ Na mesma instrução para alterar a thread atual, também se altera este CR3 par
 
 ver código **FALTA**
 
-**Linux System Call Table (not complete)**
+**Linux System Call Table (excerto)**
 
 | %rax | System Call | %rdi | %rsi | %rdx |
 | ---- | ----------- | ---- | ---- | ---- |
@@ -520,10 +520,17 @@ ver código **FALTA**
 | 1 | sys_write | unsigned int fd | const char *buf | size_t count |
 | 2 | sys_open | const char \*filename | int flags | int mode |
 | 3 | sys_close | unsigned int fd |  |  |
+| ... | | | | |
 
 Ver mais [aqui](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/)
 
+### Evolução do Memory Management
+
 [Manual 2 AMD64](https://kib.kiev.ua/x86docs/AMD/AMD64/24593_APM_v2-r3.06.pdf)
  pag 189
+
+page translation Long mode - pag 199, 202
+none PAE - pag 189
+
 
 
