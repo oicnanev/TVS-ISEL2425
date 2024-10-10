@@ -453,4 +453,58 @@ Quando temos um processo que termina é possível ver o seu *exit code* através
 >- Set disposition to signal handling function [sig04.c](../ClassCode/06-signal/sig04.c)
 >- Set an alarm every second once a procedure receives a SIGTERM. So handling SIGINT and SIGALARM [sig5.c](../ClassCode/06-signal/sig05.c)
 
+## 08OUT24
+
+### Níveis de privilegio que os processadores x86 usam controlo de acesso a segmentos
+
+- O CPU tem um registo chamado **PL** no qual está o *Privilege-Level* em que está a correr.
+- Nível 0 - privilégio máximo - kernel corre neste nível
+- Nível 3 - privilégio mínimo - user processes correm neste nível
+- Níveis 1 e 2 - são usados por *device drivers* e máquinas virtuais (VMWare, VirtualBox, etc.)
+- Existe ainda hipervisores que podem ser instalados por baixo do sistema operativo (VMWare ESXi, Citrix XenServer, Microsoft Hyper-V) e que os programadores normalmente dizem que trabalham em nível -1
+
+![x86 Privilege Levels](../img/x86_PL.jpeg)
+
+### Arranque e funcionamento do Sistema Operativo do ponto de vista do processador
+
+- CPU arranca sempre com nível de privilégio máximo (PL-0)
+- Kernel inicia ainda em privilégio máximo (PL-0)
+- Kernel coloca **init** (/sbin/init) em execução (PID=1) e muda para privilégio mínimo (PL-3) - kernel escreve no stack o retorno da interrupção e depois força uma interrupção, esta ao retornar vai para o nível 3
+- init chama outros programas e quando tem necessidade faz chamadas ao kernel
+
+### Formas de regressar ao privilégio máximo
+
+- **Chamadas do sistema**
+    * solução clássica - interrupção por software, em assembly instrução ```int```
+        + Linux - int 0x80
+        + Windows - int 0x2E
+    * atualmente - através de instrução (assembly):
+        + ```sysenter``` / ```sysexit``` para **IA-32**
+        + ```syscall``` / ```sysret``` para **AMD-64**
+- **Atendimento de interrupções**
+- **Excepções** (caso particular de interrupção)
+
+Quando retorna de uma interrupção, o CPU retorna também ao nível de privilégio anterior.
+
+### Handler de interrupções (tabela)
+
+- Tabela normalmente com 256 entradas
+- As primeiras 32 entradas são para tratar excepções
+- As restantes são para tratar interrupções
+- Cada linha tem:
+    * endereço do código do kernel para onde se deve saltar
+    * nível de privilégio em que o CPU deve ser colocado quando a interrupção acontecer
+- O local da memória onde reside esta tabela só é acessível em *kernel mode*
+
+### Memory Management
+
+O CPU tem um registo **CR3** - Control Register 3 que aponta para um dos espaço de endereçamento, o espaço de endereçamento da tread corrente.
+
+Na mesma instrução para alterar a thread atual, também se altera este CR3 para ter o espaço de endereçamento atual 
+
+![IA-32 Memory Management](../img/ia32_mem_management.jpeg)
+
+![IA-32 Page Frame and Page](../img/ia32_mem_management2.jpeg)
+
+## 09OUT24
 
