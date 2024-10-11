@@ -514,7 +514,7 @@ ver código **FALTA**
 
 **Linux System Call Table (excerto)**
 
-| %rax | System Call | %rdi | %rsi | %rdx |
+| %rax - op. number | System Call | %rdi - arg 0 | %rsi - arg 1 | %rdx - arg 2 |
 | ---- | ----------- | ---- | ---- | ---- |
 | 0 | sys_read | unsigned int fd | char *buf | size_t count |
 | 1 | sys_write | unsigned int fd | const char *buf | size_t count |
@@ -526,11 +526,71 @@ Ver mais [aqui](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_
 
 ### Evolução do Memory Management
 
-[Manual 2 AMD64](https://kib.kiev.ua/x86docs/AMD/AMD64/24593_APM_v2-r3.06.pdf)
- pag 189
+Com a criação do Processador **80386** em 1985, **IA-32**, a gestão da memória começou a ser feita em blocos de 4KB.
 
-page translation Long mode - pag 199, 202
-none PAE - pag 189
+- Temos então endereços físicos até 32 bits -> 2^32^ = 4GB 
+- Endereços virtuais de 32 bits -> 2^32^ = 4GB
+- Para a página de endereçameto são necessários 4GB / 4KB = 2^32^ / 2^12^ = 1MB
+- Temos então que a tradução do endereçamento é feita:
+    * **CR3** - Control Registry 3 - no processador que aponta para para o início do PDI
+    * **PDI** - Page Directory Index ou Table (manual AMD) - apontado pelos bits 22..31 do *virtual address*, no *address* apontado, está o *address* do PTI
+    * **PTI** - Page Table Index - apontado pelos bits 12..21 do *virtual address*, que apontam por fim para o bloco de 4KB da memória física
+    * **Page Offset** - bits 0..11 do *Virtual address* que diretamente apontam para os bits 0..11 dentro do bloco de 4KB da memória físca
+    * Isto faz com que para ir à memória (ler ou escrever) o processador precise de fazer 3 acessos:
+        + 1º ler o **PDI** com **CR3** + **bits 22..31** do *virtual address*
+        + 2º ler o **PTI** com **PDI** + **bits 12..21** do *virtual address*
+        + 3º aceder ao local final da memória físca com **PTI** + **bits 0..11** do *virtual address*
+
+![Non PAE memory management](../img/AMD_MemManage_NonPAE.jpeg)
+
+> O primeiro bloco de memória virtual é sempre inválido (entre 0 e 4095) dá sempre erro. para que os *null pointers* dêem excepção
+
+Foram introduzidos também bits de controlo e proteção no **Page Table Index**, dos quais nos interessa saber:
+
+- bit 0 **P** - Present - indica se este endereço de memória está a ser usado para apontar memória física real ou tem apenas *garbage* 
+- bit 1 **R/W** - indica se o espaço apontado está protegido contra escrita
+- bit 2 **U/S** - indica se o espaço apontado pertence ao *user mode* ou ao *kernel mode*
+
+![Bits do Page Table Index](../img/Page-Table-Bits.jpeg)
+
+Com esta configuração e com o passar dos anos atingiu-se o limite de memória física possível de utilizar (4GB máximo), o que levou então à necessidade de aumentar o tamanho máximo da memória bem como a forma de endereçamento.
+
+Surgiu então em 1995, com os processadores **Pentium Pro**, a técnologia **PAE (Physical Address Extension)** que permitia aos processadores de 32 bits acederem a mais de 4GB de memória física, uma necessidade já sentida especialmente pelos servidores de bases de dados que necessitavam de grandes quantidades de memória, uma vez que para serem mais rápidos, carregavam as DBs do disco (lento) para a memória (rápida).
+
+Relativamente ao forma de tradução dos endereços virtuais para físicos, surgiu mais uma etapa entre o **CR3** e o **PDI**, o **PDPI (Page Directory-Pointer Index)**
+
+![PAE memory management](../img/AMD_MemManage_PAE.jpeg)
+
+Em termos de proteção, surgio mais um bit de instrução, **NX - Non Execute**, o qual indica que não se pode fazer *fetch* desta parte da memória. temos também uma parte **reserved, MBZ (most be zeros)**, reservadas para futuras evoluções da arquitectura
+
+![Bits no PAE](../img/PAE_bits.jpeg)
+
+Por fim, no início dos anos 2000, apareceram os processadores a 64 bits. A *Intel* lançou o **Itanium** em 2001, destinado principalmente a servidores e a *AMD*, em 2003, começou a lançar processadores para computadores pessoais com os modelos **Opteron** e **Athlon 64**.
+
+O sistema de tradução de endereços virtuais em endereços físicos, teve de ser alterado novamente, com a introdução de uma nova etapa entre o **CR3** e o **PDPI**, o **PML4 (Page-Map Level 4)** (sem ideias para novos nomes) 
+
+![AMD-64 Memory management](../img/AMD-64_MemManage.jpeg)
+
+Com isto ficamos com um endereçamento possível de 16EB. No entanto o que acontece com o **Sign Extend** dos bits 63..48, e de forma a introduzir outra camada de proteção:
+
+- **bits a 1** - Endereçamento reservado ao uso em *kernel mode*, 128TB
+- **bits a 0** - Endereçamento para uso em *user mode*, 128TB
+
+Existe assim um espaço enorme de endereçamento que ficou reservado para futuras evoluções. Temos 16EB de endereçamento possível, 1EB = 1024PB = 1048576TB, logo 16EB = 16777216TB. Com esta forma de endereçamento estamos a usar 128TB (kernel mode) + 128TB (user mode) = 256TB. Ficam assim reservados para futuras evoluções 16777216TB - 256TB = **16776960TB**
+
+Em 2019, a *Intel* com os processadores **Ice Lake**, introduziu a possibilidade de usar paginação a 5 níveis, activando o bit **LA57** do registo **CR4**.
+
+A paginação de 5 níveis expande o espaço de endereçamento virtual de 48 bits para 57 bits, permitindo o sistema operativo aceder até 128 PB (petabytes) de memória virtual. **PML5 (Page Map Level 5)** refere-se ao quinto nível adicionado à tabela de páginas. Tradicionalmente, a paginação de 4 níveis (PML4) permitia endereçar até 256 TB de memória virtual. Com a adição do quinto nível, o PML5 aumenta significativamente essa capacidade.
+
+É necessario agora fazer 5 (em PML4) ou 6 (em PML 5) acessos à memória para ir ler ou escrever na mesma. Para resolver este problema, usamos o princípio da localidade:
+
+- Temporal - é possível que venhamos a necessitar do mesmo bloco de memória num futuro próximo
+- Espacial - se o programa está a correr neste bloco de memória, é provável que venhamos a necessitar dos blocos adjacentes
+
+Com isto, foi criado o **TBL - Translation Lockchain Buffer**, uma espécie de cache de tradução de endereços.
+
+Para mais informações, consultar o manual do AMD 64-bit Technology - Volume 2: System Programming [Manual 2 AMD64](https://kib.kiev.ua/x86docs/AMD/AMD64/24593_APM_v2-r3.06.pdf)
+ 
 
 
 
