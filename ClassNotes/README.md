@@ -591,6 +591,79 @@ Com isto, foi criado o **TBL - Translation Lockchain Buffer**, uma espécie de c
 
 Para mais informações, consultar o manual do AMD 64-bit Technology - Volume 2: System Programming [Manual 2 AMD64](https://kib.kiev.ua/x86docs/AMD/AMD64/24593_APM_v2-r3.06.pdf)
  
+## 15OUT2024
+
+### É sempre um executável (nativo)
+
+- O software que fazemos e que é executado é **sempre executado por executáveis nativos**
+- Para ver o que se passa em termos de recursos, é necessário descobrir qual é o executável nativo que está a correr
+- Isto é verdade mesmo para executáveis como kotlin ou java a correr na jvm, o shell a intrepertar um script, node a intrepretar javascript, o próprio browser, etc.
+
+### Contrução do espaço de endereçamento virtual
+
+- O espaço de endereçamento virtual de um processo é construido a partir do executável que deu origem ao processo
+- ... e das bibliotecas de que depende
+
+#### Secções comuns num executável
+
+- **HEADER** - contém informações essenciais para que o sistema operativo posssa carregar e executar o programa:
+    * *Magic Number* - tipo de ficheiro
+    * Tamanho do Header
+    * *Entry Point* - local onde deve começar a primeira instrução do programa
+    * Tabela de Secções - informações sobre as diferentes secções do ficheiro, como ```.text```, ```.data```, etc
+    * Informações de *Debug* 
+    * Em sistemas Unix-like, como Linux, BSD, etc. é utilizado o formato **ELF** (Excutable and Linkable Format) que inclui no header informações sobre o sistema operativo para o qual foi compilado, a arquitectura específica do processador (x86, ARM, etc), classe do ficheiro (32 ou 64 bits) e a versão do ELF.
+    * Para ver o HEADER em linux: ```readelf -h nome_do_ficheiro```
+- **.text** - sequência de intruções do programa
+- **.rodata** - *Read-Only Data* - zona de constantes e literais de *string* (ex: ``` printf("%d\n", YEAR);```) do programa
+- **.data** - variáveis do programa
+- **.bss** - variáveis não inicializadas. No ficheiro executável apenas diz o tamanho que depois terá esta seccção em memória, uma vez que vai ser preenchida toda a zeros 
 
 
+Na tradução de endereços cada secção tem especificidades diferentes de proteção, nos bits correspondentes ao **P**, **R/W** e **NX**:
 
+|       | .text | .rodata | .data |
+| ----- | ----- | ------- | ----- |
+|**NX** | 0 | 1 | 1 |
+|**R/W**| 0 | 0 | 1 |
+| **P** | 1 | 1 | 1 |
+
+Historicamente estas secções e a sua separação têm uma razão para existir, as quais podemos ver também nos sistemas embebidos simples actuais.
+
+![Distribuição das secções num Sistema Embebido](../img/EmbSysSections.jpeg)
+
+Atualmente, o mapeamento virtual não é mapeado sempre nos mesmos endereços, embora, a distância entre secções seja a mesma. Ex.: a intrução ```v(%rip)``` calcula o endereço de ```v``` a partir do ```rip```.
+
+Um programa quando é compilado pode trazer também bibliotecas importadas. Quando este programa é carregado em memória, estas bibliotecas são igualmente carregadas.
+
+![Carregamento de programa em memória](../img/exec.jpeg)
+
+Um tipo de programa especial que é importado, são as chamadas **Bibliotecas de Ligação Dinâmica**, com a particularidade de não conterem no seu HEADER qual a primeira instrução a executar (*Entry Point*) do .text.
+
+- Dinamic Link Librarie (.dll) - em Windows
+- Shared Object (.so) - em Linux
+
+#### Timeline do comando ```exec```
+
+1. mapear executável no *Virtual Address Space*
+2. mapear bibliotecas necessárias no *Virtual Address Space*
+3. criar a *main thread*
+    3.1. saltar para o *Entry Point* no ```.text```
+
+### Alterações ao espaço de endereçamento virtual durante a execução do programa
+
+ O sistema operativo pode alterar o espaço de endereçamento virtual durante a execução de um programa nas seguintes situações:
+ 
+- Alocação de memória
+    * quando a instrução ```malloc``` esgota a memória toda e é necessária mais, o sistema operativo aloca mais um *chunk* em múltiplos de 4KB
+    * o ```malloc``` faz a gestão 'fina' desses blocos 
+- Criação de *threads* - envolve criar mais *stacks*	 
+- Carregamento de ```dll/so``` a meio da execução
+    * ```dlopen``` - instrução que recebe ```.so``` como argumento
+- Mapeamento de ficheiros em memória
+    * ```mmap```
+- as operações inversas destas 4 operações
+
+> Os nossos executáveis em java/kotlin carregam o ```.so``` da *JVM* (```libjvm.so```)
+
+## 16OUT2024
