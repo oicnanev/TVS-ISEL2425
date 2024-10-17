@@ -667,3 +667,76 @@ Um tipo de programa especial que é importado, são as chamadas **Bibliotecas de
 > Os nossos executáveis em java/kotlin carregam o ```.so``` da *JVM* (```libjvm.so```)
 
 ## 16OUT2024
+
+### 3 Pilares da estratégia de minimização da ocupação da memória física por parte do Kernel
+
+**Primeiro Pilar - PAGE FAULT**
+
+Inicialmente, não se mapeam os endereços virtuais para a memória física
+
+- o primeiro acesso de cada página resulta numa excepção, **PAGE FAULT**
+- o kernel reage alocando memória, preenchendo-a com os devidos dados e retornando para <u>repetir</u> a instrução falhada
+- a esta técnica chama-se **DEMAND PAGING**
+
+**Segundo Pilar - Partilha de recursos**
+
+Se vários procecssos precisam do mesmo bloco de dados, o kernel, favorece a <u>partilha</u> do respetivo bloco da memória física.
+
+![Partilha de memória física](../img/MemShare.jpeg)
+
+- Quando existe um PAGE FAULT o kernel carrega os dados na memória fisica e mapei-as no para o(s espaço(s) de memória virtuai(s))
+- As seções sem dados, ```stack```, ```heap``` e ```.bss``` são mapeadas para a **Zero Page** com **COW** (Copy-On-Write).
+- Quanto à secção ```.data```, é mapeada entre os processos, metendo-se o bit **R/W** a zero. Quando um dos processos tenta escrever, acontece novamente a excepção e o kernel copia os dados para outro local colocando o bit **R/W** a um. Também é usada a técnica **COW**.
+- Em zonas de memória que permitem a escrita também é possível a partilha, com os mapeamentos *read only* e cópia seguida de correção nos PAGE FAULT.
+
+**Terceiro Pilar - DEBUG PAGING**
+
+Manter o Resident-Set aproximado do Working-Set através de DEBUG PAGING
+
+Definições:
+
+- **Resident-Set** - conjunto de páginas físicas referidas pelo espaço de endereçamento de um processo. RSS - Resident Size Set. Em Windows é chamado de Working-Set!!!
+- **Working-Set** - conjunto de páginas físicas <u>usadas</u> por um processo num <u>intervalo de tempo</u>. Em pricípio, é menor que o Resident-Set.
+- **DEBUG PAGING** - o processo usado pelo kernel para gerir a memória. Blocos de memória (páginas) são movidos (swap) entre a memória física (RAM) e a memória secundária (disco rígido ou SSD).
+
+> **Como ver a quantidade de memória usada por um programa?**
+>
+> - na virtual - calcular / contar a totalidade dos endereços mapeados
+>
+> - na física - monitorizar o RSS, normalmente, bem menor que os endereços virtuais. No entanto, se existirem vários processos numa solução desenvolvida por nós, não basta apenas somar os RSS devido ao espaço partilhado entre processos.
+> 
+> Em windows - é nos mostrado quanto do RSS está a ser partilhado com outros processos
+>
+> Em Linux - existe o **PSS** - Proportional-Set-Size:
+> 	- páginas físicas do processo contam 1 vez
+> 	- páginas físicas partilhadas por n processos, contam 1/n vezes
+>
+> **Métrica real deve ficar entre RSS e PSS**
+
+
+**Swap File / Swap Partition**
+
+Para salvaguardar o conteúdo de uma página que já não está a ser usada e cujos dados já foram alterados, é guardada no **swamp file** ou **swap partition**, em blocos de 4KB. - **SWAP OUT**
+
+No Windows a *swap file* tem o nome ```pagefile.sys```
+
+Se os dados transfereidos para a **swap** forem necessários novamente, dá-se um PAGE FAULT e o kernel transfere-os novamente para a memória física - **SWAP IN**
+
+### BACKING STORAGE
+
+As páginas do espaço de endereçamento virtual têm sempre alguma zona em disco que suporta o armazenamento de dados enquanto não estão na memória física - designa-se esta zona por **BACKING STORAGE**
+
+Para cada página do endereçamento virtual há uma zona de *Backing Storage** que pode ser:
+
+- o ficheiro executável
+- a(s) bibliotecs(s) usadas
+- swaping space
+
+#### Zonas de Backing de Storage
+
+- Para as regiões ```HEADER```, ```.text```, ```.rodata```, a zona de *backing storage* é o respetivo executável ou biblioteca.
+- Para as regiões ```.bss```, ```stack``` ou ```heap```, a zona de *backing storage* é o *swap space* - também chamado de memória virtual
+- Para a região ```.data```, começa com o *backing storage* no executável e assim que seja modificado (**COW**) o seu *backing storage* passa a ser no *swap space*
+
+
+
