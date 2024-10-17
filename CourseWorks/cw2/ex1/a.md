@@ -10,28 +10,41 @@
 
 ----
 
-<!-- Write your answer here, along with the reasoning behind it. -->
+Pela imagem 5-18, temos que:
 
-#### Respostas do *chat* com *Microsoft copilot*
+- 12 bits para Physicac-Page Offset
+- 9 bits para Page-Table Offset
+- 9 bits para Page-Directory Offset
+- 9 bits para Page-Directory Pointer Offset
+- 9 bits para Page-Map Level-4 Offset
+- 9 bits para Page-Map Level-5 Offset
 
-To address the changes needed for Figures 5-18 through 5-23 if the architectural limit for physical memory were increased to 64 PB, we need to consider several key aspects of memory management and architecture:
+12 + 9 + 9 + 9 + 9 + 9 = 57 bits
 
-1. **Address Space Expansion**: The figures would need to reflect the expanded address space. For a 64 PB limit, the address space would need to be significantly larger, likely requiring a 64-bit address space if not already in use.
+#### 2^57^
 
-2. **Page Table Entries**: The size and structure of page table entries might need to be adjusted to accommodate the larger physical memory. This could involve increasing the number of bits used for physical addresses in the page table entries.
+- 1 = KB
+- 2 = MB
+- 3 = GB
+- 4 = TB
+- **5 = PB**
+- 6 = EB
 
-3. **Segmentation and Paging**: The segmentation and paging mechanisms would need to be updated to handle the larger address space. This might involve changes to the segmentation descriptors and the paging structures to ensure they can address the full 64 PB.
+2^7^ = 128
 
-4. **Memory Management Units (MMUs)**: The MMUs would need to be capable of handling the larger address space. This could involve updates to the hardware to support the increased number of address bits.
+Logo, 22^57^ = 128Pbyte
 
-5. **System Software**: Operating systems and other system software would need to be updated to manage the larger physical memory. This includes changes to memory allocation algorithms, virtual memory management, and possibly the kernel itself.
+O que quer dizer que para aumentar para uma capacidade de
+64Pbyte não precisamos de fazer nada.
 
-6. **Hardware Support**: The underlying hardware, including CPUs and memory controllers, would need to support the larger address space. This might involve updates to the hardware design to ensure compatibility with the new memory limits.
+Se, por outro lado, quisessemos diminuir a capacidade para 64PByte,
+bastava que em vez dos 9 bits do Page-Map Level-5 Offset
+tivessemos apenas 8.
 
-These changes would ensure that the system can effectively utilize the increased physical memory limit of 64 PB. If you have specific figures or details from the document, I can provide more targeted suggestions.
+12 + 9 + 9 + 9 + 9 + 8 = 56 bits
 
-Source: Conversation with Copilot, 10/15/2024
-(1) CHAPTER 3 PROTECTED-MODE MEMORY MANAGEMENT - Donald Bren School of .... https://ics.uci.edu/~aburtsev/cs5460/lectures/midterm-pdfs/intel-segmentation-and-paging.pdf.
-(2) Lecture 12: Memory Management - Department of Computer Science. https://www.cs.cornell.edu/courses/cs4410/2021fa/assets/material/lecture12_memory_management_1.pdf.
-(3) Lecture 13: Memory Management Swap and Paging - Department of Computer .... https://www.cs.cornell.edu/courses/cs4410/2021fa/assets/material/lecture13_memory_management_2_lightweight.pdf.
- 
+2^56^ = 64PByte
+
+O problema que daqui surge, é que com 8 bits no Page-Map Level 5 Offset apenas
+conseguiriamos apontar para metade (2^8^ = 256) dos endereços do Page-Map
+Level 4 que continuaria com 9 bits (2^9^ = 512)
