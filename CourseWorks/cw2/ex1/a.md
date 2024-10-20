@@ -32,7 +32,7 @@ Pela imagem 5-18, temos que:
 
 2^7^ = 128
 
-Logo, 22^57^ = 128Pbyte
+Logo, 2^57^ = 128Pbyte
 
 O que quer dizer que para aumentar para uma capacidade de
 64Pbyte não precisamos de fazer nada.
