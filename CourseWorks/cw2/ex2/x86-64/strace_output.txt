@@ -1,0 +1,7 @@
+execve("./prog", ["./prog"], 0x7ffebfcdcd40 /* 51 vars */) = 0
+openat(AT_FDCWD, "/etc/os-release", O_RDONLY) = 3
+lseek(3, 0, SEEK_END)                   = 400
+mmap(NULL, 400, PROT_READ, MAP_PRIVATE, 3, 0) = 0x79a714280000
+write(1, "PRETTY_NAME=\"Ubuntu 24.04.1 LTS\""..., 400) = 400
+exit_group(0)                           = ?
++++ exited with 0 +++
