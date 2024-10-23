@@ -13,33 +13,22 @@
 
 ----
 
-Há pelo menos 3 formas distintas de obter *virtual address spaces* de 521PB:
+Se quisessemos estender o suporte a 512PB, teriamos de usar 59 bits. $2^{59}$ = 512PB
 
-- 12 (offset) + 10 (PTI) + 10 (PDI) + 10 (PDP) + 10 (PML4) + 10 (PML5) = 62 bits
-  - 2^62^ = 4EB de endereçamento
-- 10 (offset) + 10 (PTI) + 10 (PDI) + 10 (PDP) + 10 (PML4) + 10 (PML5) = 60 bits
-  - 2^60^ = 1EB
-  - a memória física teria de ser dividida em blocos de 2^10^ = 1KB
-- 14 (offset) + 10 (PTI) + 10 (PDI) + 10 (PDP) + 10 (PML4) + 10 (PML5) = 59 bits
-  - 2^59^ = 512Page_table
-  - a memória física teria de ser dividida em blocos de 2^14^ = 16KB
+Uma das formas, seria cria um *Page-Map Level-6* (PML6) com apenas 2 bits, que poderia apontar para 4 *Page-Map Level-5* (PML5) distintas, o que quer dizer que cada processo poderia ter até 4 PML5.
 
-Quanto ao número de *"Page-Map Level-5"*, em qualquer das soluções seria apenas 1.
+Ficariamos assim com:
 
-Relativamente à *"Canonical Address Form"*:
+- 12 bits de offset
+-  9 bits de Page-Table Index
+-  9 bits de Page-Directory Index
+-  9 bits de Page-Directory pointer Index
+-  9 bits de Page-Map Level-4
+-  9 bits de Page-Map Level-5
+-  2 bits de Page-Map Level-6
+-  5 bits de extensão do sinal do bit 58:
+    * bit 58 a **1** - **endereços para kernel mode**
+        + do 0xF800 0000 0000 0000 ao 0xFFFF FFFF FFFF FFFF
+    * bit 58 a **0** - **endereços para user mode**
+        + do 0x0000 0000 0000 0000 ao 0x07FF FFFF FFFF FFFF
 
-- com os 62 bits para endereçamento ficavamos apenas com o bit 63 livre para extender o sinal
-  - bit a 1 - endereços para *kernel mode*
-    - do 0xC000 0000 0000 0000 ao 0xFFFF FFFF FFFF FFFF
-  - bit a 0 - endereços para *user mode*
-    - do 0x0000 0000 0000 0000 ao 0x3FFF FFFF FFFF FFFF
-- com os 60 bits para endereçamento ficamos com os bits 60..63 para extender sinal
-  - bit a 1 - endereços para kernel mode
-    - do 0xE000 0000 0000 0000 ao 0xFFFF FFFF FFFF FFFF
-  - bit a 0 - endereços para user mode
-    - do 0x0000 0000 0000 0000 ao 0x1FFF FFFF FFFF FFFF
-- com os 59 bits para endereçamento ficavamos cos os bits 59..63 para extender o seinal
-  - bit a 1 - endereços para kernel mode
-    - do 0xF800 0000 0000 0000 ao 0xFFFF FFFF FFFF FFFF
-  - bit a 0 - endereços para user mode
-    - do 0x0000 0000 0000 0000 ao 0x07FF FFFF FFFF FFFF
