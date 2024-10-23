@@ -738,5 +738,128 @@ Para cada página do endereçamento virtual há uma zona de *Backing Storage** q
 - Para as regiões ```.bss```, ```stack``` ou ```heap```, a zona de *backing storage* é o *swap space* - também chamado de memória virtual
 - Para a região ```.data```, começa com o *backing storage* no executável e assim que seja modificado (**COW**) o seu *backing storage* passa a ser no *swap space*
 
+## 22OUT2024
+
+### Informação sobre processos a correr
+
+Quando o `kernel` arranca, faz a inicialização e testes ao *hardware* e depois chama o `init`. Este vai correr ficheiros de configuração do sistema e arrancar serviços, no fundo preparar o que se chama de **Ambiente de operação**. Uma particularidade do sistema linux é que este `init` pode ser "encaminhado" para outro programa. Em *Ubuntu*, `sbin/init` é um *dynamic link* (atalho em windows) para `../lib/systemd/systemd`. Para mais info [systemd.io](https://systemd.io/).
+
+Entre outros, um dos programas para ver informações sobre os processos que correm no sistema operativo é o ```ps```.
+
+Ao executar na shell o comando ```ps aux``` ou ```ps -A ux```, este vai-nos listar todos os processos a correr em `user mode`, com os separadores:
+
+- **USER** - dono do processo
+- **PID** - *Process Id*
+- **%CPU** - percentagem de CPU usado
+- **%MEM** - percentagem de memória física usada
+- **VSZ** - *Virtual Memory Size*, quantidade total de espaço de endereçamento virtual que o processo está a utilizar, inclui todas as bibliotecas, ficheiros mapeados e memória alocada, mesmo que partes desta memória não esteja atualmente carregada na memória física
+- **RSS** - *Resident Set Size*, quantidade de memória física que o processo está a utilizar atualmente
+- **STAT** - estado do processo
+    * **R** - running
+    * **S** - sleeping
+    * **D** - uninterruptible sleep - o processo está em espera mas não pode ser interrompido (geralmente à escuta de I/O)
+    * **T** - stopped
+    * **Z** - zombie - terminou mas ainda tem uma entrada na tabela de processos
+    * **I** - idle
+    * **<** - high-priority
+    * **N** - low-priority
+    * **L** - has Locked pages - tem páginas bloqueads na memória
+    * **s** - session leader
+    * **l** - multi-threaded
+    * **+** - in the foreground process group
+- **START** - data de inicio
+- **TIME** - tempo total de CPU que o processo utilizou
+- **COMMAND** - comando que deu origem ao processo
+
+### File Hierarchy Standard - FHS
+
+O **Filesystem Hierarchy Standard** (padrão para sistema de arquivos hierárquico), define as principais diretorias, e o seu conteúdo, num sistema operativo Linux ou do tipo Unix. 
+
+| Directoria | Descrição |
+| ---------- | --------- |
+| **/** | raiz da hierarquia |
+| **/bin** | programas, binários executáveis (ex.: cat, ls, cp, etc) |
+| **/boot** | ficheiros do *boot loader* (ex: kernel, initrd) |
+| **/dev** | dispositivos (I/O) |
+| **/etc** | ficheiros de configuração específicos do computador |
+| **/home** | ficheiros do utilizador |
+| **/lib** | bibliotecas |
+| **/mnt** | sistemas de ficheiros montados temporariamente |
+| **/media** | pontos de montagem para média removível (ex: USB-drive) |
+| **/opt** | pacotes estáticos das aplicações |
+| **/proc** | **Sistemas de ficheiros virtual, que possui o estado do kernel e processos do sistema; a maioria dos ficheiros é baseada no formato texto (ex: tempo de execução, rede).** |
+| **/root** | ficheiros do *super user* - **root** |
+| **/sbin** | programas administrativos do sistema |
+| **/tmp** | ficheiros temporários |
+| **/srv** | dados específicos que são servidos pelo sistema. |
+| **/sys** | **informações sobre dispositivos, *drivers* e algumas funcionalidades do kernel** |
+| **/usr** | Hierarquia secundária para dados partilhados entre *users*, cujo acesso é restrito apenas para leitura. |
+| **/var** | ficheiros de variáveis, como logs, bases de dados, páginas web e arquivos de email |
+
+Tanto `/proc` como `/sys` são especiais na medida em que são directorias do tipo `proc` e `sysfs`.
+
+**/proc** apresenta informações do kernel e tem informações sobre os processos que estão a correr
+
+- cpuinfo - informações sobre o CPU
+- kcore - representa a memória do kernel
+- [pid]/maps - espaço de endereçamento
+- [pid]/smaps - informaçoes sobre a utilização do espaço de endereçamento
+
+### /proc/[pid]/maps
+
+Mostra uma tabela com o endereçamento virtual dividido por seções (HEADER, .data, .text, .rodata, etc). Cada região, mostra:
+
+-  endereços de começo e termino
+-  permissões
+	- r - read
+	- w -write
+	- x - execute
+	- p - private 
+- offset
+- dispositivo onde a memória foi mapeada
+- inode - número do inode do ficheiro mapeado
+- nome do ficheiro 
+
+![maps do processo bwrap](../img/proc_maps.png)
+
+Aqui vemos, por exemplo:
+
+- HEADER - `5c3387225000-5c3387228000 r--p 00000000` - é apenas de leitura, começa no offset 0 e ocupa apenas 0x3000, 12KB
+- .text - `5c3387228000-5c3387231000 r-xp 00003000` - é em endereço seguido ao HEADER, é executável, e ocupa 0x9000, 26KB
+- .rodata - `5c3387231000-5c3387236000 r--p 0000c000` - é em endereço seguido ao .text, só de leitura e ocupa 0x5000, 20KB
+- ??? - `5c3387236000-5c3387237000 r--p 00010000` - outra secção seguida só de leitura mas mais pequena, ocupa 0x1000, 4KB
+- .data - `5c3387237000-5c3387238000 rw-p 00011000` - em endereço seguido, permite leitura e escrita e ocupa 0x1000, 4KB
+- heap - `5c3388009000-5c338802a000 rw-p 00000000`
+- depois vêm bibliotecas com a mesma estrutura
+- stack da main thread
+- vvar - variáveis read-only, normalmente coisas que só o kernel pode escrever e disponibiliza uma versão read-only para os processos
+- vdso - "Virtual Dynamic Shared Object" - expõe algumas funcionalidades do kernel diretamente para a aplicação
+- vsyscall - similar ao vdso mas técnica mais antiga
+
+### /proc/[pid]/smaps
+
+Com `less /proc/[pid]/smaps`, obtém-se informações detalhadas sobre o consumo de memória de cada mapeamento do processo. Este ficheiro é mais detalhado que `/proc/[pid]/maps` e inclui várias métricas úteis para análise de desempenho e depuração. 
+
+1. **Size**: O tamanho total do mapeamento.
+2. **Rss (Resident Set Size)**: A quantidade de memória que está atualmente residente na memória física.
+3. **Pss (Proportional Set Size)**: A parte proporcional da memória compartilhada com outros processos, que é atribuída ao processo.
+4. **Shared_Clean**: Páginas compartilhadas que não foram modificadas.
+5. **Shared_Dirty**: Páginas compartilhadas que já foram modificadas (escritas).
+6. **Private_Clean**: Páginas privadas que não foram modificadas.
+7. **Private_Dirty**: Páginas privadas que já foram escritas.
+8. **Referenced**: A quantidade de memória que foi referenciada recentemente.
+9. **Anonymous**: Memória que não pertence a nenhum ficheiro.
+10. **Swap**: Quantidade de memória que foi trocada para o disco.
+11. **KernelPageSize**: O tamanho da página usado pelo kernel para suportar a área de memória virtual.
+12. **MMUPageSize**: O tamanho da página usado pela Unidade de Gerenciamento de Memória (MMU).
+13. **Locked**: Indica se o mapeamento está bloqueado na memória.
+14. **ProtectionKey**: A chave de proteção de memória associada à área de memória virtual.
+15. **VmFlags**: Flags do kernel associadas à área de memória virtual, como legível (rd), gravável (wr), executável (ex), etc.
+
+> A soma de `Shared_Clean`, `Shared_Dirty`, `Private_Clean` e `Private_Dirty` tem de dar o valor de `Rss`
+
+![exemplo de /proc/[pid]/smaps](../img/proc_smaps.png)
+
+
 
 
