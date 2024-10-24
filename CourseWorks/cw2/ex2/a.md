@@ -2,13 +2,14 @@
 
 **a) List and explain the sequence of calls performed by the program in x86-64/prog.s**
 
-----
+---
 
 Este programa realiza uma série de chamadas de sistema (SYSCALL) para interagir com o sistema operativo.
 
 Segue-se uma análise do que cada parte do código faz, juntamente com a sequência de chamadas de sistema.
 
 ### Data Section
+
 ```assembly
 .section .rodata
 
@@ -19,21 +20,22 @@ data:   .byte  47, 101, 116,  99
         .byte  73,  83,  69,  76
 ```
 
-- Esta secção define um segmento *read-only* com a *string* "/etc/os-release\0ISEL".
-    * 47, 101, 116, 99 -> /etc
-    * 47, 111, 115, 45 -> /os-
-    * 114, 101, 108, 101 -> rele
-    * 97, 115, 101, 0 -> ase\0 (o ```\0``` representa o terminador nulo)
-    * 73, 83, 69, 76 -> ISEL
+- Esta secção define um segmento _read-only_ com a _string_ "/etc/os-release\0ISEL".
+  - 47, 101, 116, 99 -> /etc
+  - 47, 111, 115, 45 -> /os-
+  - 114, 101, 108, 101 -> rele
+  - 97, 115, 101, 0 -> ase\0 (o `\0` representa o terminador nulo)
+  - 73, 83, 69, 76 -> ISEL
 
 ### Text Section
+
 ```assembly
 .text
 .globl _start
 _start:
 ```
 
-- Isto marca o início da secção ```.text``` e define o ponto de entrada `_start`.
+- Isto marca o início da secção `.text` e define o ponto de entrada `_start`.
 
 ### Sequencia de System Calls
 
@@ -46,6 +48,7 @@ _start:
     movq $257, %rax
     syscall
 ```
+
     - **System Call**: `openat` (syscall number 257)
     - **Argumentos**:
         - `rdi = -100`: AT_FDCWD (current working directory)
@@ -55,7 +58,7 @@ _start:
     - **Return**: O *File descriptor* guardado em `rax`, movido em seguida para `r15` (código abaixo).
 
 2. **Move file pointer**
-    
+
 ```assembly
     movq %r15, %rdi
     xorq %rsi, %rsi
@@ -63,15 +66,16 @@ _start:
     movq $8, %rax
     syscall
 ```
+
     - **System Call**: `lseek` (syscall number 0)
     - **Argumentos**:
         - `rdi = r15`: *File descriptor*
         - `rsi = 0`: Deslocamento, 0 neste caso, início do ficheiro.
         - `rdx = 2`: Move o valor imediato 2 para o registo %rdx. %rdx é usado para passar o terceiro argumento, que neste caso é a origem (whence). O valor 2 corresponde a ```SEEK_END```, que significa que o deslocamento será relativo ao final do ficheiro.
-    - **Objetivo**: mover o ponteiro do ficheiro para uma nova posição. O descritor de ficheiro é passado através do registo `%r15`, o deslocamento é `0`, e a origem é `SEEK_END`, o que significa que o ponteiro do ficheiro é movido para o final do ficheiro.
+    - **Objetivo**: Determinar o tamanho do ficheiro. Move o ponteiro do ficheiro para uma nova posição. O descritor de ficheiro é passado através do registo `%r15`, o deslocamento é `0`, e a origem é `SEEK_END`, o que significa que o ponteiro do ficheiro é movido para o final do ficheiro.
 
 3. **Memory Mapping**
- 
+
 ```assembly
     xorq %rdi, %rdi
     movq %r14, %rsi
@@ -82,6 +86,7 @@ _start:
     movq $9, %rax
     syscall
 ```
+
     - **System Call**: `mmap` (syscall number 9)
     - **Argumentos**:
         - `rdi = 0`: Address (NULL, let the kernel choose)
@@ -94,7 +99,7 @@ _start:
     - **Return**: O endereço da área mapeada em `rax`.
 
 4. **Escrever no Standard Output**
-    
+
 ```assembly
     movq $1, %rdi
     movq %rax, %rsi
@@ -111,12 +116,13 @@ _start:
     - **Objetivo**: Escreve o número de *bytes* começado no endereço apontado para o *standard output*.
 
 5. **Exit**
- 
+
 ```assembly
     xorq %rdi, %rdi
     movq $231, %rax
     syscall
 ```
+
     - **System Call**: `exit_group` (syscall number 231)
     - **Arguments**:
         - `rdi = 0`: `Exit status` - código de saída
@@ -134,7 +140,7 @@ exit_group(0)                           = ?
 +++ exited with 0 +++
 ```
 
-### *Print* da execução do programa no *stdout*
+### _Print_ da execução do programa no _stdout_
 
 ```txt
 PRETTY_NAME="Ubuntu 24.04.1 LTS"
@@ -153,5 +159,12 @@ LOGO=ubuntu-logo
 ```
 
 ### Resumo
-O programa abre o ficheiro "/etc/os-release", em modo de leitura, reposiciona o deslocamento do  ficheiro aberto associada ao *file descriptor* até ao final, mapea o conteudo lido para a memória, escreve-o para o *standard output*, e por fim termina (exits). A sequência de chamadas *system call* assegura que o ficheiro é acedido, lido, e o seu conteudo mostrado no *standard output* antes de terminar.
 
+O programa abre o ficheiro "/etc/os-release", em modo de leitura, reposiciona o deslocamento do ficheiro aberto associada ao _file descriptor_ até ao final, mapea o conteudo lido para a memória, escreve-o para o _standard output_, e por fim termina (exits).
+
+É de salientar que quando o `mmap` é chamado, este mapeia o arquivo em memória, mas não o carrega para a memória física.
+Quando o programa tenta aceder À memória mapeada, ocorre um `page fault` e o sistema operativo carrega o a página do ficheiro na memória física.
+
+Isto é uma forma de, por exemplo, mapear ficheiros grandes de forma eficiente e com baixo consumo de memória física, uma vez que só vai ser carregado na memória física as partes realmente necessárias quando é efetuado um acesso às mesmas.
+
+Neste programa, quando o `write` é chamado, o sistema operativo carrega a página do ficheiro na memória física, e o conteúdo é escrito no _standard output_.
