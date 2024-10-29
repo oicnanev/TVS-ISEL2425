@@ -12,7 +12,7 @@ Our shell, *bach* was developed with three key points in mind:
 
 ![bach UML](../../../../img/bach_uml.png)
 
-In our implementation we define 3 definitions (```#define```):
+In our implementation we define 3 macros (```#define```):
 
 - MAX_LINE 131072 - For the maximum input line of the user. In Linux systems, the maximum size of a command is 128KB = 131072 Bytes.
 - MAX_ARGS 100 - For the maximum number of arguments of a command, not sure if there is any limit other than the size of the line.
@@ -38,9 +38,9 @@ Responsible for reading user input and forwarding it to the next function for pr
 
 Receives a string that is the user inputted commands. Creates an empty array of commands of size ```MAX_PROCS``` and ```command_counter```. Then separates the commands by pipes (|), removes accidental white spaces surrounding the command and add the null character to each one, incrementing the command_counter. After parsing all the user inputted line, call the next function ```process_pipes``` passing the array of commands and the command_counter as arguments. 
 
-Before starting to separate every command in the user inputted string is necessary to remove the new line character if present, we used [strcspn](https://documentation.help/C-Cpp-Reference/strspn.html) to find the '\n' index and substituted its value by 0.
+Before starting to separate every command in the user inputted string is necessary to remove the new line character if present, we used [strcspn](https://documentation.help/C-Cpp-Reference/strspn.html) to find the `\n` index and substituted its value by 0.
 
-For separating the user inputted line by pipes (|) we used the function [strtok](https://documentation.help/C-Cpp-Reference/strtok.html#:~:text=strtok.%20Syntax:%20#include%20%3Ccstring%3E%20char%20*strtok(%20char%20*str1,)).
+For separating the user inputted line by pipes (|) we used the function [strtok](https://documentation.help/C-Cpp-Reference/strtok.html#:~:text=strtok.%20Syntax:%20#include%20%3Ccstring%3E%20char%20*strtok(%20char%20*str1,))
 
 To remove accidental white spaces surrounding the command we call the function ```remove_whitespaces```
 
@@ -107,4 +107,3 @@ After this logout and login with the new user *iselx*
     * **Logging and Processing**: ```df -h | tee disk-usage.log | grep '/dev/sda1'``` - this command displays the disk usage, logs it to ```disk-usage.log```, and the filters the output to show only the line containing ```/dev/sda1```.
     * **Multiple Outputs**: ```echo "Hello, PSC!" | tee file1.txt file2.txt file3.txt``` - this command writes "Hello, PSC!" to ```file1.txt```, ```file2.txt```, and ```file3.txt```.
     * **Combining with Other Commands**: ```ps aux | tee processes.log | grep 'root' | tee root-processes.log | wc -l``` - this command lists all running processes, logs them to ```processes.log```, filters for processes owned by ```root```, logs those to ```root-processes.log```, and then counts the number of root processes.
-
