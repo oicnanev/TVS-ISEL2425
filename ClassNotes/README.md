@@ -860,6 +860,77 @@ Com `less /proc/[pid]/smaps`, obtém-se informações detalhadas sobre o consumo
 
 ![exemplo de /proc/[pid]/smaps](../img/proc_smaps.png)
 
+## 29OUT2024
 
+### Mapeamento de ficheiros em memória com `mmap` e `munmap`
 
+- `void *mmap(void *addr, size_t lenght, int prot, int flags, int fd, off_t off);`
+    * *addr -  endereço desejado ou então NULL para o OS escolher
+    * length - tamanho do espaço
+    * prot - r/w/x
+    * flags - *private* ou *shared*
+    * fd - ficheiro a mapear
+    * off - offset
+    * **embora seja `void` retorna o endereço em que o ficheiro ficou mapeado**
 
+- `int munmap(void *addr, size_t length);`
+    * efetua a operação contrária ao `mmap`, ou seja, remove um mapeamento de página em memória
+
+#### Mapeamento privado versus partilhado
+
+- **flag MAP_PRIVATE** 
+	- o mapeamento pertece apenas ao processo
+	- escritas são apenas visíveis para o processo e não se propagam para o ficheiro
+- **flag MAP_SHARED**
+	- pode ser partilhada através de `fork()`
+	- é visivel a todos os processos que estiverem a partilhar este ficheiro
+	- a escrita por um processo torna-se visível a todos os outros processo
+- **flag MAP_FIXED**
+    * serve para alocar memória sem mapear nenhum ficheiro
+
+#### Usos comuns
+
+O `mmap` é muitas vezes usado após um `lseek` para mapear diretamente ficheiros em memória sem fazer a operação `read`.
+
+Desta forma é possível mapear ficheiros grandes na memória virtual sem que os mesmos vão parar à memória física.
+
+É uma forma de definir regiões em memória como *backing storage*
+
+Muitos usado em motores de bases de dados e até mesmo na JVM
+
+> `lseek(fd, 0, SEEK_END);` - levar o cursor até 0 bytes do final do ficheiro *fd*
+
+### Page Eviction
+
+- **Working Set** - conjunto de páginas acedidas por um programa durante um intervalo de tempo
+- **Resident Set** - quantidade de blocos de memória virtual mapeada na memória física num determinado ponto do tempo
+
+O sistema operativo, procura equilibrar o *Resident Set* com o *Working Set*. Se o *Working Set* reduzir, o *Resident Set* deve também reduzir. O sistema operativo faz isto de uma forma não muito agressiva, uma vez que uma página que não está a ser usada 'agora' pode num futuro próximo vir a ser 'usada'.
+
+![Page Eviction](../img/pageEviction.png)
+
+O sistema operativo corre o algoritmo de *Page Eviction* se:
+
+- a memória física livre estiver baixa
+- existir desiquilibrio entre as listas *Active List* (muito grande) e *Inactive List* (muito pequena)
+- São usados neste algoritmo os bits **A** (Accessed), **D** (Dirty) e **R** (Referenced) dos PTE, PDE, PDPE - posicionados pela MMU do CPU
+
+#### Pouca memória livre
+
+- o algoritmo procura agressivamente libertar memória da *Inactive List*
+- Se não for suficiente, procura menos agressivamente, libertar memória na *Active List*
+- Se o bit **A** == 0 e **R** == 0, é para libertar
+- Se o bit **A** == 1, e **R** == 0, mete-se **R** = 1 e **A** = 0
+- Se o bits **A** e **R**, passa para a *Active List*, colocando o **R** = 0
+- Se o bit **A** == 0 e **R** == 1, então **R** = 0
+
+#### Desequilibrio entre *Active List* e *Inactive List*
+
+- Se **A** e **R** == 0, vai para a *Inactive List*
+
+#### Resumo
+
+- É preciso ver duas vezes **R==0** para libertar a página
+- É preciso ver duas vezes **R==1** para a promover para a *Active List*
+
+ 
