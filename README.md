@@ -2,13 +2,13 @@
 Técnicas de Virtualização de Sistemas
 
 ## Topics
-- Part 1 ([Class Notes](./ClassNotes/Part1.md))
+- Part 1 ([Class Notes](./ClassNotes/Part1/README.md))
 	- Introduction to virtualization techniques
 	- Operating systems processes as isolated execution environments
 	- The UNIX/POSIX process model
 	- Hardware protections for isolation of operating systems processes
 	- Operating systems techniques for safe memory sharing among processes
-- Part 2 ([Class Notes](./ClassNotes/Part2.md))
+- Part 2 ([Class Notes](./ClassNotes/Part2/README.md))
 	- Inter-process communication mechanisms
 	- Operating system services and their configuration and management
 	- Taxonomy of virtualization techniques
@@ -25,7 +25,5 @@ Técnicas de Virtualização de Sistemas
 ## Coursework
 - CW1 – [UNIX Programming Sep. 20 – Oct. 6](./CourseWorks/cw1/README.md)
 - CW2 – [HW Protections and OS Processes Isolation Oct. 11 – Oct. 26](./CourseWorks/cw2/README.md)
-- CW3 – OS Services, Hypervisors, Emulators Nov. 8 – Nov. 27
-- CW4 – Containers Nov. 29 – Dec. 15
-
- - [Class Notes](ClassNotes/README.md)
+- CW3 – [OS Services, Hypervisors, Emulators Nov. 8 – Nov. 27](./CourseWorks/cw3/README.md)
+- CW4 – [Containers Nov. 29 – Dec. 15](./CourseWorks/cw4/README.md)

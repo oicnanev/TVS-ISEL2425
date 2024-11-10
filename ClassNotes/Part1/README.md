@@ -1,4 +1,4 @@
-# Class Notes
+# Part 1
 
 ## 10SET24
 
