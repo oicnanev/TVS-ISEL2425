@@ -1,0 +1,12 @@
+[Unit]
+Description=TVS Control Socket
+
+[Socket]
+ListenStream=/run/isel/tvsctld/request
+SocketUser=root
+SocketGroup=tvsgrp
+SocketMode=0660
+
+[Install]
+WantedBy=sockets.target
+
