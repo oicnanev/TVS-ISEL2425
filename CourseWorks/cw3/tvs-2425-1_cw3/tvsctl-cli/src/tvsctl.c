@@ -20,7 +20,7 @@ void usage() {
     printf("Usage: tvsctl <command> [args]\n");
     printf("\nAvailable commads\n\n");
     printf("\tstart\t\t%s\n", srt);
-    printf("\tstatus [-v]\t\t%s\n". stt);
+    printf("\tstatus [-v]\t\t%s\n", stt);
     printf("\tstop [-db]\t\t%s\n", stp);
     printf("\treset [scale [base]]\t%s\n", rst);
     printf("\tinc [delta]\t\t%s\n", inc);
@@ -36,7 +36,7 @@ int main(int argc, const char * argv[]) {
     struct sockaddr_un server_addr;
 
     // Ensure there is at least one argument for the command
-    if (argc < 2 || argc > 2 && 
+    if ((argc < 2 || argc > 2) && 
             (strcmp(argv[2], "--help") == 0 || strcmp(argv[2], "--h") == 0)) {
         usage();
         exit(EXIT_FAILURE);
