@@ -96,7 +96,7 @@ gcc ./tvsctl-srv/src/tvsctld.c -o /opt/isel/tvs/tvsctld/bin/tvsctld
 systemctl daemon-reload
 systemctl start tvsctld.service
 
-# tvscli ----------------------------------------
+# tvsctl ----------------------------------------
 echo "installing tvsctl..."
 mkdir -p /opt/isel/tvs/tvsctl/
 gcc ./tvsctl-cli/src/tvsctl.c -o /opt/isel/tvs/tvsctl/tvsctl
