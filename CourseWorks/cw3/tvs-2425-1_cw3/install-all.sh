@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# machine user
+CURRENT_USER=$(logname)
+echo $CURRENT_USER
+
 # setup -----------------------------------
 echo "updating package manager..."
 apt update
@@ -15,7 +19,7 @@ if ! nginx -v &> /dev/null; then
 	echo "instaling nodejs..."
 	apt install nginx
 fi
-if ! dkpg -l | grep elasticsearch &> /dev/null; then
+if ! dpkg -l | grep elasticsearch &> /dev/null; then
 	echo "instaling elasticsearch..."
 	wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.15.3-amd64.deb
 	dkpg -i elasticsearch*.deb
@@ -24,6 +28,16 @@ fi
 if grep -q "xpack.security.enabled: true" /etc/elasticsearch/elasticsearch.yml; then
 	sed -i 's/xpack.security.enabled: true/xpack.security.enabled: false/' /etc/elasticsearch/elasticsearch.yml
 fi	
+
+# group tvsgrp and add current user to group
+echo "1"
+groupadd tvsgrp &> /dev/null
+echo "2"
+usermod -aG tvsgrp "$CURRENT_USER"
+echo "3"
+# Apply group changes immediately for the current session
+#exec sg tvsgrp newgrp
+echo "4"
 
 # tvsapp ----------------------------------
 echo "copying app to /opt/..."
@@ -45,7 +59,7 @@ systemctl daemon-reload
 
 # nginx --------------------------------------
 echo "configuring nginx..."
-cp ./tvsctl-srv/etc/nginx/sites-available/tvsapp /etc/nginx/nginx/sites-available/
+cp ./tvsctl-srv/etc/nginx/sites-available/tvsapp /etc/nginx/sites-available/
 ln -s /etc/nginx/sites-available/tvsapp /etc/nginx/sites-enabled/
 systemctl enable nginx
 systemctl start nginx
@@ -75,7 +89,7 @@ systemctl reload nginx
 
 # tvsctld --------------------------------------
 echo "configuring tvsctld daemon..."
-mkdir -p /opt/isel/tvs/tvsctld/bin/tvsctld
+mkdir -p /opt/isel/tvs/tvsctld/bin
 cp -r ./tvsctl-srv/bin/scripts /opt/isel/tvs/tvsctld/bin/
 cp ./tvsctl-srv/etc/service/tvsctld.service /etc/systemd/system/
 gcc ./tvsctl-srv/src/tvsctld.c -o /opt/isel/tvs/tvsctld/bin/tvsctld
@@ -83,8 +97,17 @@ systemctl daemon-reload
 systemctl start tvsctld.service
 
 # tvscli ----------------------------------------
-echo "installing tvscli..."
+echo "installing tvsctl..."
+mkdir -p /opt/isel/tvs/tvsctl/
 gcc ./tvsctl-cli/src/tvsctl.c -o /opt/isel/tvs/tvsctl/tvsctl
-# TODO: escrever em etc/profile o opt/isel/tvs/tvsctl/tvsctl e depois source
-
+NEW_PATH="/opt/isel/tvs/tvsctl"
+ENV_FILE="/etc/environment"
+if grep -q "$NEW_PATH" "$ENV_FILE"; then
+	echo "The directory $NEW_PATH is already on the PATH."
+else
+	sed -i.bak "s|^PATH=\"\(.*\)\"|PATH=\"\1:$NEW_PATH\"|" "$ENV_FILE"
+  	echo "Added $NEW_PATH to PATH."
+  	#echo "Backup of previous file: $ENV_FILE.bak"
+  	source /etc/environment
+fi
 echo "done"
