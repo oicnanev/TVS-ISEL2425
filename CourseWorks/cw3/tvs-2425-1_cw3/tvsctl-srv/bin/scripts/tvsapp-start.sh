@@ -13,7 +13,7 @@ systemctl start nginx  # does nothing if already started
 CONFIG_FILE="/etc/nginx/sites-enabled/tvsapp"  # path for nginx tvsapp conf
 
 # Extract the number of the ports from the block upstream tvsapp
-PORTS=$(awk '/upstream tvsapp {/,/}/ {
+PORTS=$(awk '/upstream tvsapp_backend {/,/}/ {
     if ($1 == "server") {
         split($2, a, ":");
         print a[2]
@@ -22,7 +22,7 @@ PORTS=$(awk '/upstream tvsapp {/,/}/ {
 
 # Check if any port found
 if [ -z "$PORTS" ]; then
-    echo "No ports found in the 'upstream tvsapp' block in the configuration file."
+    echo "No ports found in the 'upstream tvsapp_backend' block in the configuration file."
     exit 1
 fi
 

@@ -52,6 +52,7 @@ systemctl start nginx
 systemctl reload nginx  # case already been running
 
 # tvsapp services -----------------------------
+# TODO: possivelmente em vez de fazer isto basta chamar o script start!!!
 echo "starting web app instances..."
 CONFIG_FILE="/etc/nginx/sites-available/tvsapp"
 PORTS=$(awk '/upstream tvsapp_backend {/,/}/ {
@@ -72,4 +73,18 @@ done
 
 systemctl reload nginx
 
-# TODO: possivelmente em vez de fazer isto basta chamar o script start!!!
+# tvsctld --------------------------------------
+echo "configuring tvsctld daemon..."
+mkdir -p /opt/isel/tvs/tvsctld/bin/tvsctld
+cp -r ./tvsctl-srv/bin/scripts /opt/isel/tvs/tvsctld/bin/
+cp ./tvsctl-srv/etc/service/tvsctld.service /etc/systemd/system/
+gcc ./tvsctl-srv/src/tvsctld.c -o /opt/isel/tvs/tvsctld/bin/tvsctld
+systemctl daemon-reload
+systemctl start tvsctld.service
+
+# tvscli ----------------------------------------
+echo "installing tvscli..."
+gcc ./tvsctl-cli/src/tvsctl.c -o /opt/isel/tvs/tvsctl/tvsctl
+# TODO: escrever em etc/profile o opt/isel/tvs/tvsctl/tvsctl e depois source
+
+echo "done"

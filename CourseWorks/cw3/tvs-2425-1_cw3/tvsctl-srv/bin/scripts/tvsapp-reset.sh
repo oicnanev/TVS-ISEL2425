@@ -22,14 +22,14 @@ awk -v scale="$SCALE" -v base="$BASE" '
 BEGIN {
     in_upstream_block = 0
 }
-/upstream tvsapp/ { 
+/upstream tvsapp_backend/ { 
     in_upstream_block = 1
     print $0
     next
 }
 in_upstream_block && /}/ {
     in_upstream_block = 0
-    # Adiciona os novos servidores com base no valor de `scale` e `base`
+    # Adds new servers with with ports starting on `base` and up to `scale`
     for (i = 0; i < scale; i++) {
         print "    server 127.0.0.1:" base + i ";"
     }
@@ -39,15 +39,7 @@ in_upstream_block && /}/ {
 !in_upstream_block {
     print $0
 }
-' "$CONFIG_FILE" > /tmp/tvsapp_nginx_config && mv /tmp/tvsapp_nginx_config "$CONFIG_FILE"
-
-# Start new tvsapp@ services
-echo "Starting services for scale $SCALE at base $BASE..."
-for ((i=0; i < SCALE; i++)); do
-    PORT=$((BASE + i))
-    echo "Starting tvsapp@${PORT}.service"
-    systemctl start "tvsapp@${PORT}.service"
-done
+' "$CONFIG_FILE" >/tmp/tvsapp_nginx_config && mv /tmp/tvsapp_nginx_config "$CONFIG_FILE"
 
 # Reload nginx
 echo "Reloading nginx..."

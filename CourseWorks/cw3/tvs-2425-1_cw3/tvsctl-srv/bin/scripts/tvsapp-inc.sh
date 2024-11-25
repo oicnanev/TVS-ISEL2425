@@ -12,7 +12,7 @@ if ! [[ -f "$CONFIG_FILE" ]]; then
 fi
 
 # Find the highest port currently in use by tvsapp in the configuration
-LAST_PORT=$(awk '/server 127.0.0.1:/ {
+LAST_PORT=$(awk '/server localhost:/ {
     split($2, port, ":");
     gsub(";", "", port[2]);
     if (port[2] > max_port) max_port = port[2];
@@ -31,7 +31,7 @@ awk -v delta="$DELTA" -v base="$NEW_BASE" '
 BEGIN {
     in_upstream_block = 0
 }
-/upstream tvsapp/ {
+/upstream tvsapp_backend/ {
     in_upstream_block = 1
     print $0
     next
@@ -40,7 +40,7 @@ in_upstream_block && /}/ {
     in_upstream_block = 0
     # Keep existing servers and add the new ones
     for (i = 0; i < delta; i++) {
-        print "    server 127.0.0.1:" base + i ";"
+        print "    server localhost:" base + i ";"
     }
     print $0
     next
@@ -48,11 +48,11 @@ in_upstream_block && /}/ {
 {
     print $0
 }
-' "$CONFIG_FILE" > /tmp/tvsapp_nginx_config && mv /tmp/tvsapp_nginx_config "$CONFIG_FILE"
+' "$CONFIG_FILE" >/tmp/tvsapp_nginx_config && mv /tmp/tvsapp_nginx_config "$CONFIG_FILE"
 
 # Start new tvsapp@ services for the new range of ports
 echo "Starting $DELTA new tvsapp instances starting at port $NEW_BASE..."
-for ((i=0; i < DELTA; i++)); do
+for ((i = 0; i < DELTA; i++)); do
     PORT=$((NEW_BASE + i))
     echo "Starting tvsapp@${PORT}.service"
     systemctl start "tvsapp@${PORT}.service"

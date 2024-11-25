@@ -70,13 +70,14 @@ void execute_command(const char *command) {
 
 
 int main() {
-    int main() {
     struct sockaddr_un server_addr;
     int server_sock, client_sock;
     char buffer[BUFFER_SIZE];
 
     // Ensure the parent directory of the socket exists
     const char *socket_dir = "/run/isel/tvsctld";
+    const char *isel = "/run/isel/";
+    
     struct group *grp = getgrnam("tvsgrp");   // to get tvsgrp group
     if (grp == NULL) {
         perror("Group 'tvsgrp' does not exist");
@@ -84,15 +85,25 @@ int main() {
     }
 
     if (access(socket_dir, F_OK) == -1) { // Check if the directory exists
-        if (mkdir(socket_dir, 0770) == -1) { // Create directory with appropriate permissions
+        umask(0);
+        if (mkdir(isel, 0777) == -1)  { // Create directory with appropriate permissions
+            perror("Failed to create isel socket directory");
+            exit(EXIT_FAILURE);
+        }
+        if (mkdir(socket_dir, 0777) == -1)  { // Create directory with appropriate permissions
             perror("Failed to create socket directory");
             exit(EXIT_FAILURE);
         }
         // Set ownership to root:tvsgrp
+        if (chown(isel, 0, grp->gr_gid) == -1) {  // user:root (0), group:tvsgrp
+            perror("Failed to set ownership of socket directory");
+            exit(EXIT_FAILURE);
+        }
         if (chown(socket_dir, 0, grp->gr_gid) == -1) {  // user:root (0), group:tvsgrp
             perror("Failed to set ownership of socket directory");
             exit(EXIT_FAILURE);
         }
+        umask(0022);
     }
 
     // Create a Unix domain socket
@@ -111,6 +122,12 @@ int main() {
              sizeof(struct sockaddr_un)) == -1) {
         perror("Socket binding failed");
         close(server_sock);
+        exit(EXIT_FAILURE);
+    }
+
+    char *socketp = "/run/isel/tvsctld/request";
+    if (chmod(socketp, 0666) == -1) {
+        perror("Failed to set permissions of socket");
         exit(EXIT_FAILURE);
     }
 
@@ -133,7 +150,7 @@ int main() {
         ssize_t num_bytes = read(client_sock, buffer, BUFFER_SIZE - 1);
         if (num_bytes > 0) {
             buffer[num_bytes] = '\0';
-            // Call to your execute_command function here
+            execute_command(buffer);
         } else {
             perror("Failed to read from client socket");
         }

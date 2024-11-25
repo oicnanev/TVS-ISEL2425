@@ -5,7 +5,7 @@ if [[ "$1" == "-v" ]]; then
 	systemctl status nginx
 	systemctl status elasticsearch
 	systemctl status tvsapp@*
-else 
+else
 	# Check NginX Status
 	if systemctl is-active --quiet nginx; then
   		echo "nginx: Running"
@@ -24,7 +24,7 @@ else
 	CONFIG_FILE="/etc/nginx/sites-enabled/tvsapp"  # path for nginx tvsapp conf
 
 	# Extract the number of the ports from the block upstream tvsapp
-	PORTS=$(awk '/upstream tvsapp {/,/}/ {
+	PORTS=$(awk '/upstream tvsapp_backend {/,/}/ {
 	    if ($1 == "server") {
 	        split($2, a, ":");
 	        print a[2]

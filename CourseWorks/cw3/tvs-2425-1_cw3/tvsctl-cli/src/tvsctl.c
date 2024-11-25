@@ -36,8 +36,8 @@ int main(int argc, const char * argv[]) {
     struct sockaddr_un server_addr;
 
     // Ensure there is at least one argument for the command
-    if ((argc < 2 || argc > 2) && 
-            (strcmp(argv[2], "--help") == 0 || strcmp(argv[2], "--h") == 0)) {
+    if (argc < 2 || (argc > 2 && 
+            (strcmp(argv[2], "--help") == 0 || strcmp(argv[2], "--h") == 0))) {
         usage();
         exit(EXIT_FAILURE);
     }
@@ -69,7 +69,6 @@ int main(int argc, const char * argv[]) {
         close(sock);
         exit(EXIT_FAILURE);
     }
-
     // Send the command to the daemon
     if (write(sock, command, strlen(command)) == -1) {
         perror("Failed to send command");
