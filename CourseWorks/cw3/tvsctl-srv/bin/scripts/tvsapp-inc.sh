@@ -31,7 +31,7 @@ awk -v delta="$DELTA" -v base="$NEW_BASE" '
 BEGIN {
     in_upstream_block = 0
 }
-/upstream tvsapp/ {
+/upstream tvsapp_backend/ {
     in_upstream_block = 1
     print $0
     next
@@ -48,11 +48,11 @@ in_upstream_block && /}/ {
 {
     print $0
 }
-' "$CONFIG_FILE" > /tmp/tvsapp_nginx_config && mv /tmp/tvsapp_nginx_config "$CONFIG_FILE"
+' "$CONFIG_FILE" >/tmp/tvsapp_nginx_config && mv /tmp/tvsapp_nginx_config "$CONFIG_FILE"
 
 # Start new tvsapp@ services for the new range of ports
 echo "Starting $DELTA new tvsapp instances starting at port $NEW_BASE..."
-for ((i=0; i < DELTA; i++)); do
+for ((i = 0; i < DELTA; i++)); do
     PORT=$((NEW_BASE + i))
     echo "Starting tvsapp@${PORT}.service"
     systemctl start "tvsapp@${PORT}.service"

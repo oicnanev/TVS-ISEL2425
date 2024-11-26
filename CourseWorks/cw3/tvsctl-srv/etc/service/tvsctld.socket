@@ -1,11 +1,11 @@
 [Unit]
-Description=TVS Control Socket
+Description=TVS Socket for the API
 
 [Socket]
 ListenStream=/run/isel/tvsctld/request
+SocketMode=0660
 SocketUser=root
 SocketGroup=tvsgrp
-SocketMode=0660
 
 [Install]
 WantedBy=sockets.target

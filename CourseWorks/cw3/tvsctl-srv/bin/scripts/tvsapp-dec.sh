@@ -23,14 +23,14 @@ END {
 
 # Ensure there are enough instances to remove
 TOTAL_INSTANCES=${#PORTS[@]}
-if (( TOTAL_INSTANCES <= 1 )); then
+if ((TOTAL_INSTANCES <= 1)); then
     echo "Only one instance left, cannot remove any more."
     exit 1
 fi
 
 # Calculate how many instances to actually remove, ensuring at least one remains
-REMOVABLE_INSTANCES=$(( TOTAL_INSTANCES - 1 ))
-DELTA=$(( DELTA > REMOVABLE_INSTANCES ? REMOVABLE_INSTANCES : DELTA ))
+REMOVABLE_INSTANCES=$((TOTAL_INSTANCES - 1))
+DELTA=$((DELTA > REMOVABLE_INSTANCES ? REMOVABLE_INSTANCES : DELTA))
 
 # Select the highest ports to remove
 PORTS_TO_REMOVE=("${PORTS[@]: -DELTA}")
@@ -43,7 +43,7 @@ BEGIN {
     for (i in remove_ports) ports[remove_ports[i]] = 1
     in_upstream_block = 0
 }
-/upstream tvsapp/ {
+/upstream tvsapp_backend/ {
     in_upstream_block = 1
     print $0
     next
@@ -62,7 +62,7 @@ in_upstream_block {
 {
     print $0
 }
-' "$CONFIG_FILE" > "$CONFIG_FILE.tmp" && mv "$CONFIG_FILE.tmp" "$CONFIG_FILE"
+' "$CONFIG_FILE" >"$CONFIG_FILE.tmp" && mv "$CONFIG_FILE.tmp" "$CONFIG_FILE"
 
 # Stop the selected tvsapp@ services
 echo "Stopping $DELTA tvsapp instances with ports: ${PORTS_TO_REMOVE[*]}"

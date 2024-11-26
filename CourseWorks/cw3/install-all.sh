@@ -2,7 +2,6 @@
 
 # machine user
 CURRENT_USER=$(logname)
-echo $CURRENT_USER
 
 # setup -----------------------------------
 echo "updating package manager..."
@@ -27,23 +26,21 @@ if ! dpkg -l | grep elasticsearch &> /dev/null; then
 fi
 if grep -q "xpack.security.enabled: true" /etc/elasticsearch/elasticsearch.yml; then
 	sed -i 's/xpack.security.enabled: true/xpack.security.enabled: false/' /etc/elasticsearch/elasticsearch.yml
-fi	
+fi
 
 # group tvsgrp and add current user to group
-echo "1"
 groupadd tvsgrp &> /dev/null
-echo "2"
 usermod -aG tvsgrp "$CURRENT_USER"
-echo "3"
+
 # Apply group changes immediately for the current session
 #exec sg tvsgrp newgrp
-echo "4"
+# TODO: não funciona, falar com o engenheiro!!!!
 
 # tvsapp ----------------------------------
 echo "copying app to /opt/..."
 mkdir -p /opt/isel/tvs/tvsapp
 cp -r ./tvsapp/app /opt/isel/tvs/tvsapp/
-chown -R isel:isel /opt/isel
+chown -R "$CURRENT_USER":tvsgrp /opt/isel
 echo "instaling node tvsapp dependencies..."
 npm install --prefix /opt/isel/tvs/tvsapp/app
 
@@ -53,14 +50,14 @@ systemctl start elasticsearch
 systemctl enable nginx
 
 # tvsapp service template -------------------
-echo "copy tvsapp@ service to systemd..."
+echo "copying tvsapp@ service to systemd..."
 cp ./tvsapp/etc/service/tvsapp@.service /etc/systemd/system/
-systemctl daemon-reload
+# systemctl daemon-reload
 
 # nginx --------------------------------------
 echo "configuring nginx..."
 cp ./tvsctl-srv/etc/nginx/sites-available/tvsapp /etc/nginx/sites-available/
-ln -s /etc/nginx/sites-available/tvsapp /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/tvsapp /etc/nginx/sites-enabled/ &> /dev/null
 systemctl enable nginx
 systemctl start nginx
 systemctl reload nginx  # case already been running
@@ -68,9 +65,9 @@ systemctl reload nginx  # case already been running
 # tvsapp services -----------------------------
 # TODO: possivelmente em vez de fazer isto basta chamar o script start!!!
 echo "starting web app instances..."
-CONFIG_FILE="/etc/nginx/sites-available/tvsapp"
+CONFIG_FILE="/etc/nginx/sites-enabled/tvsapp"
 PORTS=$(awk '/upstream tvsapp_backend {/,/}/ {
-	if ($2 ~ /server/) {
+	if ($1 ~ /server/) {
 		split($2, a, ":");
 		print a[2]
 	}
@@ -78,7 +75,7 @@ PORTS=$(awk '/upstream tvsapp_backend {/,/}/ {
 
 for port in $PORTS; do
 	systemctl start tvsapp@"$port"
-	if [$? -eq 0]; then
+	if [ $? -eq 0 ]; then
 		echo "tvsapp@$port running"
 	else
 		echo "tvsapp@$port failed to start"
@@ -91,10 +88,12 @@ systemctl reload nginx
 echo "configuring tvsctld daemon..."
 mkdir -p /opt/isel/tvs/tvsctld/bin
 cp -r ./tvsctl-srv/bin/scripts /opt/isel/tvs/tvsctld/bin/
+cp ./tvsctl-srv/etc/service/tvsctld.socket /etc/systemd/system/
 cp ./tvsctl-srv/etc/service/tvsctld.service /etc/systemd/system/
+gcc ./tvsctl-srv/src/tvsctld.socket.c -o /opt/isel/tvs/tvsctld/bin/tvsctld.socket
 gcc ./tvsctl-srv/src/tvsctld.c -o /opt/isel/tvs/tvsctld/bin/tvsctld
 systemctl daemon-reload
-systemctl start tvsctld.service
+systemctl start tvsctld.socket
 
 # tvsctl ----------------------------------------
 echo "installing tvsctl..."
@@ -110,4 +109,6 @@ else
   	#echo "Backup of previous file: $ENV_FILE.bak"
   	source /etc/environment
 fi
+
+chown -R "$CURRENT_USER":tvsgrp /opt/isel  # again...
 echo "done"

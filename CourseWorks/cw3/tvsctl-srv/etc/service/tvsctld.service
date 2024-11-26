@@ -1,0 +1,11 @@
+[Unit]
+Description=TVS Control Application
+Requires=tvsctld.socket
+After=tvsctld.socket
+
+[Service]
+ExecStart=/opt/isel/tvs/tvsctld/bin/tvsctld
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
