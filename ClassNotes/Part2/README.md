@@ -115,4 +115,47 @@ Existem sockets de dois tipos:
 
 ![family](../img/socket2.png)
 
+## 12NOV2024
+
+- **daemon** - processo ou família de processos relacionados que estão a resolver um determinado problema
+
+### Init em Linux
+
+#### systemVinit vs systemd
+
+##### systemVinit
+
+- Tudo scripts shell em directorias numeradas
+- O que arranca primeiro está na directoria **1**, depois, o que está na directoria **2** e assim sucessivamente
+
+##### systemd
+
+- Replica o **launchd** da **apple**
+- Objetivos, arrancar menos e arrancar mais em paralelo
+- Se há serviços que necessitam de sockets, criar apenas os sockets, o serviço é criado à posteriori aquando da escrita no socket
+- Não usa scripts bash, para não criar processos
+- Usa ficheiros de configuração chamados **unit files**
+- Permite a interação através de um cliente, **systemctl**
+- Permite visualização de logs através de **journalctl**
+
+### systemd
+
+- `systemctl` - lista as units que estão disponíveis na máquina
+    * devices
+    * mounts
+    * cpus.path
+    * services
+    * slices
+    * sockets
+    * targets - agrupamentos de unidades. (podem corresponder a níveis de operacionalidade)
+
+- `systemctl list-dependencies basic.target`
+- `sudo systemctl isolate multi-user.target`
+- os ficheiros de configuração da máquina podem ser encontrados em:
+    * `/lib/systemd/system -> /usr/lib/...`
+    * `/etc/systemd/system`
+    * `/run/` - unidades em runtime
+    * `/home` - unidades apenas do user
+
+- `systemd` procura primeiro no `/etc` e só depois em `/lib`. `/lib` é mais generalista.
 
