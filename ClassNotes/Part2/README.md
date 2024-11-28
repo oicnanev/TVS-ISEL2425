@@ -137,6 +137,7 @@ Existem sockets de dois tipos:
 - Usa ficheiros de configuração chamados **unit files**
 - Permite a interação através de um cliente, **systemctl**
 - Permite visualização de logs através de **journalctl**
+- - [*post*](https://0pointer.de/blog/projects/systemd.html) do criador do systemd
 
 ### systemd
 
@@ -187,4 +188,24 @@ Also=tvsctld.socket
     * Also - indica que o se tentarem fazer enable ao serviço este manda fazer enable ao aqui indicado
 
 ## 27NOV2024 - Virtualização e Sistemas de Contentores
+
+Sistemas de contentores nascem de um conjunto de iniciativas para colocar programas a funcionar com um isolamento superior aquele que o sistema operativo proporciona.
+
+O isolamento por **processo** isola a memória e controla os CPUs através da ideia de *thread*. E o isolamento acaba aqui. O *file system* é o mesmo para todos os processos. Os recursos de rede também podem entrar em conflito, por exemplo, dois serviços configurados para usar o mesmo porto, faz com que o segundo, dẽ erro e não arranque - porto indisponível.
+
+Como tal, foi-se ao longo do tempo, tentando arranjar formas de aumentar o isolamento. por exemplo, o `chroot` em Linux que cria um ambiente isolado do *file system*, alterando a pasta `/` para uma nova pasta especificada. Programas que correm aqui, só vêm o *file system* a partir desta localização para baixo.
+
+Também já se começou a usar virtualização da rede. há processos, por exemplo, que julgam que a máquina tem um *hostname* diferente.
+
+**Docker** e outros mecanismos de contentores, tiram partido destas técnicas de isolamento para simular que estão numa máquina diferente. 
+
+![Contentores vs Máquinas Virtuais](../img/contentoresVSvms.png)
+
+Assim como um ficheiro executável tem a imagem de um programa e é possível correr isoladamente várias instâncias do programa, num sistema de contentores, podemos correr isoladamente vários contentores referentes à mesma imagem. Podemos dizer que o contentor está para a imagem assim como o processo está para o programa. 
+
+![Programa vs Imagem](../img/programaVSimagem.png)
+
+### Docker
+
+
 
