@@ -1,6 +1,6 @@
 # Part 2
 
-## 11NOV2024
+## 11NOV2024 - Mecanismos de comunicação entre processos UNIX
 
 - Mecanismos de comunicação entre processos
 - Como funciona a gestão da parte do sistema operativo que trabalha em **user mode**
@@ -115,7 +115,7 @@ Existem sockets de dois tipos:
 
 ![family](../img/socket2.png)
 
-## 12NOV2024
+## 12NOV2024 - Linix init systems
 
 - **daemon** - processo ou família de processos relacionados que estão a resolver um determinado problema
 
@@ -158,4 +158,33 @@ Existem sockets de dois tipos:
     * `/home` - unidades apenas do user
 
 - `systemd` procura primeiro no `/etc` e só depois em `/lib`. `/lib` é mais generalista.
+
+## 19NOV2024 - Systemd Unit Files
+
+### Unit Files
+
+```service
+[Unit]
+Description=TVS Control Application
+Requires=tvsctld.socket
+After=tvsctld.socket
+
+[Service]
+ExecStart=/opt/isel/tvs/tvsctld/bin/tvsctld
+Restart=no
+
+[Install]
+Also=tvsctld.socket
+```
+
+- Unit - coisas gerais sobre a unidade
+    * Requires - dependências obrigatórias
+    * Wants - dependências opcionais (se os serviços estiverem presentes na máquina devem arrancar antes deste serviço)
+    * After - indicação relativa à ordem de arranque / ativação do sistema
+- Service - especificações próprias do serviço
+- Install - target necessário para correr o serviço
+    * WantedBy - associa o serviço a um target, ex m̀ulti-user.tagert`
+    * Also - indica que o se tentarem fazer enable ao serviço este manda fazer enable ao aqui indicado
+
+## 27NOV2024 - Virtualização e Sistemas de Contentores
 
