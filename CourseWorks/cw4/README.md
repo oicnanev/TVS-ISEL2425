@@ -45,6 +45,8 @@ Be ready to explain the values observed for **HOST** and **PORT** in the four in
 
 > Tag this exercise on the GitHub repository with: **CW4-2** [Reference date: December 11 2024]
 
+[Our response](./Ex2.md)
+
 ---
 
 In the end, you must be able to **run the solution** with the following command:
