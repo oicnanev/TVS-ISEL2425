@@ -207,5 +207,65 @@ Assim como um ficheiro executável tem a imagem de um programa e é possível co
 
 ### Docker
 
+Alguns comandos docker:
 
+- `docker pull archlinux`- faz download da imagem archlinux
+- `docker images` - listas as imagens instaladas no sistema
+- `docker run ubuntu` - cria e corre um contentor ubuntu
+- `docker run -t ubuntu` - run com acesso ao terminal (stdout)
+- `docker run -it ubuntu` - run com acesso ao terminal e com stdin
+- `docker ps -a` - mostra os contentores que estão a correr e os parados (-a --all). só ps mostra apenas os que estão a correr
+- `docker start archlinux -ai` - corre um ou mais contentores parados com stdout/stdin (-a --attach) e interatividade (-i)
+- `docker build -t tvs51n1 [Dockerfile directory]` - constroi uma imagem docker com o nome (tag) tvs51n1
+- `docker run -it tvs51n1 /bin/bash` - run com substituição do [CMD] por /bin/bash
+- `docker exec -it [nome do contentor] /bin/bash` - permite executar um comando (neste caso /bin/bash) no contentor a correr
+- `docker prune [contentor]` - remove o contentor
+- `docker run tvsapp -p 12345:12345` - run tvsapp expondo o porto interno 12345 para a máquina no porto 12345
+
+No mundo docker chama-se sistema operativo ao *ambiente de execução*, tudo o que constitui o sistema operativo excepto o *kernel*
+
+Cada contentor a correr tem um *file system* de **diff** que contem apenas aquilo que foi alterado em relação à imagem original (base)
+
+[Base vs Diff](../img/docker_diff.png)
+
+Contentores não são máquinas virtuais, são processos que correm num ambiente isolado de execução, com sistema de ficheiros limitado
+
+#### Construção de imagens docker
+
+[docker image](../img/image.png)
+
+- uma imagem é constituída por dois componentes
+    * file system
+    * meta dados / meta informação
+- é construida através de instruções num ficheiro Dockerfile
+- a primeira instrução de um Dockerfile é "em que imagem a nossa imagem se basea"
+    * existe uma base vazia chamada **scratch**, `FROM scratch` 
+- normamente é usado um `ENTRYPOINT` vazio que é concatenado com `CMD`, onde metemos o comando que queremos correr
+    * `CMD` pode ser substituido em run, `ENTRYPOINT` não pode ser substituido
+- pode ser necessário forçar o `build` porque o docker quando faz `build` aproveita *cache* de *builds* anteriores
+- o último *user* usado no Dockerfile é o que fica como *user* da *image*
+
+#### Exemplo Dockerfile
+
+```Dockerfile
+FROM  ubuntu
+LABEL org.opencontainers.image.author="joao.trindade@isel.pt"
+USER  root
+RUN   apt-get -qq -y update && \
+	   apt-get upgrade && \
+	   apt-get -y autoclean && \
+	   apt-get -y autoremove && \
+      run -rf /var/lib/apt/list/*
+
+# create user tvs
+RUN	useradd -m tvs && \
+		cp /root/.bashrc /home/tvs/ && \
+       mkdir /home/tvs/work && \
+       chown -R --from=root tvs /home/tvs
+ENV	HOME=/home/tvs
+WORKDIR ${HOME}/work
+USER	tvs
+ENTRYPOINT [""]
+CMD	["/bin/sh"]  			
+```
 
