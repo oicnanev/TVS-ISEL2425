@@ -226,13 +226,13 @@ No mundo docker chama-se sistema operativo ao *ambiente de execução*, tudo o q
 
 Cada contentor a correr tem um *file system* de **diff** que contem apenas aquilo que foi alterado em relação à imagem original (base)
 
-[Base vs Diff](../img/docker_diff.png)
+![Base vs Diff](../img/docker_diff.png)
 
 Contentores não são máquinas virtuais, são processos que correm num ambiente isolado de execução, com sistema de ficheiros limitado
 
 #### Construção de imagens docker
 
-[docker image](../img/image.png)
+![docker image](../img/image.png)
 
 - uma imagem é constituída por dois componentes
     * file system
@@ -248,24 +248,24 @@ Contentores não são máquinas virtuais, são processos que correm num ambiente
 #### Exemplo Dockerfile
 
 ```Dockerfile
-FROM  ubuntu
-LABEL org.opencontainers.image.author="joao.trindade@isel.pt"
-USER  root
-RUN   apt-get -qq -y update && \
-	   apt-get upgrade && \
-	   apt-get -y autoclean && \
-	   apt-get -y autoremove && \
-      run -rf /var/lib/apt/list/*
+FROM       ubuntu
+LABEL      org.opencontainers.image.author="joao.trindade@isel.pt"
+USER       root
+RUN        apt-get -qq -y update && \
+	        apt-get upgrade && \
+	        apt-get -y autoclean && \
+	        apt-get -y autoremove && \
+           run -rf /var/lib/apt/list/*
 
 # create user tvs
-RUN	useradd -m tvs && \
-		cp /root/.bashrc /home/tvs/ && \
-       mkdir /home/tvs/work && \
-       chown -R --from=root tvs /home/tvs
-ENV	HOME=/home/tvs
-WORKDIR ${HOME}/work
-USER	tvs
+RUN        useradd -m tvs && \
+           cp /root/.bashrc /home/tvs/ && \
+           mkdir /home/tvs/work && \
+           chown -R --from=root tvs /home/tvs
+ENV	    HOME=/home/tvs
+WORKDIR    ${HOME}/work
+USER	    tvs
 ENTRYPOINT [""]
-CMD	["/bin/sh"]  			
+CMD	    ["/bin/sh"]  			
 ```
 
