@@ -25,6 +25,8 @@ Produce the *tvsapp image* from this *Dockerfile* and use `docker run` to execut
 
 Be ready to explain the values observed for **HOST** and **PORT** in the four instances.
 
+[Our response](./Ex1.md)
+
 > Tag this exercice on the GitHub repository with: **CW4-1** [Reference date: Dec 4 2024]
 
 ----
