@@ -10,7 +10,7 @@ ln -s /etc/nginx/sites-available/tvsapp /etc/nginx/sites-enabled/ &> /dev/null #
 systemctl start nginx  # does nothing if already started
 
 # start all tvsapp instances -----------------------------------------------
-CONFIG_FILE="/etc/nginx/sites-enabled/tvsapp"  # path for nginx tvsapp conf
+CONFIG_FILE="/etc/nginx/sites-available/tvsapp"  # path for nginx tvsapp conf
 
 # Extract the number of the ports from the block upstream tvsapp
 PORTS=$(awk '/upstream tvsapp_backend {/,/}/ {
@@ -36,6 +36,8 @@ for port in $PORTS; do
         echo "Fail to start the service tvsapp@$port."
     fi
 done
+
+ln -s /etc/nginx/sites-available/tvsapp /etc/nginx/sites-enabled/ &> /dev/null
 
 echo "Reloading nginx..."
 systemctl reload nginx # reload nginx configuration

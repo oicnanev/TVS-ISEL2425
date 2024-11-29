@@ -19,7 +19,7 @@ void usage() {
     
     printf("Usage: tvsctl <command> [args]\n");
     printf("\nAvailable commads\n\n");
-    printf("\tstart\t\t%s\n", srt);
+    printf("\tstart\t\t\t%s\n", srt);
     printf("\tstatus [-v]\t\t%s\n", stt);
     printf("\tstop [-db]\t\t%s\n", stp);
     printf("\treset [scale [base]]\t%s\n", rst);

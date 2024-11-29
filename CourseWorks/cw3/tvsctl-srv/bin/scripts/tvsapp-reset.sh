@@ -9,7 +9,7 @@ echo "Stopping all tvsapp@ services..."
 systemctl stop 'tvsapp@*.service'
 
 # tvsapp nginx config file
-CONFIG_FILE="/etc/nginx/sites-enabled/tvsapp"
+CONFIG_FILE="/etc/nginx/sites-available/tvsapp"
 
 if ! [[ -f "$CONFIG_FILE" ]]; then
     echo "Configuration file not found: $CONFIG_FILE"

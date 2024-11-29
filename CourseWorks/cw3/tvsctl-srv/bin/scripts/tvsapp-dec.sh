@@ -4,7 +4,7 @@
 DELTA=${1:-1}
 
 # Configuration file path
-CONFIG_FILE="/etc/nginx/sites-enabled/tvsapp"
+CONFIG_FILE="/etc/nginx/sites-available/tvsapp"
 
 if ! [[ -f "$CONFIG_FILE" ]]; then
     echo "Configuration file not found: $CONFIG_FILE"

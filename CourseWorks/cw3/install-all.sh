@@ -3,29 +3,31 @@
 # machine user
 CURRENT_USER=$(logname)
 
-# setup -----------------------------------
-echo "updating package manager..."
-apt update
-if ! npm -v npm -v &> /dev/null; then
-	echo "installing node package manager..."
-	apt install npm
-fi
-if ! node -v &> /dev/null; then
-	echo "instaling nodejs..."
-	apt install nodejs
-fi
-if ! nginx -v &> /dev/null; then
-	echo "instaling nodejs..."
-	apt install nginx
-fi
-if ! dpkg -l | grep elasticsearch &> /dev/null; then
-	echo "instaling elasticsearch..."
-	wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.15.3-amd64.deb
-	dkpg -i elasticsearch*.deb
-	rm elasticsearch*.deb
-fi
-if grep -q "xpack.security.enabled: true" /etc/elasticsearch/elasticsearch.yml; then
-	sed -i 's/xpack.security.enabled: true/xpack.security.enabled: false/' /etc/elasticsearch/elasticsearch.yml
+if [[ "$1" == "--setup" ]]; then
+	# setup -----------------------------------
+	echo "updating package manager..."
+	apt update
+	if ! npm -v npm -v &> /dev/null; then
+		echo "installing node package manager..."
+		apt install npm
+	fi
+	if ! node -v &> /dev/null; then
+		echo "instaling nodejs..."
+		apt install nodejs
+	fi
+	if ! nginx -v &> /dev/null; then
+		echo "instaling nodejs..."
+		apt install nginx
+	fi
+	if ! dpkg -l | grep elasticsearch &> /dev/null; then
+		echo "instaling elasticsearch..."
+		wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.15.3-amd64.deb
+		dkpg -i elasticsearch*.deb
+		rm elasticsearch*.deb
+	fi
+	if grep -q "xpack.security.enabled: true" /etc/elasticsearch/elasticsearch.yml; then
+		sed -i 's/xpack.security.enabled: true/xpack.security.enabled: false/' /etc/elasticsearch/elasticsearch.yml
+	fi
 fi
 
 # group tvsgrp and add current user to group
@@ -40,7 +42,7 @@ usermod -aG tvsgrp "$CURRENT_USER"
 echo "copying app to /opt/..."
 mkdir -p /opt/isel/tvs/tvsapp
 cp -r ./tvsapp/app /opt/isel/tvs/tvsapp/
-chown -R "$CURRENT_USER":tvsgrp /opt/isel
+#chown -R "$CURRENT_USER":tvsgrp /opt/isel
 echo "instaling node tvsapp dependencies..."
 npm install --prefix /opt/isel/tvs/tvsapp/app
 
@@ -90,10 +92,10 @@ mkdir -p /opt/isel/tvs/tvsctld/bin
 cp -r ./tvsctl-srv/bin/scripts /opt/isel/tvs/tvsctld/bin/
 cp ./tvsctl-srv/etc/service/tvsctld.socket /etc/systemd/system/
 cp ./tvsctl-srv/etc/service/tvsctld.service /etc/systemd/system/
-gcc ./tvsctl-srv/src/tvsctld.socket.c -o /opt/isel/tvs/tvsctld/bin/tvsctld.socket
 gcc ./tvsctl-srv/src/tvsctld.c -o /opt/isel/tvs/tvsctld/bin/tvsctld
 systemctl daemon-reload
 systemctl start tvsctld.socket
+systemctl enable tvsctld.socket
 
 # tvsctl ----------------------------------------
 echo "installing tvsctl..."
@@ -110,5 +112,8 @@ else
   	source /etc/environment
 fi
 
-chown -R "$CURRENT_USER":tvsgrp /opt/isel  # again...
+chown "$CURRENT_USER":tvsgrp /opt/isel/tvs/tvsctl/tvsctl
+chmod 750 /opt/isel/tvs/tvsctl/tvsctl
+
 echo "done"
+echo "please logout and login again to reload the environment"
