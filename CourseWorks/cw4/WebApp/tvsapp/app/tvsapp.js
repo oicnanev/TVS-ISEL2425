@@ -92,7 +92,10 @@ async function incrementAndGetCounter() {
 
 async function getFortune() {
 	return new Promise((resolve) => {
-		exec("/usr/games/fortune", (error, stdout, stderr) => { resolve(stdout) })
+		// for alpine
+		exec("/usr/bin/fortune", (error, stdout, stderr) => { resolve(stdout) })
+		// for ubuntu
+		//exec("/usr/games/fortune", (error, stdout, stderr) => { resolve(stdout) })			
 	})
 }
 

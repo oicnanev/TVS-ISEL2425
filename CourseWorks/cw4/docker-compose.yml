@@ -1,0 +1,43 @@
+name: "tvs"
+
+services:
+  entry:
+    build:
+      context: ./nginx
+    depends_on:
+      - webapp
+    ports:
+      - "2024:2024"
+    networks:
+      - frontnet
+
+  webapp:
+    build:
+      context: ./WebApp
+    depends_on:
+      - storage
+    environment:
+      - ELASTIC_URL=http://tvs-storage-1:9200
+    networks:
+      - frontnet
+      - backnet
+
+  storage:
+    image: elasticsearch:8.16.1
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    #expose:
+    #  - "9200"
+    networks:
+      - backnet
+
+volumes:
+  esdata:
+    driver: local
+    
+networks:
+  frontnet: {}
+  backnet: {}
