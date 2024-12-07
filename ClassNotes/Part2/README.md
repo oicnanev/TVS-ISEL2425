@@ -269,3 +269,82 @@ ENTRYPOINT [""]
 CMD	    ["/bin/sh"]  			
 ```
 
+### 04DEC2024
+
+#### Redes docker
+
+É possível associar um contentor a uma 'visão de rede'. Para isso é necesário criar primeiro essa rede. Existem vários tipos (drivers) de redes no docker:
+
+- **null** - sem rede
+- **host** - rede do host
+- **bridge** - rede default (uma espécie de NAT entre a rede do host e a rede docker)
+- ouros - ex. alterar MAC address, redes que ligam diferentes dockerd em máquinas distintas, etc.
+
+Para cada 'solução docker' (conhunto de containers relacionados entre si) deve ser criada uma rede isolada para que a rede docker não misture as várias soluções na mesma rede.
+
+- ```docker network ls``` - lista as redes (iniciais) do docker
+- ```docker network create [nome da rede] -- driver bridge``` - cria uma rede do tipo bridge mas diferente da bridge default (tem serviço de DNS, no endereço xxx.xxx.xxx.11)
+- ```docker run -it --network tvsnet1 busybox```- para correr um contentor numa rede própria
+- ```nslookup [container hostname] 127.0.0.11``` - dns resolver no busybox
+
+#### docker compose
+
+Docker compose serve para criar uma solução docker de forma descritiva. Para isso é usado um ficheiro *yaml* com os campos:
+
+- name - o nome da solução
+- service - contentores
+- networks - a(s) rede(s) usada(s)
+- volumes - referencias permanentes e não voláteis para o sistema de ficheiros da máquina (ex. uma base de dados)
+
+Exemplo:
+
+```yaml
+name: "tvs"
+
+services:
+	entry:
+		build:
+			context: ./nginx
+		depends_on:
+			- webapp
+		 ports:
+			- "2024:2024"
+		netwoks:
+			- frontnet
+	webapp:
+		build:
+			context: ./webapp
+		depends_on:
+			- storage
+		environment:
+			- ELASTIC_URL=http://tvs-storage-1:9200
+		networks:
+			- frontnet
+			- backnet
+	storage:
+		image: elasticsearch:8.16.1
+		environment
+			- discovery.type=single-node
+			- xpack.security.enable=false
+		volumes:
+			esdata:/usr/share/elasticsearch/data
+		networks:
+			backnet
+
+volumes:
+	esdata:
+		driver: local
+
+networks:
+	frontnet: {}
+	backnet: {}
+```
+
+**Comandos**
+
+- ```docker compose up -d``` - build and run the solution
+- ```docker compose down``` - stop the solution
+- ```docker compose up -d --scale webapp=3 --no-recreate```- run the solution with 3 instances of the service webapp
+- ```seq 32 | xargs -I{} curl -s http://localhost:2024/ | grep "HOST" | sed "s/<\/\?[a-z]\+>//g" | sed "s/^[[:space:]]*//" | sort | uniq -c``` - check how many webapps are running
+
+ 
