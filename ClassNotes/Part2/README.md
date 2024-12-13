@@ -516,7 +516,7 @@ Windows começou com o **DOS**. Disk Operating System, que não era bem um siste
 
 Depois, com o Windows NT (New Technology), desenvolvido por [Dave Cutler](https://en.wikipedia.org/wiki/Dave_Cutler), cria-se um sistema operativo de ambiente gráfico de raiz. No entanto, para poder concorrer aos concursos públicos dos USA, teve de criar uma interface POSIX. Por exemplo Windows, não tem a operação `fork()`
 
-![Windows NT com suporte a POSIX](https://en.wikipedia.org/wiki/Windows_NT#/media/File:Windows_2000_architecture.svg)
+![Windows NT com suporte a POSIX](../img/Windows_2000_architecture.svg)
 
 Por volta de 2010, o windows retirou o suporte aos subsistemas, entretanto com o aparecimento da tecnologia docker, a Microsoft, decide ressuscitar os subsistemas, com uma API linux.
 
