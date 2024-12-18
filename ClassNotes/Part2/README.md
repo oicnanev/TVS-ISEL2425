@@ -18,7 +18,7 @@
 - **shm** (shared memory) - tipo `mmap` mas com nome e que pode ser partilhado entre vários ficheiros
 - **uds** (UNIX Domain Socket) - socket específico para comunicação entre processos
  
-Todos estes mecanismos resolvem o pproblema do nome da mesma forma, são nomes no sistema de ficheiros, são **UNIX files**
+Todos estes mecanismos resolvem o problema do nome da mesma forma, são nomes no sistema de ficheiros, são **UNIX files**
 
 - **-** ficheiro normal, inclui `shm`
 - **d** directoria (mapa de ficheiros)
@@ -191,7 +191,7 @@ Also=tvsctld.socket
 
 Sistemas de contentores nascem de um conjunto de iniciativas para colocar programas a funcionar com um isolamento superior aquele que o sistema operativo proporciona.
 
-O isolamento por **processo** isola a memória e controla os CPUs através da ideia de *thread*. E o isolamento acaba aqui. O *file system* é o mesmo para todos os processos. Os recursos de rede também podem entrar em conflito, por exemplo, dois serviços configurados para usar o mesmo porto, faz com que o segundo, dẽ erro e não arranque - porto indisponível.
+O isolamento por **processo** isola a memória e controla os CPUs através da ideia de *thread*. E o isolamento acaba aqui. O *file system* é o mesmo para todos os processos. Os recursos de rede também podem entrar em conflito, por exemplo, dois serviços configurados para usar o mesmo porto, faz com que o segundo, dê erro e não arranque - porto indisponível.
 
 Como tal, foi-se ao longo do tempo, tentando arranjar formas de aumentar o isolamento. por exemplo, o `chroot` em Linux que cria um ambiente isolado do *file system*, alterando a pasta `/` para uma nova pasta especificada. Programas que correm aqui, só vêm o *file system* a partir desta localização para baixo.
 
@@ -278,7 +278,7 @@ CMD	    ["/bin/sh"]
 - **null** - sem rede
 - **host** - rede do host
 - **bridge** - rede default (uma espécie de NAT entre a rede do host e a rede docker)
-- ouros - ex. alterar MAC address, redes que ligam diferentes dockerd em máquinas distintas, etc.
+- outros - ex. alterar MAC address, redes que ligam diferentes dockerd em máquinas distintas, etc.
 
 Para cada 'solução docker' (conhunto de containers relacionados entre si) deve ser criada uma rede isolada para que a rede docker não misture as várias soluções na mesma rede.
 
