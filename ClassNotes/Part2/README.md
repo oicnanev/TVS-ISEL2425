@@ -280,7 +280,7 @@ CMD	    ["/bin/sh"]
 - **bridge** - rede default (uma espécie de NAT entre a rede do host e a rede docker)
 - outros - ex. alterar MAC address, redes que ligam diferentes dockerd em máquinas distintas, etc.
 
-Para cada 'solução docker' (conhunto de containers relacionados entre si) deve ser criada uma rede isolada para que a rede docker não misture as várias soluções na mesma rede.
+Para cada 'solução docker' (conjunto de containers relacionados entre si) deve ser criada uma rede isolada para que a rede docker não misture as várias soluções na mesma rede.
 
 - ```docker network ls``` - lista as redes (iniciais) do docker
 - ```docker network create [nome da rede] -- driver bridge``` - cria uma rede do tipo bridge mas diferente da bridge default (tem serviço de DNS, no endereço xxx.xxx.xxx.11)
@@ -377,7 +377,10 @@ Depois, executamos o comando `sudo mount -t overlay -o lowerdir=base,upperdir=di
 
 Dentro da pasta `merged` estão agora as directorias `base` e `diff`
 
-Curiosidade, quando se apaga um ficheiro de um sistema montado por overlay, na pasta `diff` é criado um ficheiro do tipo `character device` mas um inteiro que representa um *driver* ilegal. Exemplo:
+Curiosidade, quando se apaga um ficheiro de um sistema montado por overlay, na pasta `diff` é criado um ficheiro do tipo `character device` mas com o inteiro que representa um *driver* ilegal. 
+[tipo de ficheiro][permissoes user, group, others] [owner] [group] [driver integer] [???] [data/hora] [nome do ficheiro]
+
+Exemplo:
 
 ```sh
 c--------- 2 root root 0, 0 Dec 12 13:58 file.c
