@@ -543,7 +543,48 @@ Na versão atual, WSL 2, foi introduzido a tecnologia **Hyper-V**, a qual acenta
 
 `C:\USER\AppData\Local\Packages\CanonicalGroup\LocalState\rootfs` - para WSL1, não é uma máquina virtual
 
-## Hypervisores
+## 17DEC2024 Hypervisores
+
+### Taxonomia de Máquinas Virtuais
+
+- **Q** - Trabalha (run) como Processo integrado, OS-Level (container) ou Sistema independente?
+- **Q** - Usa a mesma arquitetura do processador (mesmo ISA)? 
+
+![Taxonomia de Máquinas Virtuais](../img/taxonimiaVM.png)
+
+### Hypervisor Type-2
+
+#### Exemplo do VMWare Workstation 
+
+- **VMM** - Virtual Machine Monitor ou Hypervisor
+
+![VMWare](../img/vmware.png)
+
+Ao longo do tempo, deu-se também a intervenção de outros participantes para o desenvolvimento e utilização de Máquinas Virtuais de Sistema
+
+- **Processadores**
+    * Extensões de virtualização (VT-x, AMD-V)
+    * Suporte de virtualização (ARM64 de origem)
+    * Tradução de endereços a dois níveis (nos Hypervisores Tipo-2)
+    * Extensão do nível de privilégio. Exemplo do ARM64:
+        + EL0 - user mode
+        + EL1 - kernel mode
+        + EL2 - hypervisor mode
+- **Sistemas Operativos**
+    * Paravirtualização:
+        + OS deteta que está numa máquina virtual, e usando a paravirtualização tem um melhor desempenho
+        + OS Host tem drivers de paravirtualização para serem usados pelo Guest
 
 
+![Tradução de endereços a dois níveis](../img/2leveladdrtranslation.png)
+
+### Hypervisor Type-1
+
+Existem também soluções empresariais de Maquinas Virtuais de Sistema como VMWare ESXi, Nutanix, Proxmox, Hyper-V (microsoft)
+
+A diferença para hypervisors type-2 é que o Hypervisor Type-1 trabalha diretamente em cima do hardware, não necesita OS
+
+No caso do Hyper-V (windows), tem um SO principal (Windows Server) que colabora com o hypervisor, tem os drivers todos e monta BUS de comunicação para as VMs
+
+![Hypervisor Type-1](../img/type1_hypervisor.png)
 
