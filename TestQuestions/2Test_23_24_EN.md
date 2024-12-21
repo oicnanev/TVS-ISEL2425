@@ -1,6 +1,6 @@
 # TVS, Inverno de 2023/2024, Época Normal — Teste Parcial #2 — Teste Global, parte 2
 
-## 1. Num sistema Linux é possível utilizar sockets de domínio Unix (Unix Domain Sockets). ndique qual é a diferença fundamental entre este tipo de sockets e os sockets de Internet, incluindo qual a sua principal vantagem e a principal limitação.
+## 1. Num sistema Linux é possível utilizar sockets de domínio Unix (Unix Domain Sockets). indique qual é a diferença fundamental entre este tipo de sockets e os sockets de Internet, incluindo qual a sua principal vantagem e a principal limitação.
 
 ### Diferença Fundamental
 - **Unix Domain Sockets**: São utilizados para a comunicação entre processos (IPC) que residem no mesmo host (máquina). Em vez de utilizar endereços IP e números de porta como os sockets de Internet, eles utilizam caminhos do sistema de ficheiros para identificar os endpoints de comunicação.
@@ -17,9 +17,9 @@
 ### Endereços de Sockets de Domínio Unix (Unix Domain Sockets)
 Os endereços utilizados com os sockets de domínio Unix são caminhos no sistema de ficheiros. Estes caminhos apontam para entradas do tipo *socket* no sistema de ficheiros, permitindo que os processos se comuniquem entre si através destes pontos de acesso. Aqui está um exemplo de endereço de um socket de domínio Unix:
 ```
-/tmp/socket_unix
+/run/socket_unix
 ```
-Este caminho `/tmp/socket_unix` seria utilizado pelos processos para se conectarem ao socket.
+Este caminho `/run/socket_unix` seria utilizado pelos processos para se conectarem ao socket.
 
 ### Endereços de Sockets de Internet
 Os endereços utilizados com os sockets de Internet são compostos por endereços IP e números de porta. Estes endereços permitem que processos em diferentes máquinas se comuniquem através da rede. Aqui está um exemplo de endereço de um socket de Internet:
@@ -30,7 +30,7 @@ Neste caso, `192.168.1.10` é o endereço IP e `8080` é o número da porta util
 
 ### Diferenças Fundamentais
 - **Formato**:
-  - **Unix Domain Sockets**: Utilizam caminhos de sistema de ficheiros, como `/tmp/socket_unix`.
+  - **Unix Domain Sockets**: Utilizam caminhos de sistema de ficheiros, como `/run/socket_unix`.
   - **Sockets de Internet**: Utilizam uma combinação de endereços IP e números de porta, como `192.168.1.10:8080`.
 
 - **Utilização**:
@@ -69,8 +69,6 @@ StandardError=journal
 Estas configurações garantem que toda a saída e erros dos daemons são capturados e podem ser facilmente acessados e revisados através das ferramentas do systemd, como o `journalctl`.
 
 ## 3. Num sistema Linux com systemd, o ficheiro /etc/systemd/system/tp2.socket, na sua secção [Install] tem a linha WantedBy=sockets.target . Para que serve a secção Install, porquê WantedBy e o que representa sockets.target ?
-
-Excelente pergunta! Vamos detalhar cada um desses componentes no contexto do systemd em Linux.
 
 ### Secção [Install]
 A secção `[Install]` num ficheiro de unidade (unit file) do systemd define informações específicas sobre como e quando a unidade deve ser instalada ou ativada. Essencialmente, esta secção especifica as condições sob as quais a unidade deve ser iniciada automaticamente durante o processo de inicialização ou ativação do sistema.
@@ -294,31 +292,31 @@ Em uma configuração com Docker Compose, os nomes de serviços e contentores s�
 
 - **Contentores:**
   - `svca`:
-    - Nome do contentor: `tp2_svca_1`
+    - Nome do contentor: `tp2-svca-1`
   - `svcb` (com scale=2):
-    - Nome dos contentores: `tp2_svcb_1` e `tp2_svcb_2`
+    - Nome dos contentores: `tp2-svcb-1` e `tp2-svcb-2`
   - `svcc`:
-    - Nome do contentor: `tp2_svcc_1`
+    - Nome do contentor: `tp2-svcc-1`
 
 ### Endereços e Resolução de DNS:
 
 - **Nomes de Serviços**:
-  - `svca`: Refere-se ao endereço do contentor `tp2_svca_1`
-  - `svcb`: Refere-se a um dos contentores `tp2_svcb_1` ou `tp2_svcb_2`, dependendo do mecanismo de load balancing do Docker.
-  - `svcc`: Refere-se ao endereço do contentor `tp2_svcc_1`
+  - `svca`: Refere-se ao endereço do contentor `tp2-svca-1`
+  - `svcb`: Refere-se a um dos contentores `tp2-svcb-1` ou `tp2-svcb-2`, dependendo do mecanismo de load balancing do Docker.
+  - `svcc`: Refere-se ao endereço do contentor `tp2-svcc-1`
 
 - **Nomes de Contentores**:
-  - `tp2_svca_1`: Endereço do contentor `svca`
-  - `tp2_svcb_1`: Endereço de um dos contentores `svcb`
-  - `tp2_svcb_2`: Endereço do outro contentor `svcb`
-  - `tp2_svcc_1`: Endereço do contentor `svcc`
+  - `tp2-svca-1`: Endereço do contentor `svca`
+  - `tp2-svcb-1`: Endereço de um dos contentores `svcb`
+  - `tp2-svcb-2`: Endereço do outro contentor `svcb`
+  - `tp2-svcc-1`: Endereço do contentor `svcc`
 
 ### Funcionamento do DNS Interno:
 No Docker Compose, todos os serviços registados na rede `svcnet` podem resolver uns aos outros pelo nome do serviço. Por exemplo:
 - O serviço `svca` pode se conectar ao serviço `svcb` utilizando o nome `svcb`.
 - O serviço `svcc` pode se conectar ao serviço `svca` utilizando o nome `svca`.
 
-Os nomes dos contentores são únicos e seguem o padrão `<nome_compose>_<nome_serviço>_<índice>`, onde `<nome_compose>` é o nome da solução composta especificada (neste caso, `tp2`), `<nome_serviço>` é o nome do serviço, e `<índice>` é o índice do contentor (iniciado em 1).
+Os nomes dos contentores são únicos e seguem o padrão `<nome_compose>-<nome_serviço>-<índice>`, onde `<nome_compose>` é o nome da solução composta especificada (neste caso, `tp2`), `<nome_serviço>` é o nome do serviço, e `<índice>` é o índice do contentor (iniciado em 1).
 
 Esta configuração permite que os serviços se comuniquem facilmente, utilizando os nomes dos serviços registados no DNS interno da rede `svcnet`.
 
