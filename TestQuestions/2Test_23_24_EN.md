@@ -1,13 +1,6 @@
-# TVS, Inverno de 2023/2024, Época Normal —
+# TVS, Inverno de 2023/2024, Época Normal —Teste Parcial #2 — Teste Global, parte 2
 
-Teste Parcial #2 — Teste Global, parte 2
-
-## 1. Num sistema Linux é possível utilizar sockets de domínio Unix
-
-(Unix Domain Sockets)
-
-Indique qual é a diferença fundamental entre este tipo de sockets e os sockets
-de Internet, incluindo qual a sua principal vantagem e a principal limitação.
+## 1. Num sistema Linux é possível utilizar sockets de domínio Unix (Unix Domain Sockets). Indique qual é a diferença fundamental entre este tipo de sockets e os sockets de Internet, incluindo qual a sua principal vantagem e a principal limitação.
 
 ### Diferença Fundamental
 
@@ -34,9 +27,7 @@ de Internet, incluindo qual a sua principal vantagem e a principal limitação.
   Eles só funcionam para a comunicação dentro do mesmo sistema operativo.
   Para comunicação entre hosts, é necessário utilizar sockets de Internet.
 
-## Qual é a forma dos endereços que são usados com sockets de domínio Unix
-
-e como diferem dos endereços de sockets de Internet
+## Qual é a forma dos endereços que são usados com sockets de domínio Unix e como diferem dos endereços de sockets de Internet
 
 ### Endereços de Sockets de Domínio Unix (Unix Domain Sockets)
 
@@ -83,12 +74,7 @@ utilizada para a comunicação.
 Esta diferenciação fundamental nos endereços reflete a distinta finalidade
 e alcance destes dois tipos de sockets.
 
-## 2. Alguns processos ativos num sistema Linux correspondem a serviços a
-
-operar como daemons. Indique a consequência dessa situação para os canais de
-standard output e de standard error desses processos e que mecanismo deve
-incluir um gestor de serviços avançado (como, por exemplo, o systemd) para
-lidar com os dados que possam surgir nesses canais
+## 2. Alguns processos ativos num sistema Linux correspondem a serviços a operar como daemons. Indique a consequência dessa situação para os canais de standard output e de standard error desses processos e que mecanismo deve incluir um gestor de serviços avançado (como, por exemplo, o systemd) para lidar com os dados que possam surgir nesses canais
 
 Quando um processo opera como daemon num sistema Linux, ele geralmente é
 dissociado do terminal onde foi iniciado. Isso significa que os seus canais
@@ -130,11 +116,7 @@ Estas configurações garantem que toda a saída e erros dos daemons são
 capturados e podem ser facilmente acessados e revisados através das
 ferramentas do systemd, como o `journalctl`.
 
-## 3. Num sistema Linux com systemd, o ficheiro
-
-/etc/systemd/system/tp2.socket, na sua secção [Install] tem a linha
-WantedBy=sockets.target . Para que serve a secção Install, porquê WantedBy e o
-que representa sockets.target ?
+## 3. Num sistema Linux com systemd, o ficheiro /etc/systemd/system/tp2.socket, na sua secção [Install] tem a linh WantedBy=sockets.target . Para que serve a secção Install, porquê WantedBy e o que representa sockets.target ?
 
 ### Secção [Install]
 
@@ -191,13 +173,7 @@ Com estas configurações, o serviço `tp2.socket` será automaticamente
 iniciado sempre que o `sockets.target` for ativado, garantindo que o
 sistema está pronto para lidar com conexões de socket.
 
-## 4. Os hipervisores são tipicamente classificados como sendo de Tipo 1 ou de
-
-Tipo 2. Um destes tipos, pelas suas características, é geralmente mais
-eficiente do que o outro na gestão e consumo de recursos computacionais da
-máquina base. Qual destes tipos tende a ser mais eficiente, porquê e porque
-motivo(s), apesar disso, existem os dois tipos de hipervisores, por vezes até
-vindos da mesma empresa?
+## 4. Os hipervisores são tipicamente classificados como sendo de Tipo 1 ou de Tipo 2. Um destes tipos, pelas suas características, é geralmente mais eficiente do que o outro na gestão e consumo de recursos computacionais da máquina base. Qual destes tipos tende a ser mais eficiente, porquê e porque motivo(s), apesar disso, existem os dois tipos de hipervisores, por vezes até vindos da mesma empresa?
 
 ### Tipos de Hipervisores
 
@@ -260,13 +236,7 @@ ambiente. A eficiência dos hipervisores Tipo 1 os torna ideais para grandes
 implementações de servidores, enquanto a flexibilidade dos hipervisores Tipo 2
 os torna valiosos para ambientes de desenvolvimento, teste e uso pessoal.
 
-## 5. Num sistema Linux com o serviço docker ativo, estão em execução dois
-
-contentores baseados na imagem node:current-alpine3.18 e um baseado na imagem
-php:8.2-alpine3.18. Nos respectivos Dockerfile, ambas as imagens começam com a
-linha FROM alpine:3.18 . Havendo neste cenário duas imagens e três
-contentores, justifique quantas cópias do sistema de ficheiros definido pela
-imagem base alpine:3.18 deverão existir no disco do sistema host?
+## 5. Num sistema Linux com o serviço docker ativo, estão em execução dois contentores baseados na imagem node:current-alpine3.18 e um baseado na imagem php:8.2-alpine3.18. Nos respectivos Dockerfile, ambas as imagens começam com a linha FROM alpine:3.18 . Havendo neste cenário duas imagens e três contentores, justifique quantas cópias do sistema de ficheiros definido pela imagem base alpine:3.18 deverão existir no disco do sistema host?
 
 Num cenário Docker, as imagens são construídas em camadas, e cada camada é
 armazenada de forma única no disco do sistema host. Portanto, mesmo que várias
@@ -319,9 +289,7 @@ WORKDIR /home/node/app
 CMD ["node", "app.js"]
 ```
 
-## 6.1 Indique que camadas (não-vazias) do sistema de ficheiros são criadas
-
-sobre a imagem base node:alpine
+## 6.1 Indique que camadas (não-vazias) do sistema de ficheiros são criadas sobre a imagem base node:alpine
 
 Aqui estão as camadas (não-vazias) do sistema de ficheiros que são criadas
 sobre a imagem base `node:alpine` no seu Dockerfile:
@@ -396,10 +364,7 @@ sobre a imagem base `node:alpine` no seu Dockerfile:
 Estas são as camadas não-vazias adicionadas sobre a imagem base
 `node:alpine` no seu Dockerfile.
 
-# 6.2 Modifique o Dockerfile para tirar melhor proveito da build cache
-
-relativa à atual linha 4, minimizando o número de camadas finais (não-vazias)
-no sistema de ficheiros, indicando quais serão
+# 6.2 Modifique o Dockerfile para tirar melhor proveito da build cache relativa à atual linha 4, minimizando o número de camadas finais (não-vazias) no sistema de ficheiros, indicando quais serão
 
 Para otimizar o uso do cache de build e minimizar o número de camadas finais
 (não-vazias) no Dockerfile, é importante colocar as instruções que não mudam
@@ -480,13 +445,7 @@ cacheada, a menos que o `package.json` seja modificado. Isto reduz a
 necessidade de reinstalar as dependências sempre que os arquivos de
 código-fonte mudam, minimizando as camadas criadas durante a build.
 
-## 7. Um ficheiro docker-compose.yml, para especificação de uma solução
-
-composta com o nome tp2, contém três serviços: svca, svcb e svcc, todos
-colocados na rede svcnet de tipo bridge. Os serviços svca e svcc têm uma
-instância, mas svcb foi lançado com scale=2. Indique os nomes de serviços e de
-contentores que são registados no serviço de DNS interno e que endereço(s)
-refere cada um desses nomes
+## 7. Um ficheiro docker-compose.yml, para especificação de uma solução composta com o nome tp2, contém três serviços: svca, svcb e svcc, todos colocados na rede svcnet de tipo bridge. Os serviços svca e svcc têm uma instância, mas svcb foi lançado com scale=2. Indique os nomes de serviços e de contentores que são registados no serviço de DNS interno e que endereço(s) refere cada um desses nomes
 
 Numa configuração com Docker Compose, os nomes de serviços e contentores são
 gerenciados automaticamente pelo Docker Compose, e os serviços são registados
