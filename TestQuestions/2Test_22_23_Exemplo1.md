@@ -37,7 +37,7 @@ A utilização de memória partilhada (shared memory) em sistemas Unix para IPC 
 ### Sincronização
 
 1. **Controle de Acesso**:
-   - Sem um mecanismo de sincronização, múltiplos processos podem tentar acessar e modificar a memória partilhada simultaneamente, resultando em condições de corrida (race conditions) e dados corrompidos. Para evitar isso, são utilizados mecanismos de sincronização como semáforos, mutexes ou locks para coordenar o acesso à memória partilhada.
+   - Sem um mecanismo de sincronização, múltiplos processos podem tentar aceder e modificar a memória partilhada simultaneamente, resultando em race conditions e dados corrompidos. Para evitar isso, são utilizados mecanismos de sincronização como semáforos, mutexes ou locks para coordenar o acesso à memória partilhada.
 
 ### Notificação
 
@@ -50,7 +50,7 @@ A utilização de memória partilhada (shared memory) em sistemas Unix para IPC 
    - Antes que a memória partilhada possa ser utilizada, os processos precisam coordenar a criação e a inicialização dessa memória. Isso muitas vezes requer a troca de mensagens para assegurar que todos os processos envolvidos estejam prontos e configurados corretamente.
 
 4. **Finalização e Limpeza**:
-   - Da mesma forma, quando a memória partilhada não é mais necessária, os processos precisam coordenar a liberação dos recursos. Isso pode ser feito utilizando sinais ou mensagens para garantir que todos os processos liberem a memória de forma ordenada.
+   - Da mesma forma, quando a memória partilhada já não necessária, os processos precisam coordenar a libertação dos recursos. Isso pode ser feito utilizando sinais ou mensagens para garantir que todos os processos libertem a memória de forma ordenada.
 
 ### Exemplo Prático
 
@@ -58,7 +58,7 @@ Suponha que dois processos, A e B, precisem compartilhar dados. Eles podem usar 
 
 ### Conclusão
 
-Embora a memória partilhada seja um mecanismo poderoso e eficiente para IPC, ela geralmente precisa ser combinada com outros mecanismos para garantir a sincronização adequada, coordenação de eventos e gestão de recursos, tornando a comunicação entre processos segura e eficaz.
+Embora a memória partilhada seja um mecanismo poderoso e eficiente para IPC, este  precisa geralmente, ser combinado com outros mecanismos para garantir a sincronização adequada, coordenação de eventos e gestão de recursos, tornando a comunicação entre processos segura e eficaz.
 
 ## 3. Um servicço systemd pode estar: enabled, disabled, active, inactive.
 
@@ -69,26 +69,26 @@ No `systemd`, os estados de um serviço indicam o seu status de inicialização 
 ### 1. **Enabled (Habilitado)**:
    - **Indicação**: O serviço está configurado para iniciar automaticamente durante a inicialização do sistema.
    - **Configuração**: Os links simbólicos para o serviço estão presentes nos diretórios de `wants` ou `requires` de um ou mais alvos (`targets`), como `multi-user.target.wants/`.
-   - **Exemplo de Comando**: Você pode habilitar um serviço com `sudo systemctl enable nome_do_serviço`.
+   - **Exemplo de Comando**: Pode-se habilitar um serviço com `sudo systemctl enable nome_do_serviço`.
 
 ### 2. **Disabled (Desabilitado)**:
    - **Indicação**: O serviço não está configurado para iniciar automaticamente durante a inicialização do sistema.
    - **Configuração**: Não há links simbólicos para o serviço nos diretórios de `wants` ou `requires` dos alvos (`targets`).
-   - **Exemplo de Comando**: Você pode desabilitar um serviço com `sudo systemctl disable nome_do_serviço`.
+   - **Exemplo de Comando**: Pode-se desabilitar um serviço com `sudo systemctl disable nome_do_serviço`.
 
 ### 3. **Active (Ativo)**:
    - **Indicação**: O serviço está atualmente em execução.
    - **Status de Execução**: O processo do serviço foi iniciado e está funcionando como esperado.
-   - **Exemplo de Comando**: Você pode verificar se um serviço está ativo com `systemctl is-active nome_do_serviço`.
+   - **Exemplo de Comando**: Pode-se verificar se um serviço está ativo com `systemctl is-active nome_do_serviço`.
 
 ### 4. **Inactive (Inativo)**:
    - **Indicação**: O serviço não está em execução no momento.
    - **Status de Execução**: O processo do serviço foi parado ou nunca foi iniciado desde a inicialização do sistema.
-   - **Exemplo de Comando**: Você pode verificar se um serviço está inativo com `systemctl is-active nome_do_serviço`.
+   - **Exemplo de Comando**: Pode-se verificar se um serviço está inativo com `systemctl is-active nome_do_serviço`.
 
 ### Exemplo de Uso
 
-Aqui está um exemplo prático de como você pode usar os comandos `systemctl` para gerenciar um serviço chamado `example.service`:
+Exemplo prático de como você pode usar os comandos `systemctl` para gerenciar um serviço chamado `example.service`:
 
 - **Habilitar o serviço**:
 
@@ -145,13 +145,13 @@ Os estados de um serviço `systemd` podem ocorrer em combinações legítimas, r
 - **Disabled e Active**
 - **Disabled e Inactive**
 
-Esses pares são legítimos e representam os diferentes estados de configuração e execução de serviços gerenciados pelo `systemd` no sistema Linux.
+Esses pares são legítimos e representam os diferentes estados de configuração e execução de serviços geridos pelo `systemd` no sistema Linux.
 
 ## 4. No âmbito do systemd, explique sucintamente o que é um ficheiro de unidade do tipo .socket e o que se entende por socket activation.
 
 ### Ficheiro de Unidade do Tipo .socket
 
-Um ficheiro de unidade do tipo `.socket` no `systemd` é usado para definir sockets que são gerenciados pelo `systemd` e podem ser utilizados para a comunicação entre processos (IPC). Ele especifica as propriedades e comportamentos dos sockets, como os tipos de sockets (TCP, UDP, Unix domain sockets), endereços, portas, permissões, entre outras configurações.
+Um ficheiro de unidade do tipo `.socket` no `systemd` é usado para definir sockets que são geridos pelo `systemd` e podem ser utilizados para a comunicação entre processos (IPC). Ele especifica as propriedades e comportamentos dos sockets, como os tipos de sockets (TCP, UDP, Unix domain sockets), endereços, portas, permissões, entre outras configurações.
 
 Exemplo de um ficheiro `.socket`:
 
@@ -196,17 +196,17 @@ Com a configuração correta, o ficheiro `.socket` e o ficheiro de serviço trab
 
 ### Paravirtualização
 
-**Paravirtualização** é uma técnica de virtualização em que o sistema operacional convidado (guest OS) é modificado para ser ciente do hipervisor e para se comunicar diretamente com ele utilizando uma API especial conhecida como "hypercalls". Isso permite um desempenho mais eficiente, pois elimina a necessidade de emular completamente o hardware subjacente.
+**Paravirtualização** é uma técnica de virtualização em que o sistema operativo convidado (guest OS) é modificado para ser ciente do hipervisor e para se comunicar diretamente com ele utilizando uma API especial conhecida como "hypercalls". Isso permite um desempenho mais eficiente, pois elimina a necessidade de emular completamente o hardware subjacente.
 
 ### Principal Desvantagem
 
-A principal desvantagem da paravirtualização é a **necessidade de modificar o sistema operacional convidado**. Isso implica que nem todos os sistemas operacionais podem ser utilizados como convidados sem adaptações, o que limita a flexibilidade e a compatibilidade. Sistemas operacionais que não foram modificados para suportar paravirtualização não podem tirar proveito dessa técnica, tornando-a menos versátil em comparação com a virtualização completa (full virtualization), que pode executar sistemas operacionais não modificados.
+A principal desvantagem da paravirtualização é a **necessidade de modificar o sistema operativo convidado**. Isso implica que nem todos os sistemas operacionais podem ser utilizados como convidados sem adaptações, o que limita a flexibilidade e a compatibilidade. Sistemas operacionais que não foram modificados para suportar paravirtualização não podem tirar proveito dessa técnica, tornando-a menos versátil em comparação com a virtualização completa (full virtualization), que pode executar sistemas operacionais não modificados.
 
 ## 6. Explique sucintamente o que se entende por máquinas virtuais de processo. Dê exemplos práticos da utilização deste tipo de virtualização no cenário particular do set de instruções da arquitetura do host ser distinto do existente no ambiente virtualizado. 
 
 ### Máquinas Virtuais de Processo
 
-Máquinas virtuais de processo são um tipo de virtualização que permite a execução de um único processo ou aplicação em um ambiente virtual, proporcionando uma abstração completa da plataforma de hardware e do sistema operacional subjacente. Elas permitem que aplicações sejam executadas de maneira isolada e independente do sistema operacional ou da arquitetura de hardware do host.
+Máquinas virtuais de processo são um tipo de virtualização que permite a execução de um único processo ou aplicação em um ambiente virtual, proporcionando uma abstração completa da plataforma de hardware e do sistema operativo subjacente. Elas permitem que aplicações sejam executadas de maneira isolada e independente do sistema operativo ou da arquitetura de hardware do host.
 
 ### Exemplos Práticos
 
@@ -230,7 +230,7 @@ Esses exemplos ilustram como máquinas virtuais de processo permitem a execuçã
 ## 8. Comente a seguinte afirmação:
 > «Um dos custos incontornáveis do sistema de contentores Docker é o de manter múltiplas versões do kernel Linux para que, por exemplo, as imagens baseadas em Ubuntu 22.04 usem o kernel 5.15 enquanto as imagens baseadas em Red Hat Enterprise Linux 8 precisam do kernel 4.18.»
 
-Essa afirmação não está correta. No sistema de contentores Docker, todos os contentores compartilham o mesmo kernel do host. Isso significa que as imagens baseadas em diferentes distribuições, como Ubuntu 22.04 e Red Hat Enterprise Linux 8, usam o mesmo kernel do sistema operacional host onde o Docker está sendo executado.
+Essa afirmação não está correta. No sistema de contentores Docker, todos os contentores compartilham o mesmo kernel do host. Isso significa que as imagens baseadas em diferentes distribuições, como Ubuntu 22.04 e Red Hat Enterprise Linux 8, usam o mesmo kernel do sistema operativo host onde o Docker está sendo executado.
 
 ### Explicação Detalhada
 
