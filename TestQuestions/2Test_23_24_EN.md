@@ -6,18 +6,18 @@
 
 - **Unix Domain Sockets**: São utilizados para a comunicação entre processos
   (IPC) que residem no mesmo host (máquina). Em vez de utilizar endereços
-  IP e números de porta como os sockets de Internet, eles utilizam caminhos
+  IP e portos como os sockets de Internet, utilizam caminhos
   do sistema de ficheiros para identificar os endpoints de comunicação.
 - **Sockets de Internet**: São utilizados para a comunicação entre processos
-  que podem estar em diferentes hosts. Eles utilizam endereços IP e números de
-  porta para identificar os endpoints de comunicação na rede.
+  que podem estar em diferentes hosts. Eles utilizam endereços IP e 
+  portos para identificar os endpoints de comunicação na rede.
 
 ### Principal Vantagem dos Unix Domain Sockets
 
 - **Desempenho**: Por serem utilizados para comunicação local dentro do mesmo
   sistema, os Unix Domain Sockets têm menos overhead e, portanto, oferecem um
-  desempenho melhor em comparação com os sockets de Internet. Eles são
-  geralmente mais rápidos e eficientes para a comunicação entre processos no
+  desempenho melhor em comparação com os sockets de Internet. São
+  geralmente, mais rápidos e eficientes para a comunicação entre processos no
   mesmo host.
 
 ### Principal Limitação dos Unix Domain Sockets
@@ -46,7 +46,7 @@ conectarem ao socket.
 ### Endereços de Sockets de Internet
 
 Os endereços utilizados com os sockets de Internet são compostos por endereços
-IP e números de porta. Estes endereços permitem que processos em diferentes
+IP e porto. Estes endereços permitem que processos em diferentes
 máquinas se comuniquem através da rede. Exemplo de endereço de um socket de
 Internet:
 
@@ -54,16 +54,14 @@ Internet:
 192.168.1.10:8080
 ```
 
-Neste caso, `192.168.1.10` é o endereço IP e `8080` é o número da porta
+Neste caso, `192.168.1.10` é o endereço IP e `8080` é o porto
 utilizada para a comunicação.
 
 ### Diferenças Fundamentais
 
 - **Formato**:
-
   - **Unix Domain Sockets**: Utilizam caminhos de sistema de ficheiros, como `/run/socket_unix`.
-  - **Sockets de Internet**: Utilizam uma combinação de endereços IP e números
-    de porta, como `192.168.1.10:8080`.
+  - **Sockets de Internet**: Utilizam uma combinação de endereços IP e porto, como `192.168.1.10:8080`.
 
 - **Utilização**:
   - **Unix Domain Sockets**: São utilizados para comunicação entre processos
@@ -80,7 +78,7 @@ Quando um processo opera como daemon num sistema Linux, ele geralmente é
 dissociado do terminal onde foi iniciado. Isso significa que os seus canais
 de **standard output** (stdout) e **standard error** (stderr) não estão
 ligados ao terminal padrão. Sem um mecanismo para redirecionar esses dados,
-qualquer output gerado pelo daemon seria perdido.
+qualquer output gerado pelo daemon será perdido.
 
 ### Consequências para Stdout e Stderr
 
@@ -113,10 +111,10 @@ StandardError=journal
 ```
 
 Estas configurações garantem que toda a saída e erros dos daemons são
-capturados e podem ser facilmente acessados e revisados através das
+capturados e podem ser facilmente acedidos e revistos através das
 ferramentas do systemd, como o `journalctl`.
 
-## 3. Num sistema Linux com systemd, o ficheiro /etc/systemd/system/tp2.socket, na sua secção [Install] tem a linh WantedBy=sockets.target . Para que serve a secção Install, porquê WantedBy e o que representa sockets.target ?
+## 3. Num sistema Linux com systemd, o ficheiro /etc/systemd/system/tp2.socket, na sua secção [Install] tem a linh WantedBy=sockets.target. Para que serve a secção Install, porquê WantedBy e o que representa sockets.target?
 
 ### Secção [Install]
 
@@ -169,7 +167,7 @@ WantedBy=sockets.target
 - **sockets.target**: Um target que agrupa todos os sockets que devem ser
   preparados ao iniciar o sistema.
 
-Com estas configurações, o serviço `tp2.socket` será automaticamente
+Com esta configuração, o serviço `tp2.socket` será automaticamente
 iniciado sempre que o `sockets.target` for ativado, garantindo que o
 sistema está pronto para lidar com conexões de socket.
 
@@ -207,7 +205,7 @@ sistema está pronto para lidar com conexões de socket.
      ambientes de teste e desenvolvimento, onde a eficiência máxima não
      é um fator crítico. Podem ser instalados como qualquer outra aplicação,
      tornando-os acessíveis para uma variedade de utilizadores, incluindo
-     desenvolvedores e entusiastas.
+     developers e entusiastas.
 
 2. **Casos de Uso Específicos**:
 
@@ -223,6 +221,7 @@ sistema está pronto para lidar com conexões de socket.
      separados. Isto facilita a integração e o uso em sistemas já em produção.
 
 4. **Custo**:
+
    - A implantação de hipervisores Tipo 1 pode ser mais cara devido aos
      requisitos de hardware e configuração. Hipervisores Tipo 2 são mais
      acessíveis para usuários individuais ou pequenas empresas que precisam de
@@ -236,7 +235,7 @@ ambiente. A eficiência dos hipervisores Tipo 1 os torna ideais para grandes
 implementações de servidores, enquanto a flexibilidade dos hipervisores Tipo 2
 os torna valiosos para ambientes de desenvolvimento, teste e uso pessoal.
 
-## 5. Num sistema Linux com o serviço docker ativo, estão em execução dois contentores baseados na imagem node:current-alpine3.18 e um baseado na imagem php:8.2-alpine3.18. Nos respectivos Dockerfile, ambas as imagens começam com a linha FROM alpine:3.18 . Havendo neste cenário duas imagens e três contentores, justifique quantas cópias do sistema de ficheiros definido pela imagem base alpine:3.18 deverão existir no disco do sistema host?
+## 5. Num sistema Linux com o serviço docker ativo, estão em execução dois contentores baseados na imagem node:current-alpine3.18 e um baseado na imagem php:8.2-alpine3.18. Nos respectivos Dockerfile, ambas as imagens começam com a linha FROM alpine:3.18. Havendo neste cenário duas imagens e três contentores, justifique quantas cópias do sistema de ficheiros definido pela imagem base alpine:3.18 deverão existir no disco do sistema host?
 
 Num cenário Docker, as imagens são construídas em camadas, e cada camada é
 armazenada de forma única no disco do sistema host. Portanto, mesmo que várias
@@ -256,9 +255,8 @@ imagens usem a mesma base, as camadas comuns são compartilhadas.
   como uma camada no sistema de arquivos do Docker. Essa camada será
   compartilhada por ambas as imagens `node:current-alpine3.18` e
   `php:8.2-alpine3.18`.
-- **Contentores**: Os três contentores baseados em
-  `node:current-alpine3.18` e `php:8.2-alpine3.18` usarão a mesma camada base
-  `alpine:3.18`.
+- **Contentores**: Os três contentores baseados em `node:current-alpine3.18` 
+  e `php:8.2-alpine3.18` usarão a mesma camada base `alpine:3.18`.
 
 ### Número de Cópias no Disco do Sistema Host
 
@@ -268,13 +266,10 @@ imagens usem a mesma base, as camadas comuns são compartilhadas.
   assim como pelos contentores em execução.
 
 Este compartilhamento de camadas é um dos principais benefícios do Docker,
-pois economiza espaço em disco e permite um gerenciamento mais eficiente das
+permite economizar espaço em disco e um gerenciamento mais eficiente das
 imagens e contentores.
 
-## 6. Considere o Dockerfile apresentado e três ficheiros, presentes na
-
-subdiretoria src: package.json e app.js, com uma aplicação para Node.js, e um
-README.md
+## 6. Considere o Dockerfile apresentado e três ficheiros, presentes na subdiretoria src: package.json e app.js, com uma aplicação para Node.js, e um README.md
 
 ```Dockerfile
 FROM node:alpine
@@ -291,7 +286,7 @@ CMD ["node", "app.js"]
 
 ## 6.1 Indique que camadas (não-vazias) do sistema de ficheiros são criadas sobre a imagem base node:alpine
 
-Aqui estão as camadas (não-vazias) do sistema de ficheiros que são criadas
+Camadas (não-vazias) do sistema de ficheiros que são criadas
 sobre a imagem base `node:alpine` no seu Dockerfile:
 
 1. **FROM node:alpine**
@@ -307,7 +302,7 @@ sobre a imagem base `node:alpine` no seu Dockerfile:
 3. **COPY src/ ./**
 
    - Copia os ficheiros da subdiretoria `src` no contexto do build para o
-     diretório de trabalho atual no container (`/home/node/app`). Esta ação cria
+     diretório de trabalho atual no contentor (`/home/node/app`). Esta ação cria
      uma camada que contém:
      - `package.json`
      - `app.js`
@@ -334,14 +329,14 @@ sobre a imagem base `node:alpine` no seu Dockerfile:
 
 7. **USER node**
 
-   - Altera o usuário sob o qual os comandos subsequentes são executados para
+   - Altera o utilizador sob o qual os comandos subsequentes são executados para
      `node`. Esta instrução não cria uma camada de sistema de ficheiros, mas
      configura o contexto para comandos subsequentes.
 
 8. **EXPOSE 80**
 
-   - Informa que o container escutará na porta 80. Esta instrução não cria uma
-     camada de sistema de ficheiros, mas documenta a porta exposta.
+   - Informa que o contentor ficará à escuta no porto 80. Esta instrução não cria uma
+     camada de sistema de ficheiros, mas documenta o porto exposto.
 
 9. **WORKDIR /home/node/app**
 
@@ -349,7 +344,7 @@ sobre a imagem base `node:alpine` no seu Dockerfile:
      como anteriormente, não cria uma camada de sistema de ficheiros.
 
 10. **CMD ["node", "app.js"]**
-    - Define o comando padrão que será executado quando o container iniciar
+    - Define o comando padrão que será executado quando o contentor iniciar
       (`node app.js`). Esta instrução não cria uma camada de sistema de ficheiros.
 
 ### Resumo das Camadas Não-Vazias Criadas
@@ -371,8 +366,6 @@ Para otimizar o uso do cache de build e minimizar o número de camadas finais
 frequentemente (como a instalação de dependências) antes das que mudam
 frequentemente (como a cópia do código-fonte). Além disso, podemos reduzir o
 número de comandos `WORKDIR` ao mínimo necessário.
-
-Vamos ajustar o Dockerfile seguindo estas diretrizes:
 
 ### Dockerfile Original
 
@@ -435,6 +428,7 @@ CMD ["node", "app.js"]
    - Copia o restante dos arquivos do código-fonte (`app.js` e `README.md`).
 
 4. **RUN chown -R node.node /home/node/app**:
+
    - Altera as permissões dos arquivos e diretórios dentro de `/home/node/app`.
 
 ### Racional
@@ -448,7 +442,7 @@ código-fonte mudam, minimizando as camadas criadas durante a build.
 ## 7. Um ficheiro docker-compose.yml, para especificação de uma solução composta com o nome tp2, contém três serviços: svca, svcb e svcc, todos colocados na rede svcnet de tipo bridge. Os serviços svca e svcc têm uma instância, mas svcb foi lançado com scale=2. Indique os nomes de serviços e de contentores que são registados no serviço de DNS interno e que endereço(s) refere cada um desses nomes
 
 Numa configuração com Docker Compose, os nomes de serviços e contentores são
-gerenciados automaticamente pelo Docker Compose, e os serviços são registados
+geridos automaticamente pelo Docker Compose, e os serviços são registados
 no DNS interno da rede.
 
 ### Nomes de Serviços e Contentores

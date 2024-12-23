@@ -27,7 +27,7 @@ Aqui está um exemplo simples em C de como um servidor pode gerenciar múltiplos
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SOCKET_PATH "/tmp/my_socket"
+#define SOCKET_PATH "/run/my_socket"
 
 int main() {
     int server_fd, client_fd;
@@ -99,36 +99,30 @@ int main() {
 - **Aceitar Conexões**: Quando uma conexão é aceita, o servidor cria um novo processo (usando `fork()`) para tratar o cliente. O descritor de socket retornado por `accept()` é único para cada cliente, permitindo a distinção e comunicação individual.
 - **Tratar Clientes**: No processo filho, o servidor lê e escreve dados para o cliente usando o novo socket.
 
-### Alternativa: Uso de `select()`, `poll()` ou `epoll()`
-
-Para uma implementação mais eficiente, especialmente para um grande número de clientes, o servidor pode usar `select()`, `poll()` ou `epoll()` para monitorar múltiplos descritores de socket simultaneamente, evitando a criação de muitos processos filhos.
-
-Dessa forma, o serviço pode gerenciar múltiplos clientes de maneira eficiente e segura, utilizando sockets de domínio Unix do tipo stream.
-
 ## 7. Alguns processos ativos num sistema Linux correspondem a serviços a operar como daemons. Indique três características associadas a este tipo de processos (não específicas de um gestor de serviços).
 
-Daemons são processos em segundo plano que oferecem serviços ou realizam tarefas específicas em sistemas operacionais baseados em Unix, como o Linux. Aqui estão três características associadas a esses processos:
+Daemons são processos em segundo plano que oferecem serviços ou realizam tarefas específicas em sistemas operativos baseados em Unix, como o Linux. Três características associadas a esses processos:
 
 ### 1. **Execução em Segundo Plano (Background Execution)**
-   - Daemons geralmente são iniciados durante o processo de inicialização do sistema ou em resposta a certos eventos, e continuam em execução em segundo plano. Eles não têm uma interface de usuário direta e não requerem interação contínua do usuário.
+   - Daemons geralmente são iniciados durante o processo de inicialização do sistema ou em resposta a certos eventos, e continuam em execução em segundo plano. Não têm interface de utilizador direta e não requerem interação contínua do utilizador.
 
 ### 2. **Desassociação de Terminal (Disassociation from Terminal)**
-   - Um daemon, ao ser iniciado, desassocia-se do terminal de controle. Isso envolve a criação de um novo processo filho que se torna o daemon, enquanto o processo pai termina. Isso garante que o daemon não mantenha nenhum controle ou vínculo com o terminal onde foi iniciado, permitindo que continue a operar mesmo se o terminal for fechado.
+   - Um daemon, ao ser iniciado, desassocia-se do terminal de controle. Isso envolve a criação de um novo processo filho que se torna o daemon, enquanto o processo pai termina. Isso garante que o daemon não mantenha nenhum controle ou vínculo com o terminal onde foi iniciado, permitindo que continue a operar mesmo que o terminal seja fechado.
 
 ### 3. **Execução Contínua e Ciclo de Vida Longo (Continuous Operation and Long Lifespan)**
-   - Daemons são projetados para ter um ciclo de vida longo e contínuo. Eles são frequentemente configurados para iniciar automaticamente no boot do sistema e continuar executando até que o sistema seja desligado ou o daemon seja explicitamente interrompido. Eles devem ser capazes de lidar com várias requisições de serviços ao longo de seu ciclo de vida.
+   - Daemons são projetados para ter um ciclo de vida longo e contínuo. Eles são frequentemente configurados para iniciar automaticamente no boot do sistema e continuar em execução até que o sistema seja desligado ou o daemon seja explicitamente interrompido. Eles devem ser capazes de lidar com várias requisições de serviços ao longo de seu ciclo de vida.
 
-Essas características permitem que os daemons funcionem de forma eficiente e estável, fornecendo serviços essenciais ao sistema operacional sem a necessidade de interação direta com os usuários.
+Essas características permitem que os daemons funcionem de forma eficiente e estável, fornecendo serviços essenciais ao sistema operativo sem a necessidade de interação direta com os utilizadores.
 
 ## 8. Num sistema Linux com systemd, o ficheiro /etc/systemd/system/tp2.service, na sua secção [Unit] tem a linha Requires=tp2.socket.
 
 ## a. Tendo em conta esta linha, que funcionalidade do systemd deverá estar a ser usada no serviço tp2 e porque aparece esta diretiva Requires no ficheiro .service?
 
-No sistema `systemd`, a diretiva `Requires=tp2.socket` no ficheiro `/etc/systemd/system/tp2.service` indica que o serviço `tp2.service` depende do socket `tp2.socket`. A funcionalidade do `systemd` que está sendo utilizada aqui é chamada de **socket activation**.
+No sistema `systemd`, a diretiva `Requires=tp2.socket` no ficheiro `/etc/systemd/system/tp2.service` indica que o serviço `tp2.service` depende do socket `tp2.socket`. A funcionalidade do `systemd` que é usada aqui chama-se **socket activation**.
 
 ### Funcionalidade: Socket Activation
 
-**Socket activation** é uma técnica utilizada pelo `systemd` para iniciar serviços sob demanda quando uma conexão é recebida em um socket. Em vez de iniciar o serviço `tp2.service` no boot ou manualmente, o `systemd` escuta no socket `tp2.socket` e ativa o serviço `tp2.service` apenas quando necessário, ou seja, quando uma conexão é recebida nesse socket.
+**Socket activation** é uma técnica utilizada pelo `systemd` para iniciar serviços sob pedido quando uma conexão é recebida num socket. Em vez de iniciar o serviço `tp2.service` no boot ou manualmente, o `systemd` escuta no socket `tp2.socket` e ativa o serviço `tp2.service` apenas quando necessário, ou seja, quando uma conexão é recebida nesse socket.
 
 ### Por Que a Diretiva `Requires` Está Presente
 
@@ -138,8 +132,8 @@ No sistema `systemd`, a diretiva `Requires=tp2.socket` no ficheiro `/etc/systemd
 - **Gerenciamento de Dependências**:
   - A diretiva `Requires` estabelece uma relação de dependência explícita entre o serviço e o socket. O `systemd` sabe que deve iniciar e manter o socket `tp2.socket` enquanto o serviço `tp2.service` estiver ativo. Se o socket falhar ou for parado, o `systemd` também interromperá o serviço `tp2.service`.
 
-- **Facilidade de Gerenciamento**:
-  - O uso da diretiva `Requires` facilita a configuração e o gerenciamento do serviço, garantindo que todos os componentes necessários estejam disponíveis e funcionando corretamente.
+- **Facilidade de Gestão**:
+  - O uso da diretiva `Requires` facilita a configuração e gestão do serviço, garantindo que todos os componentes necessários estejam disponíveis e funcionando corretamente.
 
 ### Exemplo de Configuração
 
@@ -207,27 +201,27 @@ O VMware ESXi é um **hipervisor de tipo 1**.
 O texto menciona que, durante a instalação:
 
 1. **"You boot the ESXi installer and respond to the installer prompts to install ESXi to the local host disk."**
-   - Isso indica que o ESXi é instalado diretamente no hardware do servidor (bare-metal), sem a necessidade de um sistema operacional subjacente.
+   - Isso indica que o ESXi é instalado diretamente no hardware do servidor (bare-metal), sem a necessidade de um sistema operativo subjacente.
 
 2. **"The installer reformats and partitions the target disk and installs the ESXi boot image."**
    - Reformatar e particionar o disco de destino sugere que o ESXi assume controle total sobre o hardware, criando um ambiente virtualizado diretamente sobre o hardware físico.
 
 3. **"If you have not installed ESXi on the target disk before, all data on the drive is overwritten, including hardware vendor partitions, operating system partitions, and associated data."**
-   - A menção de sobrescrever partições do sistema operacional e dados associados reforça que o ESXi opera independentemente de qualquer sistema operacional existente, confirmando que é um hipervisor de tipo 1.
+   - A menção de sobrescrever partições do sistema operativo e dados associados reforça que o ESXi opera independentemente de qualquer sistema operativo existente, confirmando que é um hipervisor de tipo 1.
 
 ### Diferença entre Hipervisor de Tipo 1 e Tipo 2
 
 - **Hipervisor de Tipo 1 (Bare-Metal)**:
   - Instala-se diretamente no hardware físico e gerencia os recursos do sistema, como CPU, memória e dispositivos de I/O.
   - Exemplos incluem VMware ESXi, Microsoft Hyper-V e Xen.
-  - Oferece melhor desempenho e eficiência, pois não há uma camada adicional de sistema operacional entre o hipervisor e o hardware.
+  - Oferece melhor desempenho e eficiência, pois não há uma camada adicional de sistema operativo entre o hipervisor e o hardware.
 
 - **Hipervisor de Tipo 2 (Hosted)**:
-  - Instala-se sobre um sistema operacional existente e depende desse sistema operacional para acessar os recursos do hardware.
+  - Instala-se sobre um sistema operativo existente e depende desse sistema operativo para acessar os recursos do hardware.
   - Exemplos incluem VMware Workstation, Oracle VirtualBox e Parallels Desktop.
-  - Pode ter mais overhead devido à presença do sistema operacional anfitrião.
+  - Pode ter mais overhead devido à presença do sistema operativo anfitrião.
 
-Portanto, com base na descrição fornecida, é claro que o VMware ESXi é um hipervisor de tipo 1, pois é instalado diretamente no hardware do servidor e reformata o disco, removendo qualquer sistema operacional pré-existente.
+Portanto, com base na descrição fornecida, é claro que o VMware ESXi é um hipervisor de tipo 1, pois é instalado diretamente no hardware do servidor e reformata o disco, removendo qualquer sistema operativo pré-existente.
 
 ## 10. Apresente duas vantagens que resultam da organização das imagens docker em camadas, suportadas por sistemas de ficheiros do tipo overlay. Apresente também uma possível desvantagem.
 
@@ -237,11 +231,11 @@ A organização das imagens Docker em camadas, suportadas por sistemas de fichei
 
 1. **Eficiência de Armazenamento**:
    - **Redução do Espaço em Disco**: As imagens Docker são compostas por múltiplas camadas, onde cada camada é armazenada separadamente e pode ser compartilhada entre várias imagens. Isso significa que se várias imagens utilizarem a mesma base (por exemplo, uma imagem base de Ubuntu), essas camadas comuns são armazenadas apenas uma vez no disco, economizando espaço de armazenamento.
-   - **Reutilização de Camadas**: Quando você cria novas imagens ou atualiza imagens existentes, o Docker reutiliza as camadas que já existem e só cria novas camadas para as mudanças, o que torna a construção de imagens mais rápida e eficiente.
+   - **Reutilização de Camadas**: Quando se criam novas imagens ou atualiza imagens existentes, o Docker reutiliza as camadas que já existem e só cria novas camadas para as mudanças, o que torna a construção de imagens mais rápida e eficiente.
 
 2. **Velocidade de Construção e Deploy**:
    - **Construção Incremental**: Com a organização em camadas, o Docker pode construir imagens de maneira incremental. Ou seja, se uma camada intermediária não mudou, o Docker pode reutilizar a camada do cache em vez de reconstruí-la, acelerando o processo de construção.
-   - **Deploys Mais Rápidos**: Ao fazer o deploy de contêineres, apenas as camadas que não estão presentes no ambiente de destino precisam ser transferidas. Como resultado, os deploys se tornam mais rápidos e utilizam menos largura de banda.
+   - **Deploys Mais Rápidos**: Ao fazer o deploy de contentores, apenas as camadas que não estão presentes no ambiente de destino precisam ser transferidas. Como resultado, os deploys se tornam mais rápidos e utilizam menos largura de banda.
 
 ### Desvantagem
 
@@ -353,11 +347,11 @@ Com as otimizações, aqui estão as camadas de overlay criadas sobre a imagem b
 ### Benefícios das Modificações
 
 - **Redução de Camadas**: As instruções `RUN npm install` e `RUN chown` foram combinadas, reduzindo o número total de camadas.
-- **Eficiência**: O Docker pode reutilizar o cache mais eficientemente, especialmente quando apenas o código da aplicação é alterado.
+- **Eficiência**: O Docker pode reutilizar a cache mais eficientemente, especialmente quando apenas o código da aplicação é alterado.
 
 ## 12. Um ficheiro docker-compose.yml, para especificação de uma solução composta com o nome tp2, contém três serviços: svca, svcb e svcc, todos colocados na mesma rede, svcnet, de tipo bridge. Os serviços svca e svcc têm apenas uma instância cada um, mas o serviço svcb foi lançado com scale=4. Executando um shell (/bin/sh) no contentor do serviço svca, qual é a diferença observável entre executar nslookup svcb ou nslookup tp2-svcb-1 ?
 
-Ao executar o comando `nslookup` no contêiner do serviço `svca`, você observará diferentes comportamentos dependendo se você consulta `svcb` ou `tp2-svcb-1`. Vamos ver as diferenças:
+Ao executar o comando `nslookup` no contentor do serviço `svca`, você observará diferentes comportamentos dependendo se você consulta `svcb` ou `tp2-svcb-1`. Vamos ver as diferenças:
 
 ### 1. `nslookup svcb`
 
@@ -368,7 +362,7 @@ Ao executar o comando `nslookup` no contêiner do serviço `svca`, você observa
 ### 2. `nslookup tp2-svcb-1`
 
 - **Resolução de Nome Específico da Instância**:
-  - Quando você executa `nslookup tp2-svcb-1`, está consultando especificamente a instância `tp2-svcb-1` do serviço `svcb`. O DNS interno do Docker Compose resolve diretamente para o endereço IP dessa instância específica.
+  - Quando se executa `nslookup tp2-svcb-1`, está-se consultando especificamente a instância `tp2-svcb-1` do serviço `svcb`. O DNS interno do Docker Compose resolve diretamente para o endereço IP dessa instância específica.
   - Este comando sempre retornará o mesmo endereço IP, que é o endereço da instância `tp2-svcb-1`, sem envolver balanceamento de carga entre as outras instâncias.
 
 ### Resumo das Diferenças
