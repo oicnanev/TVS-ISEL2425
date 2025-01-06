@@ -23,57 +23,62 @@ int main() {
 
 A utilização do named pipe (FIFO) no código apresentado está fundamentalmente errada principalmente devido ao uso de `O_RDWR` ao abrir o pipe e à falta de controle adequado de clientes concorrentes. Vamos examinar essas questões em mais detalhes:
 
-### Problemas
+### Problema
 
-1. **Uso de `O_RDWR` ao Abrir o Pipe**:
-   - Ao usar `open("/tmp/tp2-req", O_RDWR)`, o named pipe é aberto para leitura e escrita ao mesmo tempo. Isso é problemático porque um named pipe é geralmente usado para comunicação unidirecional (um lado escreve e o outro lê). Ter o mesmo processo lendo e escrevendo no pipe pode causar comportamentos inesperados.
-   - Deveria ser usado `O_RDONLY` para o lado que lê e `O_WRONLY` para o lado que escreve. No contexto de um daemon, o daemon normalmente abriria o pipe para leitura (`O_RDONLY`) e o cliente abriria para escrita (`O_WRONLY`).
+O problema fundamental no uso do named pipe (FIFO) neste código está no modo como o descritor de arquivo do FIFO (fd) foi aberto com a flag O_RDWR. Isso cria um cenário problemático porque o processo lê e escreve no mesmo FIFO, potencialmente resultando em auto-feedback e bloqueios desnecessários, além de violar o propósito típico de um FIFO como **canal de comunicação unidirecional** entre processos.
 
-2. **Bloqueio na Leitura**:
-   - A leitura do pipe com `do { len = read(fd, req, REQ_LEN); } while (len == 0);` espera que um cliente escreva dados, mas como o daemon abriu o pipe com `O_RDWR`, não há garantia de que o cliente tenha aberto o pipe para escrita, podendo causar bloqueio.
-   - Abrir o pipe somente para leitura (`O_RDONLY`) resolveria este problema, pois a leitura bloquearia até que um cliente escreva no pipe.
+### Razões Fundamentais do Erro
 
-3. **Falta de Sincronização e Concurrency**:
-   - O código não lida com a possibilidade de múltiplos clientes tentarem acessar o daemon simultaneamente. Isso pode levar a condições de corrida e resultados inesperados.
-   - Named pipes não têm mecanismos de controle de concorrência embutidos. Normalmente, você precisaria usar mecanismos adicionais, como semáforos ou mutexes, para garantir acesso seguro em ambientes concorrentes.
+Auto-feedback (leitura da própria escrita):
+- Quando o servidor escreve uma resposta no mesmo FIFO com write(fd, ...), essa resposta pode ser lida pelo próprio servidor na próxima iteração do loop, em vez de ser enviada ao cliente. Isso ocorre porque tanto leitura quanto escrita estão a ser realizadas no mesmo descritor de arquivo (fd), que é associado ao FIFO /tmp/tp2-req.
 
-### Sugestões de Correção
+### FIFO como canal unidirecional:
 
-- **Abrir o Named Pipe Apropriadamente**:
-  - O daemon deve abrir o named pipe apenas para leitura:
+Por definição, um FIFO é projetado para comunicação unidirecional entre dois processos:
+- Um processo abre o FIFO para escrita.
+- Outro processo abre o FIFO para leitura.
 
-```c
-int fd = open("/tmp/tp2-req", O_RDONLY);
-```
+Abrir um FIFO com `O_RDWR` vai contra esse modelo. Embora tecnicamente permitido, essa prática raramente faz sentido e pode levar a comportamentos inesperados.
+ - Bloqueio na leitura e escrita: O read bloqueia até que outro processo escreva no FIFO, o que é esperado. No entanto, ao abrir o FIFO com `O_RDWR`, o próprio processo pode acabar bloqueando sua escrita devido à ausência de um leitor externo.
+- Potencial falha ao comunicar com múltiplos clientes: Se um cliente escreve no FIFO e o servidor responde pelo mesmo canal, o cliente pode não receber a resposta imediatamente devido à forma como os dados são geridos no buffer do FIFO. Para comunicação bidirecional com múltiplos clientes, o uso de um único FIFO para ambos os fluxos (entrada e saída) é inadequado.
 
-- **Tratamento de Múltiplos Clientes**:
-  - Pode-se considerar o uso de sockets de domínio Unix em vez de named pipes para lidar melhor com múltiplos clientes. Os sockets oferecem uma abordagem mais robusta para comunicação bidirecional e gerenciamento de conexões concorrentes.
+### Como corrigir o problema?
 
-### Exemplo de Correção com Named Pipe
-
-Aqui está uma correção básica para o uso do named pipe:
+**Solução 1**: Usar dois FIFOs (um para entrada e outro para saída)
+Separe os canais de entrada e saída para evitar conflitos:
 
 ```c
-char data[4];
-int main() {
-    char req[REQ_LEN];
-    umask(0111);
-    mkfifo("/tmp/tp2-req", 0666);
-    int fd = open("/tmp/tp2-req", O_RDONLY);
-    for (;;) {
-        memset(req, 0, REQ_LEN);
-        int len; while ((len = read(fd, req, REQ_LEN)) <= 0);
+mkfifo("/tmp/tp2-req-in", 0666);
+mkfifo("/tmp/tp2-req-out", 0666);
+
+int fd_in = open("/tmp/tp2-req-in", O_RDONLY);
+int fd_out = open("/tmp/tp2-req-out", O_WRONLY);
+
+for (;;) {
+    memset(req, 0, REQ_LEN);
+    int len = read(fd_in, req, REQ_LEN);
+    if (len > 0) {
         switch (req[0]) {
-            case 'S': memcpy(data, &req[1], 4); write(fd, "OK\n", 3); break;
-            case 'G': write(fd, data, 4); break;
-            case 'Q': write(fd, "OK\n", 3); unlink("/tmp/tp2-req"); close(fd); exit(0);
-            default: write(fd, "ERR\n", 4); break;
+            case 'S': memcpy(data, &req[1], 4); write(fd_out, "OK\n", 3); break;
+            case 'G': write(fd_out, data, 4); break;
+            case 'Q': write(fd_out, "OK\n", 3); unlink("/tmp/tp2-req-in"); unlink("/tmp/tp2-req-out"); exit(0);
+            default: write(fd_out, "ERR\n", 4); break;
         }
     }
 }
 ```
 
-Este exemplo aborda o problema de abrir o named pipe apenas para leitura. No entanto, para lidar com múltiplos clientes e comunicação bidirecional, a melhor prática seria usar sockets de domínio Unix.
+Essa abordagem separa completamente os fluxos de entrada (comandos) e saída (respostas), eliminando o risco de auto-feedback.
+
+**Solução 2**: Comunicação baseada em cliente-servidor com FIFOs dinâmicos
+Outra abordagem seria o cliente criar um FIFO temporário para receber a resposta do servidor. O fluxo seria:
+
+- Cliente cria um FIFO único (ex.: /tmp/resp-<pid>).
+- Cliente envia o nome desse FIFO junto com o comando no FIFO principal (/tmp/tp2-req).
+- O servidor lê o comando, processa-o, e responde no FIFO temporário do cliente.
+
+### Conclusão
+O problema fundamental é que o FIFO foi aberto com `O_RDWR`, permitindo que o servidor leia e escreva no mesmo descritor de ficheiro. Isso contraria a funcionalidade esperada de um FIFO como canal unidirecional, introduzindo problemas como auto-feedback e bloqueios. A solução mais adequada é separar os fluxos de entrada e saída ou implementar uma comunicação cliente-servidor usando FIFOs dinâmicos.
 
 ## 2. Vários processos relacionados comunicam através de um espaço de memória partilhada. Um dos processos aloca espaço para um objeto com malloc, preenche devidamente todos os campos do objeto e publica o ponteiro para o objeto na zona de memória partilhada. Há processos a tentar consultar os campos do objeto publicado e a terminar a execução com indicação de segmentation fault. Qual é o problema?
 
